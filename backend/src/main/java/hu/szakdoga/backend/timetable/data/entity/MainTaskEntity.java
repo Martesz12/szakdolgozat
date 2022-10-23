@@ -1,5 +1,7 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
@@ -33,10 +35,11 @@ public class MainTaskEntity {
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="lessonId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="lessonId", referencedColumnName = "id")
     private LessonEntity lesson;
 
-    @OneToMany(mappedBy = "mainTask", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "mainTask")
     private List<SubTaskEntity> subTasks;
 }

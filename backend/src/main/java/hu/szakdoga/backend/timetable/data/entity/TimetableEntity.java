@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 
 import javax.persistence.*;
@@ -19,10 +20,11 @@ public class TimetableEntity {
     private String name;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="userId", referencedColumnName = "id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "timetable", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "timetable")
     private List<LessonEntity> lessons;
 }

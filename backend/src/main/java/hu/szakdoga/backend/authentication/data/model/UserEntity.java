@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.authentication.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.timetable.data.entity.SubjectEntity;
 import hu.szakdoga.backend.timetable.data.entity.TeacherEntity;
 import hu.szakdoga.backend.timetable.data.entity.TimetableEntity;
@@ -18,12 +19,15 @@ public class UserEntity {
     private Long primaryTimetableId;
 
     //***Constraints***
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<SubjectEntity> subjects;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<TeacherEntity> teachers;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<TimetableEntity> timetables;
 }

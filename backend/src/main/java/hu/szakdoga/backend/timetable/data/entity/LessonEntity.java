@@ -1,5 +1,8 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -8,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="lesson")
+@Data
 public class LessonEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,37 +19,38 @@ public class LessonEntity implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Day must be set (lesson)")
+//    @NotEmpty(message = "Day must be set (lesson)")
     private String day;
 
     @Column(nullable = false)
-    @NotEmpty(message = "StartTime must be set (lesson)")
+//    @NotEmpty(message = "StartTime must be set (lesson)")
     private LocalTime startTime;
 
     @Column(nullable = false)
-    @NotEmpty(message = "EndTime must be set (lesson)")
+//    @NotEmpty(message = "EndTime must be set (lesson)")
     private LocalTime endTime;
 
     @Column()
     private String location;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Type must be set (lesson)")
+//    @NotEmpty(message = "Type must be set (lesson)")
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="subjectId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="subjectId", referencedColumnName = "id")
     private SubjectEntity subject;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="timetableId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="timetableId", referencedColumnName = "id")
     private TimetableEntity timetable;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="teacherId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="teacherId", referencedColumnName = "id")
     private TeacherEntity teacher;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "lesson")
     private List<MainTaskEntity> mainTasks;
 }

@@ -20,7 +20,7 @@ public class SubTaskEntity {
     private boolean fulfilled;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="mainTaskId")
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="mainTaskId", referencedColumnName = "id")
     private MainTaskEntity mainTask;
 }
