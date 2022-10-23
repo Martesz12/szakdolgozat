@@ -1,6 +1,7 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "mainTask")
+@Data
 public class MainTaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

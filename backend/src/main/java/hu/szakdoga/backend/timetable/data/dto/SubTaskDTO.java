@@ -1,8 +1,15 @@
 package hu.szakdoga.backend.timetable.data.dto;
 
 public class SubTaskDTO {
-    private Long id;
-    private String name;
-    private boolean fulfilled;
-    private Long mainTaskId;
+    public final Long id;
+    public final String name;
+    public final boolean fulfilled;
+    public final Long mainTaskId;
+
+    public SubTaskDTO(Long id, String name, boolean fulfilled, Long mainTaskId) {
+        this.id = id;
+        this.name = name;
+        this.fulfilled = fulfilled;
+        this.mainTaskId = mainTaskId;
+    }
 }

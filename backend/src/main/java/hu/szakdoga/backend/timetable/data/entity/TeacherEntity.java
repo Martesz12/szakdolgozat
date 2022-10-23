@@ -2,6 +2,7 @@ package hu.szakdoga.backend.timetable.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "teacher")
+@Data
 public class TeacherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

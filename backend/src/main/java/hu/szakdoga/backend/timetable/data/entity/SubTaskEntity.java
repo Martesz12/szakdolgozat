@@ -1,10 +1,13 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "subTask")
+@Data
 public class SubTaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

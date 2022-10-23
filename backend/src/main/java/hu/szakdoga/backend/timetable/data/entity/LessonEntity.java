@@ -7,10 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="lesson")
+@Table(name = "lesson")
 @Data
 public class LessonEntity implements Serializable {
     @Id
@@ -38,19 +37,31 @@ public class LessonEntity implements Serializable {
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="subjectId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "subjectId", referencedColumnName = "id")
     private SubjectEntity subject;
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="timetableId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "timetableId", referencedColumnName = "id")
     private TimetableEntity timetable;
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="teacherId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacherId", referencedColumnName = "id")
     private TeacherEntity teacher;
 
     @JsonIgnore
     @OneToMany(mappedBy = "lesson")
     private List<MainTaskEntity> mainTasks;
+
+    public LessonEntity(Long id, String day, LocalTime startTime, LocalTime endTime, String location, String type, SubjectEntity subject, TimetableEntity timetable, TeacherEntity teacher) {
+        this.id = id;
+        this.day = day;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.type = type;
+        this.subject = subject;
+        this.timetable = timetable;
+        this.teacher = teacher;
+    }
 }
