@@ -29,4 +29,13 @@ public class TimetableEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "timetable")
     private List<LessonEntity> lessons;
+
+    public TimetableEntity(Long id, String name, UserEntity user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
+
+    public TimetableEntity() {
+    }
 }

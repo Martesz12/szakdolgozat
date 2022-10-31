@@ -1,6 +1,7 @@
 package hu.szakdoga.backend.timetable.controller;
 
-import hu.szakdoga.backend.timetable.data.entity.TeacherEntity;
+
+import hu.szakdoga.backend.timetable.data.dto.TeacherDTO;
 import hu.szakdoga.backend.timetable.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/teacher")
@@ -20,26 +22,29 @@ public class TeacherController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<TeacherEntity>> getAllTeacher() {
-        List<TeacherEntity> teachers = teacherService.findAllTeacher();
+    public ResponseEntity<List<TeacherDTO>> getAllTeacher() {
+        List<TeacherDTO> teachers = teacherService.findAllTeacher()
+                .stream().map(teacherService::convertEntityToDto).collect(Collectors.toList());
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<TeacherEntity> getTeacherById(@PathVariable("id") Long id) {
-        TeacherEntity teacher = teacherService.findTeacherById(id);
+    public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable("id") Long id) {
+        TeacherDTO teacher = teacherService.convertEntityToDto(teacherService.findTeacherById(id));
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TeacherEntity> addTeacher(@RequestBody TeacherEntity teacher) {
-        TeacherEntity newTeacher = teacherService.addTeacher(teacher);
+    public ResponseEntity<TeacherDTO> addTeacher(@RequestBody TeacherDTO teacher) {
+        TeacherDTO newTeacher = teacherService.convertEntityToDto(
+                teacherService.addTeacher(teacherService.convertDtoToEntity(teacher)));
         return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<TeacherEntity> updateTeacher(@RequestBody(required = true) TeacherEntity teacher) {
-        TeacherEntity updatedTeacher = teacherService.updateTeacher(teacher);
+    public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody(required = true) TeacherDTO teacher) {
+        TeacherDTO updatedTeacher = teacherService.convertEntityToDto(
+                teacherService.updateTeacher(teacherService.convertDtoToEntity(teacher)));
         return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
     }
 

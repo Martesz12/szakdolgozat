@@ -1,7 +1,6 @@
 package hu.szakdoga.backend.timetable.controller;
 
 import hu.szakdoga.backend.timetable.data.dto.LessonDTO;
-import hu.szakdoga.backend.timetable.data.entity.LessonEntity;
 import hu.szakdoga.backend.timetable.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +35,15 @@ public class LessonController {
 
     @PostMapping("/add")
     public ResponseEntity<LessonDTO> addLesson(@RequestBody LessonDTO lesson) {
-        LessonDTO newLesson = lessonService.convertEntityToDto(lessonService.addLesson(lessonService.convertDtoToEntity(lesson)));
+        LessonDTO newLesson = lessonService.convertEntityToDto(
+                lessonService.addLesson(lessonService.convertDtoToEntity(lesson)));
         return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<LessonDTO> updateLesson(@RequestBody(required = true) LessonDTO lesson) {
-        LessonDTO updatedLesson = lessonService.convertEntityToDto(lessonService.updateLesson(lessonService.convertDtoToEntity(lesson)));
+        LessonDTO updatedLesson = lessonService.convertEntityToDto(
+                lessonService.updateLesson(lessonService.convertDtoToEntity(lesson)));
         return new ResponseEntity<>(updatedLesson, HttpStatus.OK);
     }
 

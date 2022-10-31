@@ -40,4 +40,16 @@ public class SubjectEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "subject")
     private List<LessonEntity> lessons;
+
+    public SubjectEntity(Long id, String name, String abbreviation, String color, String requirement, UserEntity user) {
+        this.id = id;
+        this.name = name;
+        this.abbreviation = abbreviation;
+        this.color = color;
+        this.requirement = requirement;
+        this.user = user;
+    }
+
+    public SubjectEntity() {
+    }
 }

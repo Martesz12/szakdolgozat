@@ -1,6 +1,9 @@
 package hu.szakdoga.backend.timetable.service;
 
+import hu.szakdoga.backend.timetable.data.dto.MainTaskDTO;
+import hu.szakdoga.backend.timetable.data.entity.LessonEntity;
 import hu.szakdoga.backend.timetable.data.entity.MainTaskEntity;
+import hu.szakdoga.backend.timetable.repository.LessonRepository;
 import hu.szakdoga.backend.timetable.repository.MainTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +15,12 @@ import java.util.List;
 public class MainTaskService {
 
     private final MainTaskRepository mainTaskRepository;
+    private final LessonRepository lessonRepository;
 
     @Autowired
-    public MainTaskService(MainTaskRepository mainTaskRepository){
+    public MainTaskService(MainTaskRepository mainTaskRepository, LessonRepository lessonRepository){
         this.mainTaskRepository = mainTaskRepository;
+        this.lessonRepository = lessonRepository;
     }
 
     public MainTaskEntity addMainTask(MainTaskEntity mainTask){
@@ -40,5 +45,23 @@ public class MainTaskService {
         if(!exist)
             throw new IllegalStateException("MainTask with id " + id + " does not exist.");
         mainTaskRepository.deleteById(id);
+    }
+
+    public MainTaskEntity convertDtoToEntity(MainTaskDTO dto) {
+        LessonEntity lesson = lessonRepository.findById(dto.lessonId)
+                .orElseThrow(() -> new EntityNotFoundException("Lesson by id " + dto.lessonId + " was not found."));
+
+        return new MainTaskEntity(dto.id,
+                dto.name,
+                dto.fulfilled,
+                dto.deadline,
+                dto.note,
+                dto.type,
+                lesson);
+    }
+
+    public MainTaskDTO convertEntityToDto(MainTaskEntity entity){
+        return new MainTaskDTO(entity.getId(), entity.getName(), entity.isFulfilled(),
+                entity.getDeadline(), entity.getNote(), entity.getType(), entity.getLesson().getId());
     }
 }

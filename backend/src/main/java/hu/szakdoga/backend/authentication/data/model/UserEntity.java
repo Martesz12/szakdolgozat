@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.timetable.data.entity.SubjectEntity;
 import hu.szakdoga.backend.timetable.data.entity.TeacherEntity;
 import hu.szakdoga.backend.timetable.data.entity.TimetableEntity;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
-public class UserEntity {
+//@Table(name = "user")
+@Data
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)

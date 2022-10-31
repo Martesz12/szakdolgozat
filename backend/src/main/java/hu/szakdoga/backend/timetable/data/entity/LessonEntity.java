@@ -64,4 +64,7 @@ public class LessonEntity implements Serializable {
         this.timetable = timetable;
         this.teacher = teacher;
     }
+
+    public LessonEntity() {
+    }
 }

@@ -1,6 +1,7 @@
 package hu.szakdoga.backend.timetable.controller;
 
-import hu.szakdoga.backend.timetable.data.entity.TimetableEntity;
+
+import hu.szakdoga.backend.timetable.data.dto.TimetableDTO;
 import hu.szakdoga.backend.timetable.service.TimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/timetable")
@@ -20,26 +22,29 @@ public class TimetableController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<TimetableEntity>> getAllTimetable() {
-        List<TimetableEntity> timetables = timetableService.findAllTimetable();
+    public ResponseEntity<List<TimetableDTO>> getAllTimetable() {
+        List<TimetableDTO> timetables = timetableService.findAllTimetable()
+                .stream().map(timetableService::convertEntityToDto).collect(Collectors.toList());
         return new ResponseEntity<>(timetables, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<TimetableEntity> getTimetableById(@PathVariable("id") Long id) {
-        TimetableEntity timetable = timetableService.findTimetableById(id);
+    public ResponseEntity<TimetableDTO> getTimetableById(@PathVariable("id") Long id) {
+        TimetableDTO timetable = timetableService.convertEntityToDto(timetableService.findTimetableById(id));
         return new ResponseEntity<>(timetable, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TimetableEntity> addTimetable(@RequestBody TimetableEntity timetable) {
-        TimetableEntity newTimetable = timetableService.addTimetable(timetable);
+    public ResponseEntity<TimetableDTO> addTimetable(@RequestBody TimetableDTO timetable) {
+        TimetableDTO newTimetable = timetableService.convertEntityToDto(
+                timetableService.addTimetable(timetableService.convertDtoToEntity(timetable)));
         return new ResponseEntity<>(newTimetable, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<TimetableEntity> updateTimetable(@RequestBody(required = true) TimetableEntity timetable) {
-        TimetableEntity updatedTimetable = timetableService.updateTimetable(timetable);
+    public ResponseEntity<TimetableDTO> updateTimetable(@RequestBody(required = true) TimetableDTO timetable) {
+        TimetableDTO updatedTimetable = timetableService.convertEntityToDto(
+                timetableService.updateTimetable(timetableService.convertDtoToEntity(timetable)));
         return new ResponseEntity<>(updatedTimetable, HttpStatus.OK);
     }
 

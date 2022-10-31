@@ -26,4 +26,14 @@ public class SubTaskEntity {
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="mainTaskId", referencedColumnName = "id")
     private MainTaskEntity mainTask;
+
+    public SubTaskEntity(Long id, String name, boolean fulfilled, MainTaskEntity mainTask) {
+        this.id = id;
+        this.name = name;
+        this.fulfilled = fulfilled;
+        this.mainTask = mainTask;
+    }
+
+    public SubTaskEntity() {
+    }
 }

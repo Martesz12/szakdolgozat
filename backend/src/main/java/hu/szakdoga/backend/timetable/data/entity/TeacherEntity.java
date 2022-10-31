@@ -37,4 +37,15 @@ public class TeacherEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private List<LessonEntity> lessons;
+
+    public TeacherEntity(Long id, String name, String webpage, String email, UserEntity user) {
+        this.id = id;
+        this.name = name;
+        this.webpage = webpage;
+        this.email = email;
+        this.user = user;
+    }
+
+    public TeacherEntity() {
+    }
 }

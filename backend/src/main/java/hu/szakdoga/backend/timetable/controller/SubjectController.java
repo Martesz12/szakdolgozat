@@ -1,6 +1,6 @@
 package hu.szakdoga.backend.timetable.controller;
 
-import hu.szakdoga.backend.timetable.data.entity.SubjectEntity;
+import hu.szakdoga.backend.timetable.data.dto.SubjectDTO;
 import hu.szakdoga.backend.timetable.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/subject")
@@ -20,26 +21,29 @@ public class SubjectController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<SubjectEntity>> getAllSubject() {
-        List<SubjectEntity> subjects = subjectService.findAllSubject();
+    public ResponseEntity<List<SubjectDTO>> getAllSubject() {
+        List<SubjectDTO> subjects = subjectService.findAllSubject()
+                .stream().map(subjectService::convertEntityToDto).collect(Collectors.toList());
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<SubjectEntity> getSubjectById(@PathVariable("id") Long id) {
-        SubjectEntity subject = subjectService.findSubjectById(id);
+    public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") Long id) {
+        SubjectDTO subject = subjectService.convertEntityToDto(subjectService.findSubjectById(id));
         return new ResponseEntity<>(subject, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<SubjectEntity> addSubject(@RequestBody SubjectEntity subject) {
-        SubjectEntity newSubject = subjectService.addSubject(subject);
+    public ResponseEntity<SubjectDTO> addSubject(@RequestBody SubjectDTO subject) {
+        SubjectDTO newSubject = subjectService.convertEntityToDto(
+                subjectService.addSubject(subjectService.convertDtoToEntity(subject)));
         return new ResponseEntity<>(newSubject, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<SubjectEntity> updateSubject(@RequestBody(required = true) SubjectEntity subject) {
-        SubjectEntity updatedSubject = subjectService.updateSubject(subject);
+    public ResponseEntity<SubjectDTO> updateSubject(@RequestBody(required = true) SubjectDTO subject) {
+        SubjectDTO updatedSubject = subjectService.convertEntityToDto(
+                subjectService.updateSubject(subjectService.convertDtoToEntity(subject)));
         return new ResponseEntity<>(updatedSubject, HttpStatus.OK);
     }
 

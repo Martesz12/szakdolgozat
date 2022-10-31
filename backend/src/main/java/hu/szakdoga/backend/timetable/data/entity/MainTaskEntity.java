@@ -44,4 +44,17 @@ public class MainTaskEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "mainTask")
     private List<SubTaskEntity> subTasks;
+
+    public MainTaskEntity(Long id, String name, boolean fulfilled, Date deadline, String note, String type, LessonEntity lesson) {
+        this.id = id;
+        this.name = name;
+        this.fulfilled = fulfilled;
+        this.deadline = deadline;
+        this.note = note;
+        this.type = type;
+        this.lesson = lesson;
+    }
+
+    public MainTaskEntity() {
+    }
 }

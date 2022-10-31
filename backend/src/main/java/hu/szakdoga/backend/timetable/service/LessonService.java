@@ -58,7 +58,7 @@ public class LessonService {
 
     public LessonEntity convertDtoToEntity(LessonDTO dto) {
         SubjectEntity subject = subjectRepository.findById(dto.subjectId)
-                .orElseThrow(() -> new EntityNotFoundException("Lesson by id " + dto.subjectId + " was not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Subject by id " + dto.subjectId + " was not found."));
         TimetableEntity timetable = timetableRepository.findById(dto.timetableId)
                 .orElseThrow(() -> new EntityNotFoundException("Timetable by id " + dto.timetableId + " was not found."));
         TeacherEntity teacher = teacherRepository.findById(dto.teacherId)

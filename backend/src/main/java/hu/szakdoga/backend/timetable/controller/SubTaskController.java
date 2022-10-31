@@ -1,6 +1,6 @@
 package hu.szakdoga.backend.timetable.controller;
 
-import hu.szakdoga.backend.timetable.data.entity.SubTaskEntity;
+import hu.szakdoga.backend.timetable.data.dto.SubTaskDTO;
 import hu.szakdoga.backend.timetable.service.SubTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/subTask")
@@ -20,26 +21,29 @@ public class SubTaskController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<SubTaskEntity>> getAllSubTask() {
-        List<SubTaskEntity> subTasks = subTaskService.findAllSubTask();
+    public ResponseEntity<List<SubTaskDTO>> getAllSubTask() {
+        List<SubTaskDTO> subTasks = subTaskService.findAllSubTask()
+                .stream().map(subTaskService::convertEntityToDto).collect(Collectors.toList());
         return new ResponseEntity<>(subTasks, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<SubTaskEntity> getSubTaskById(@PathVariable("id") Long id) {
-        SubTaskEntity subTask = subTaskService.findSubTaskById(id);
+    public ResponseEntity<SubTaskDTO> getSubTaskById(@PathVariable("id") Long id) {
+        SubTaskDTO subTask = subTaskService.convertEntityToDto(subTaskService.findSubTaskById(id));
         return new ResponseEntity<>(subTask, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<SubTaskEntity> addSubTask(@RequestBody SubTaskEntity subTask) {
-        SubTaskEntity newSubTask = subTaskService.addSubTask(subTask);
+    public ResponseEntity<SubTaskDTO> addSubTask(@RequestBody SubTaskDTO subTask) {
+        SubTaskDTO newSubTask = subTaskService.convertEntityToDto(
+                subTaskService.addSubTask(subTaskService.convertDtoToEntity(subTask)));
         return new ResponseEntity<>(newSubTask, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<SubTaskEntity> updateSubTask(@RequestBody(required = true) SubTaskEntity subTask) {
-        SubTaskEntity updatedSubTask = subTaskService.updateSubTask(subTask);
+    public ResponseEntity<SubTaskDTO> updateSubTask(@RequestBody(required = true) SubTaskDTO subTask) {
+        SubTaskDTO updatedSubTask = subTaskService.convertEntityToDto(
+                subTaskService.updateSubTask(subTaskService.convertDtoToEntity(subTask)));
         return new ResponseEntity<>(updatedSubTask, HttpStatus.OK);
     }
 

@@ -1,5 +1,8 @@
 package hu.szakdoga.backend.timetable.service;
 
+import hu.szakdoga.backend.authentication.data.model.UserEntity;
+import hu.szakdoga.backend.authentication.repository.UserRepository;
+import hu.szakdoga.backend.timetable.data.dto.TimetableDTO;
 import hu.szakdoga.backend.timetable.data.entity.TimetableEntity;
 import hu.szakdoga.backend.timetable.repository.TimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,12 @@ import java.util.List;
 public class TimetableService {
 
     private final TimetableRepository timetableRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TimetableService(TimetableRepository timetableRepository){
+    public TimetableService(TimetableRepository timetableRepository, UserRepository userRepository){
         this.timetableRepository = timetableRepository;
+        this.userRepository = userRepository;
     }
 
     public TimetableEntity addTimetable(TimetableEntity timetable){
@@ -40,5 +45,16 @@ public class TimetableService {
         if(!exist)
             throw new IllegalStateException("Timetable with id " + id + " does not exist.");
         timetableRepository.deleteById(id);
+    }
+
+    public TimetableEntity convertDtoToEntity(TimetableDTO dto){
+        UserEntity user = userRepository.findById(dto.userId)
+                .orElseThrow(() -> new EntityNotFoundException("User by id " + dto.userId + " was not found."));
+
+        return new TimetableEntity(dto.id, dto.name, user);
+    }
+
+    public TimetableDTO convertEntityToDto(TimetableEntity entity){
+        return new TimetableDTO(entity.getId(), entity.getName(), entity.getUser().getId());
     }
 }
