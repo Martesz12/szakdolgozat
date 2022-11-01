@@ -1,0 +1,121 @@
+.navigation-items{
+    list-style: none;
+    margin: 1vh;
+    padding: 1vh;
+  }
+
+.bounds {    
+  min-width: 300px;  
+}
+
+.main-mat-toolbar {  
+  z-index: 10;
+}
+
+.slide-in-drawer {
+  min-width: 240px;
+}
+
+
+//sub
+// variables
+div.nav-bar > div.sticky-nav {
+  --navbar-background-color: rgba(0, 0, 0, 0.03);
+  --navbar-scrollbar-thumb-color: rgba(0, 0, 0, .26);
+  --navbar-scrollbar-background-color: #F5F5F5;
+}
+
+// styles
+.component-maximize {
+  // makes sure the header stays at the bottom of the page 
+  // even if there is very little content.
+  min-height: 100%;
+}
+
+.page-header {
+  min-height: 80px;
+}
+
+.page-header h1 {
+    font-weight: 300;
+    margin: 0;
+    padding: 28px 8px;
+    padding-top: 28px;
+    padding-right: 8px;
+    padding-bottom: 28px;
+    padding-left: 8px;
+    font-size: 20px;    
+}
+
+.flex-nav-bar {
+  width: 290px;
+  max-width: 290px;  
+}
+
+div.nav-bar {  
+  //height: 100%; // ???
+
+  div.sticky-nav {
+    position: sticky;
+    top: 25px;
+        
+    div.nav-items-box {        
+      margin: 25px;      
+      background-color: var(--navbar-background-color);
+
+      // sticky-box
+      max-height: 75vh;  
+      z-index: 1000;
+      overflow: auto;
+    }
+
+    .scrollbar {
+      background-color: var(--navbar-scrollbar-background-color);      
+      overflow-y: scroll;
+    }
+    
+    .scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+      background-color: var(--navbar-scrollbar-background-color);
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: var(--navbar-scrollbar-thumb-color);
+    }
+  }  
+}
+
+.content {
+  padding: 25px 40px 0;
+}
+
+.footer-margin {  
+  margin-top: 25px;  
+}
+
+.footer-padding {
+  padding: 20px;
+}
+
+.footer-text {
+  //display: block;  
+  font-size: 12px; 
+  text-align: center;
+} 
+
+// // sample media query
+// @media all and (max-width: 900px) {
+//   div.nav-bar > div.sticky-nav {
+//     --navbar-scrollbar-background-color: cyan;
+//   }
+// }
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+a:hover, a:active{
+  color: lightgrey;
+}
