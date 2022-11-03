@@ -1,5 +1,5 @@
 export class MainTaskDto {
-  public readonly id: number;
+  public readonly id: number | null;
   public readonly name: string;
   public readonly fulfilled: boolean;
   public readonly deadline: Date;
@@ -8,13 +8,13 @@ export class MainTaskDto {
   public readonly lessonId: number;
 
   constructor(
-    id: number,
     name: string,
     fulfilled: boolean,
     deadline: Date,
     note: string,
     type: string,
-    lessonId: number
+    lessonId: number,
+    id: number | null = null,
   ) {
     this.id = id;
     this.name = name;

@@ -1,7 +1,7 @@
 import { Time } from '@angular/common';
 
 export class LessonDto {
-  public readonly id: number;
+  public readonly id: number | null;
   public readonly day: string;
   public readonly startTime: Time;
   public readonly endTime: Time;
@@ -12,7 +12,6 @@ export class LessonDto {
   public readonly teacherId: number;
 
   constructor(
-    id: number,
     day: string,
     startTime: Time,
     endTime: Time,
@@ -20,7 +19,8 @@ export class LessonDto {
     type: string,
     subjectId: number,
     timetableId: number,
-    teacherId: number
+    teacherId: number,
+    id: number | null = null,
   ) {
     this.id = id;
     this.day = day;

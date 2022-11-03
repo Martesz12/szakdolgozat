@@ -1,5 +1,5 @@
 export class SubjectDto {
-  public readonly id: number;
+  public readonly id: number | null;
   public readonly name: string;
   public readonly abbreviation: string;
   public readonly color: string;
@@ -7,12 +7,12 @@ export class SubjectDto {
   public readonly userId: number;
 
   constructor(
-    id: number,
     name: string,
     abbreviation: string,
     color: string,
     requirement: string,
-    userId: number
+    userId: number,
+    id: number | null = null,
   ){
     this.id = id;
     this.name = name;

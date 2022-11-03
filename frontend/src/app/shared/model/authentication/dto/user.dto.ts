@@ -1,9 +1,9 @@
 export class UserDto {
-    public readonly id: number;
-    public readonly primaryTimetableId: number;
+  public readonly id: number | null;
+  public readonly primaryTimetableId: number;
 
-    constructor(id: number, primaryTimetableId: number){
-        this.id = id;
-        this.primaryTimetableId = primaryTimetableId;
-    }
+  constructor(primaryTimetableId: number, id: number | null = null) {
+    this.id = id;
+    this.primaryTimetableId = primaryTimetableId;
+  }
 }
