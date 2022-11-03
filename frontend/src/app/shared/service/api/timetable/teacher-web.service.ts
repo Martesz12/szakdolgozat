@@ -9,13 +9,13 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class TeacherWebService {
-  private specificUrl: string = "teacher/"
+  private specificUrl: string = 'teacher/';
 
   constructor(private http: HttpClient) {}
 
   private buildFullPath(path: ApiPath): string {
     return environment.apiBaseUrl + this.specificUrl + path;
-}
+  }
 
   getAllTeacher(): Observable<TeacherDto[]> {
     var fullPath = this.buildFullPath(ApiPath.FindAll);
@@ -24,7 +24,7 @@ export class TeacherWebService {
 
   getTeacherById(teacherId: number): Observable<TeacherDto> {
     var fullPath = this.buildFullPath(ApiPath.FindById);
-    fullPath += "/" + teacherId;
+    fullPath += '/' + teacherId;
     return this.http.get<TeacherDto>(fullPath);
   }
 
@@ -40,7 +40,7 @@ export class TeacherWebService {
 
   deleteTeacher(teacherId: number): Observable<any> {
     var fullPath = this.buildFullPath(ApiPath.Delete);
-    fullPath += "/" + teacherId;
+    fullPath += '/' + teacherId;
     return this.http.delete<any>(fullPath);
   }
 }
