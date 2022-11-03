@@ -18,22 +18,22 @@ public class MainTaskEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Name must be set (mainTask)")
+//    @NotEmpty(message = "Name must be set (mainTask)")
     private String name;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Fulfilled must be set (mainTask)")
+//    @NotEmpty(message = "Fulfilled must be set (mainTask)")
     private boolean fulfilled;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Deadline must be set (mainTask)")
+//    @NotEmpty(message = "Deadline must be set (mainTask)")
     private Date deadline;
 
     @Column()
     private String note;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Type must be set (mainTask)")
+//    @NotEmpty(message = "Type must be set (mainTask)")
     private String type;
 
     //***Constraints***

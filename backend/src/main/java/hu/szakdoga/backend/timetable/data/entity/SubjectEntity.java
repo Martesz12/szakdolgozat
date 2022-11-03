@@ -18,15 +18,15 @@ public class SubjectEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Name must be set (subject)")
+//    @NotEmpty(message = "Name must be set (subject)")
     private String name;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Abbreviation must be set (subject)")
+//    @NotEmpty(message = "Abbreviation must be set (subject)")
     private String abbreviation;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Color must be set (subject)")
+//    @NotEmpty(message = "Color must be set (subject)")
     private String color;
 
     @Column()

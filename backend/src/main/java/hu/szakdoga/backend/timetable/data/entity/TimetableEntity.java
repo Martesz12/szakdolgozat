@@ -18,7 +18,7 @@ public class TimetableEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Name must be set (timetable)")
+//    @NotEmpty(message = "Name must be set (timetable)")
     private String name;
 
     //***Constraints***

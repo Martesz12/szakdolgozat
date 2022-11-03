@@ -15,11 +15,11 @@ public class SubTaskEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Name must be set (subTask)")
+//    @NotEmpty(message = "Name must be set (subTask)")
     private String name;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Fulfilled must be set (subTask)")
+//    @NotEmpty(message = "Fulfilled must be set (subTask)")
     private boolean fulfilled;
 
     //***Constraints***

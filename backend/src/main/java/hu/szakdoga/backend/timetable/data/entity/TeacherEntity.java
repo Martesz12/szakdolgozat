@@ -26,7 +26,7 @@ public class TeacherEntity {
     private String webpage;
 
     @Column()
-    @Email
+//    @Email
     private String email;
 
     //***Constraints***
