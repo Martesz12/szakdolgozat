@@ -10,9 +10,21 @@
 }
 
 .tree .mat-nested-tree-node div[role="group"] {
-  padding-left: 40px;
+  padding-left: 0px;
 }
 
 .tree div[role="group"] > .mat-tree-node {
   padding-left: 40px;
+}
+
+.pointer-node {
+  cursor: pointer;
+}
+
+.leaf-button{
+  width: 20vh;
+}
+
+mat-tree{
+  background-color: #fafafa;
 }

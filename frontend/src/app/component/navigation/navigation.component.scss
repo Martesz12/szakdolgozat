@@ -48,8 +48,10 @@ div.nav-bar > div.sticky-nav {
 }
 
 .flex-nav-bar {
-  width: 290px;
-  max-width: 290px;  
+  width: 30vh;
+  max-width: 30vh; 
+  min-height: 100%; 
+  border-right: 2px solid lightgray;
 }
 
 div.nav-bar {  
@@ -87,7 +89,7 @@ div.nav-bar {
 }
 
 .content {
-  padding: 25px 40px 0;
+  padding: 10px;
 }
 
 .footer-margin {  
@@ -104,12 +106,6 @@ div.nav-bar {
   text-align: center;
 } 
 
-// // sample media query
-// @media all and (max-width: 900px) {
-//   div.nav-bar > div.sticky-nav {
-//     --navbar-scrollbar-background-color: cyan;
-//   }
-// }
 
 a{
   text-decoration: none;
@@ -118,4 +114,8 @@ a{
 
 a:hover, a:active{
   color: lightgrey;
+}
+
+mat-icon{
+  margin-right: 1vh;
 }

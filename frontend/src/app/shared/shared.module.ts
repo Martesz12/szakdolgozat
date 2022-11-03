@@ -10,6 +10,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatGridListModule,
     MatTreeModule,
     MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatGridListModule,
     MatTreeModule,
     MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
   ],
 })
 export class SharedModule {}
