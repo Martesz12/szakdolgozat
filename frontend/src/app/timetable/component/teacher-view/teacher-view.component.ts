@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
+import { TeacherWebService } from 'src/app/shared/service/api/timetable/teacher-web.service';
 
 @Component({
   selector: 'app-teacher-view',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeacherViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private teacherWebService: TeacherWebService) {
+    
+  }
 
   ngOnInit(): void {
   }

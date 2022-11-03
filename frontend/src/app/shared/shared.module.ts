@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDividerModule } from '@angular/material/divider';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatGridListModule,
     MatTreeModule,
     MatDividerModule,
+    HttpClientModule
   ],
   exports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatGridListModule,
     MatTreeModule,
     MatDividerModule,
+    HttpClientModule
   ],
 })
 export class SharedModule {}

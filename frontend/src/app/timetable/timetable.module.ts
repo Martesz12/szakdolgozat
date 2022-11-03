@@ -10,6 +10,7 @@ import { TeacherViewComponent } from './component/teacher-view/teacher-view.comp
 import { LessonViewComponent } from './component/lesson-view/lesson-view.component';
 import { AgendaListViewComponent } from './component/agenda-list-view/agenda-list-view.component';
 import { AgendaMonthlyViewComponent } from './component/agenda-monthly-view/agenda-monthly-view.component';
+import { TeacherWebService } from '../shared/service/api/timetable/teacher-web.service';
 
 @NgModule({
   declarations: [
@@ -22,5 +23,6 @@ import { AgendaMonthlyViewComponent } from './component/agenda-monthly-view/agen
     AgendaMonthlyViewComponent,
   ],
   imports: [CommonModule, TimetableRoutingModule, SharedModule],
+  providers: [],
 })
 export class TimetableModule {}

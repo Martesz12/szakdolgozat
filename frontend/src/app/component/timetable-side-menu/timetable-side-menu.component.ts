@@ -2,7 +2,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Router } from '@angular/router';
-import { SideMenuNodes } from 'src/app/shared/enum/side-menu-nodes';
+import { SideMenuNodes } from 'src/app/shared/constant/side-menu-nodes';
 import { TimetableSideMenuNode } from 'src/app/shared/model/timetable/timetable-side-menu-node';
 
 @Component({

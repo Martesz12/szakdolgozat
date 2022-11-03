@@ -1,16 +1,16 @@
 export class TeacherDto {
-  public readonly id: number;
+  public readonly id: number | null;
   public readonly name: string;
   public readonly webpage: string;
   public readonly email: string;
   public readonly userId: number;
 
   constructor(
-    id: number,
     name: string,
     webpage: string,
     email: string,
-    userId: number
+    userId: number,
+    id: number | null = null,
   ) {
     this.id = id;
     this.name = name;
