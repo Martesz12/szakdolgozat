@@ -1,9 +1,12 @@
-.scrollable-content {
-    height: 80vh;
-    overflow-y: auto;
-    overflow-x: auto;
+.content {
+    padding: 16px;
 }
 
-.teacher-card{
-    margin: 3vh;
+.content > mat-card {
+    width: 200px;
+}
+
+.teacher-card {
+    overflow-y: scroll;
+    height: 80vh;
 }

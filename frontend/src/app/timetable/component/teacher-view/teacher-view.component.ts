@@ -10,7 +10,9 @@ import { TeacherWebService } from 'src/app/shared/service/api/timetable/teacher-
 export class TeacherViewComponent implements OnInit {
 
   constructor(private teacherWebService: TeacherWebService) {
-    
+    teacherWebService.getAllTeacher().subscribe(teachers => console.log(teachers));
+    teacherWebService.deleteTeacher(43).subscribe(teachers => console.log(teachers));
+    teacherWebService.getAllTeacher().subscribe(teachers => console.log(teachers));
   }
 
   ngOnInit(): void {
