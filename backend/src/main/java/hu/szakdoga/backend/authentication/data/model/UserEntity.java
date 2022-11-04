@@ -23,15 +23,4 @@ public class UserEntity implements Serializable {
     private Long primaryTimetableId;
 
     //***Constraints***
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<SubjectEntity> subjects;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<TeacherEntity> teachers;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<TimetableEntity> timetables;
 }

@@ -2,6 +2,8 @@ package hu.szakdoga.backend.timetable.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,21 +39,20 @@ public class LessonEntity implements Serializable {
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subjectId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private SubjectEntity subject;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "timetableId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private TimetableEntity timetable;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private TeacherEntity teacher;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "lesson")
-    private List<MainTaskEntity> mainTasks;
 
     public LessonEntity(Long id, String day, LocalTime startTime, LocalTime endTime, String location, String type, SubjectEntity subject, TimetableEntity timetable, TeacherEntity teacher) {
         this.id = id;

@@ -3,6 +3,8 @@ package hu.szakdoga.backend.timetable.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -30,13 +32,10 @@ public class TeacherEntity {
     private String email;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
-    private List<LessonEntity> lessons;
 
     public TeacherEntity(Long id, String name, String webpage, String email, UserEntity user) {
         this.id = id;

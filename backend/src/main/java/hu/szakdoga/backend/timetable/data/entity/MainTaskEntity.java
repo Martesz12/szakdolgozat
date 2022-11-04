@@ -2,6 +2,8 @@ package hu.szakdoga.backend.timetable.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -37,13 +39,10 @@ public class MainTaskEntity {
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="lessonId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private LessonEntity lesson;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "mainTask")
-    private List<SubTaskEntity> subTasks;
 
     public MainTaskEntity(Long id, String name, boolean fulfilled, Date deadline, String note, String type, LessonEntity lesson) {
         this.id = id;

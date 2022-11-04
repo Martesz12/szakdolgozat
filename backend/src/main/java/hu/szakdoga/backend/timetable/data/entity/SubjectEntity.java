@@ -3,6 +3,8 @@ package hu.szakdoga.backend.timetable.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -33,13 +35,10 @@ public class SubjectEntity {
     private String requirement;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "subject")
-    private List<LessonEntity> lessons;
 
     public SubjectEntity(Long id, String name, String abbreviation, String color, String requirement, UserEntity user) {
         this.id = id;

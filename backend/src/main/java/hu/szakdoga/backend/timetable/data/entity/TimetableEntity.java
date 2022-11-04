@@ -3,6 +3,8 @@ package hu.szakdoga.backend.timetable.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -22,13 +24,10 @@ public class TimetableEntity {
     private String name;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "timetable")
-    private List<LessonEntity> lessons;
 
     public TimetableEntity(Long id, String name, UserEntity user) {
         this.id = id;
