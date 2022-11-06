@@ -14,18 +14,18 @@ import { TeacherListComponent } from './component/teacher-view/teacher-list/teac
 import { TeacherDataOperationsComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations.component';
 
 @NgModule({
-  declarations: [
-    TimetableWeeklyViewComponent,
-    TimetableDailyViewComponent,
-    SubjectViewComponent,
-    TeacherViewComponent,
-    LessonViewComponent,
-    AgendaListViewComponent,
-    AgendaMonthlyViewComponent,
-    TeacherListComponent,
-    TeacherDataOperationsComponent,
-  ],
-  imports: [CommonModule, TimetableRoutingModule, SharedModule],
-  providers: [],
+    declarations: [
+        TimetableWeeklyViewComponent,
+        TimetableDailyViewComponent,
+        SubjectViewComponent,
+        TeacherViewComponent,
+        LessonViewComponent,
+        AgendaListViewComponent,
+        AgendaMonthlyViewComponent,
+        TeacherListComponent,
+        TeacherDataOperationsComponent,
+    ],
+    imports: [CommonModule, TimetableRoutingModule, SharedModule],
+    providers: [],
 })
 export class TimetableModule {}

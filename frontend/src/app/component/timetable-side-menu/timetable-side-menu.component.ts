@@ -7,33 +7,30 @@ import { TimetableSideMenuNode } from 'src/app/shared/model/timetable/timetable-
 import { NavigationService } from 'src/app/shared/service/navigation/navigation.service';
 
 @Component({
-  selector: 'app-timetable-side-menu',
-  templateUrl: './timetable-side-menu.component.html',
-  styleUrls: ['./timetable-side-menu.component.scss'],
+    selector: 'app-timetable-side-menu',
+    templateUrl: './timetable-side-menu.component.html',
+    styleUrls: ['./timetable-side-menu.component.scss'],
 })
 export class TimetableSideMenuComponent {
-  treeControl = new NestedTreeControl<TimetableSideMenuNode>(
-    (node) => node.children
-  );
-  dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
-  selectedMenuElement: number = 0;
+    treeControl = new NestedTreeControl<TimetableSideMenuNode>(node => node.children);
+    dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
+    selectedMenuElement: number = 0;
 
-  constructor(private router: Router, private navigationService: NavigationService) {
-    this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
-    this.navigationService.selectedTimetableMenuElement.subscribe(id => this.selectedMenuElement = id);
-  }
+    constructor(private router: Router, private navigationService: NavigationService) {
+        this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
+        this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
+    }
 
-  hasChild = (_: number, node: TimetableSideMenuNode) =>
-    !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: TimetableSideMenuNode) => !!node.children && node.children.length > 0;
 
-  onMenuElementSelected(menuElementId: number) {
-    this.navigationService.setSelectedTimetableMenuElement(menuElementId);
-    if(menuElementId === 11) this.router.navigateByUrl('timetable/timetable-daily');
-    else if(menuElementId === 12) this.router.navigateByUrl('timetable/timetable-weekly');
-    else if(menuElementId === 21) this.router.navigateByUrl('timetable/subject');
-    else if(menuElementId === 22) this.router.navigateByUrl('timetable/teacher');
-    else if(menuElementId === 23) this.router.navigateByUrl('timetable/lesson');
-    else if(menuElementId === 31) this.router.navigateByUrl('timetable/agenda-list');
-    else if(menuElementId === 32) this.router.navigateByUrl('timetable/agenda-monthly');
-  }
+    onMenuElementSelected(menuElementId: number) {
+        this.navigationService.setSelectedTimetableMenuElement(menuElementId);
+        if (menuElementId === 11) this.router.navigateByUrl('timetable/timetable-daily');
+        else if (menuElementId === 12) this.router.navigateByUrl('timetable/timetable-weekly');
+        else if (menuElementId === 21) this.router.navigateByUrl('timetable/subject');
+        else if (menuElementId === 22) this.router.navigateByUrl('timetable/teacher');
+        else if (menuElementId === 23) this.router.navigateByUrl('timetable/lesson');
+        else if (menuElementId === 31) this.router.navigateByUrl('timetable/agenda-list');
+        else if (menuElementId === 32) this.router.navigateByUrl('timetable/agenda-monthly');
+    }
 }

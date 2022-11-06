@@ -1,4 +1,4 @@
-import { TimetableSideMenuNode } from "../model/timetable/timetable-side-menu-node";
+import { TimetableSideMenuNode } from '../model/timetable/timetable-side-menu-node';
 
 export class SideMenuNodes {
     static readonly TimetableSideMenuNodes: TimetableSideMenuNode[] = [
@@ -13,8 +13,8 @@ export class SideMenuNodes {
                 {
                     id: 12,
                     name: 'Heti nézet',
-                }
-            ]
+                },
+            ],
         },
         {
             id: 2,
@@ -31,8 +31,8 @@ export class SideMenuNodes {
                 {
                     id: 23,
                     name: 'Tanórák',
-                }
-            ]
+                },
+            ],
         },
         {
             id: 3,
@@ -44,9 +44,9 @@ export class SideMenuNodes {
                 },
                 {
                     id: 32,
-                    name: 'Havi nézet'
-                }
-            ]
-        }
+                    name: 'Havi nézet',
+                },
+            ],
+        },
     ];
 }

@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class NavigationService {
+    selectedTimetableMenuElement: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  selectedTimetableMenuElement: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+    constructor() {}
 
-  constructor() { }
-
-  setSelectedTimetableMenuElement(selectedMenuId: number){
-    this.selectedTimetableMenuElement.next(selectedMenuId);
-  }
+    setSelectedTimetableMenuElement(selectedMenuId: number) {
+        this.selectedTimetableMenuElement.next(selectedMenuId);
+    }
 }

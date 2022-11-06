@@ -1,22 +1,14 @@
 <mat-card class="mat-elevation-z4 teacher-card">
-  <mat-card-title>Tanárok</mat-card-title>
-  <mat-card-content>
-    <mat-form-field class="teacher-filter-input" appearance="fill">
-      <mat-label>Keresés...</mat-label>
-      <input
-        matInput
-        type="text"
-        (keyup)="applyFilter()"
-        [(ngModel)]="filterText"
-      />
-    </mat-form-field>
-    <mat-selection-list #teachers [multiple]="false">
-      <mat-list-option
-        *ngFor="let teacher of filteredAllTeacher"
-        (click)="selectTeacher(teacher.id)"
-      >
-        <span class="all-teacher">{{ teacher.name }}</span>
-      </mat-list-option>
-    </mat-selection-list>
-  </mat-card-content>
+    <mat-card-title>Tanárok</mat-card-title>
+    <mat-card-content>
+        <mat-form-field class="teacher-filter-input" appearance="fill">
+            <mat-label>Keresés...</mat-label>
+            <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
+        </mat-form-field>
+        <mat-selection-list #teachers [multiple]="false">
+            <mat-list-option *ngFor="let teacher of filteredAllTeacher" (click)="selectTeacher(teacher.id)">
+                <span class="all-teacher">{{ teacher.name }}</span>
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-card-content>
 </mat-card>

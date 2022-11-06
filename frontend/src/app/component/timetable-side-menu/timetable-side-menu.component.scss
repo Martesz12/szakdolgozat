@@ -1,30 +1,30 @@
 .tree-invisible {
-  display: none;
+    display: none;
 }
 
 .tree ul,
 .tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
 }
 
-.tree .mat-nested-tree-node div[role="group"] {
-  padding-left: 0px;
+.tree .mat-nested-tree-node div[role='group'] {
+    padding-left: 0px;
 }
 
-.tree div[role="group"] > .mat-tree-node {
-  padding-left: 40px;
+.tree div[role='group'] > .mat-tree-node {
+    padding-left: 40px;
 }
 
 .pointer-node {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.leaf-button{
-  width: 20vh;
+.leaf-button {
+    width: 20vh;
 }
 
-mat-tree{
-  background-color: #fafafa;
+mat-tree {
+    background-color: #fafafa;
 }

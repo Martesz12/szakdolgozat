@@ -10,21 +10,10 @@ import { TimetableModule } from './timetable/timetable.module';
 import { TimetableSideMenuComponent } from './component/timetable-side-menu/timetable-side-menu.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavigationComponent,
-    TimetableSideMenuComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    TimetableModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, NavigationComponent, TimetableSideMenuComponent],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SharedModule, TimetableModule],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

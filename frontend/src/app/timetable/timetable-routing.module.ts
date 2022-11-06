@@ -8,45 +8,44 @@ import { TeacherViewComponent } from './component/teacher-view/teacher-view.comp
 import { TimetableDailyViewComponent } from './component/timetable-daily-view/timetable-daily-view.component';
 import { TimetableWeeklyViewComponent } from './component/timetable-weekly-view/timetable-weekly-view.component';
 
-
 const routes: Routes = [
-  {
-    path: 'timetable-weekly',
-    component: TimetableWeeklyViewComponent,
-  },
-  {
-    path: 'timetable-daily',
-    component: TimetableDailyViewComponent,
-  },
-  {
-    path: 'subject',
-    component: SubjectViewComponent,
-  },
-  {
-    path: 'teacher',
-    component: TeacherViewComponent,
-  },
-  {
-    path: 'lesson',
-    component: LessonViewComponent,
-  },
-  {
-    path: 'agenda-list',
-    component: AgendaListViewComponent,
-  },
-  {
-    path: 'agenda-monthly',
-    component: AgendaMonthlyViewComponent,
-  },
-  {
-    path: '',
-    redirectTo: 'timetable-weekly',
-    pathMatch: 'full',
-  },
+    {
+        path: 'timetable-weekly',
+        component: TimetableWeeklyViewComponent,
+    },
+    {
+        path: 'timetable-daily',
+        component: TimetableDailyViewComponent,
+    },
+    {
+        path: 'subject',
+        component: SubjectViewComponent,
+    },
+    {
+        path: 'teacher',
+        component: TeacherViewComponent,
+    },
+    {
+        path: 'lesson',
+        component: LessonViewComponent,
+    },
+    {
+        path: 'agenda-list',
+        component: AgendaListViewComponent,
+    },
+    {
+        path: 'agenda-monthly',
+        component: AgendaMonthlyViewComponent,
+    },
+    {
+        path: '',
+        redirectTo: 'timetable-weekly',
+        pathMatch: 'full',
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class TimetableRoutingModule {}
