@@ -11,6 +11,11 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -27,6 +32,12 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     HttpClientModule,
     MatCardModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatTabsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
   ],
   exports: [
     CommonModule,
@@ -41,6 +52,12 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     HttpClientModule,
     MatCardModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatTabsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
   ],
 })
 export class SharedModule {}

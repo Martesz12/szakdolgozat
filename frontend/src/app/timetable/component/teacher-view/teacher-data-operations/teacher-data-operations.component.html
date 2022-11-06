@@ -1,0 +1,65 @@
+<mat-card class="mat-elevation-z4 teacher-card">
+  <mat-tab-group mat-stretch-tabs class="teacher-tabs">
+    <mat-tab label="Adatok">
+      <div *ngIf="isTeacherSelected()">
+        <h2>Név:</h2>
+        <div style="margin-bottom: 3vh">{{ selectedTeacher.name }}</div>
+        <h2>Email cím:</h2>
+        <div style="margin-bottom: 3vh">{{ selectedTeacher.email }}</div>
+        <h2>Weboldal:</h2>
+        <div style="margin-bottom: 3vh">{{ selectedTeacher.webpage }}</div>
+      </div>
+      <div *ngIf="!isTeacherSelected()">Még nem választottál tanárt...</div>
+    </mat-tab>
+    <mat-tab label="Módosítás">
+      <div  *ngIf="isTeacherSelected()">
+        <div class="main-component">
+          <form class="teacher-form">
+            <mat-form-field class="teacher-full-width" appearance="fill">
+              <mat-label>Név:</mat-label>
+              <input matInput value="{{selectedTeacher.name}}" [formControl]="updatedName" />
+            </mat-form-field>
+            <mat-form-field class="teacher-full-width" appearance="fill">
+              <mat-label>Email cím:</mat-label>
+              <input matInput value="{{selectedTeacher.email}}" [formControl]="updatedEmail" />
+            </mat-form-field>
+            <mat-form-field class="teacher-full-width" appearance="fill">
+              <mat-label>Weboldal</mat-label>
+              <input matInput value="{{selectedTeacher.webpage}}" [formControl]="updatedWebpage"/>
+            </mat-form-field>
+          </form>
+        </div>
+        <mat-card-actions class="edit-buttons">
+          <div class="center">
+            <button mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
+            <button mat-raised-button color="warn" (click)="deleteTeacher(selectedTeacher.id)">Törlés</button>
+          </div>
+        </mat-card-actions>
+      </div>
+      <div *ngIf="!isTeacherSelected()">Még nem választottál tanárt...</div>
+    </mat-tab>
+    <mat-tab label="Hozzáadás">
+      <div class="main-component">
+        <form class="teacher-form">
+          <mat-form-field class="teacher-full-width" appearance="fill">
+            <mat-label>Név:</mat-label>
+            <input matInput type="text" [formControl]="newName"/>
+          </mat-form-field>
+          <mat-form-field class="teacher-full-width" appearance="fill">
+            <mat-label>Email cím:</mat-label>
+            <input matInput type="text" [formControl]="newEmail"/>
+          </mat-form-field>
+          <mat-form-field class="teacher-full-width" appearance="fill">
+            <mat-label>Weboldal:</mat-label>
+            <input matInput type="text" [formControl]="newWebpage"/>
+          </mat-form-field>
+        </form>
+      </div>
+      <mat-card-actions class="edit-buttons">
+        <div class="center">
+          <button mat-raised-button color="primary" (click)="addTeacher()">Mentés</button>
+        </div>
+      </mat-card-actions>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>

@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
-import { TeacherWebService } from 'src/app/shared/service/api/timetable/teacher-web.service';
+import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 
 @Component({
   selector: 'app-teacher-view',
   templateUrl: './teacher-view.component.html',
-  styleUrls: ['./teacher-view.component.scss']
+  styleUrls: ['./teacher-view.component.scss'],
 })
-export class TeacherViewComponent implements OnInit {
-
-  constructor(private teacherWebService: TeacherWebService) {
-    teacherWebService.getAllTeacher().subscribe(teachers => console.log(teachers));
-    teacherWebService.deleteTeacher(43).subscribe(teachers => console.log(teachers));
-    teacherWebService.getAllTeacher().subscribe(teachers => console.log(teachers));
+export class TeacherViewComponent {
+  
+  
+  constructor(private teacherService: TeacherService) {
+    
   }
-
-  ngOnInit(): void {
-  }
-
 }
