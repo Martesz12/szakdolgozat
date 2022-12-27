@@ -18,7 +18,9 @@ export class TimetableSideMenuComponent {
 
     constructor(private router: Router, private navigationService: NavigationService) {
         this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
+        this.treeControl.dataNodes = this.dataSource.data;
         this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
+        this.treeControl.expandAll();
     }
 
     hasChild = (_: number, node: TimetableSideMenuNode) => !!node.children && node.children.length > 0;

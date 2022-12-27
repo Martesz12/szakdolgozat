@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 
@@ -11,9 +12,17 @@ export class TeacherListComponent {
     allTeacher: TeacherDto[] = [];
     filteredAllTeacher: TeacherDto[] = [];
     filterText: string = '';
+    selectedTeacher: TeacherDto = {} as TeacherDto;
 
-    constructor(private teacherService: TeacherService) {
+    constructor(private teacherService: TeacherService, private changeDetection: ChangeDetectorRef,) {
         this.getAllTeacher();
+        this.getSelectedTeacher();
+    }
+
+    private getSelectedTeacher() {
+        this.teacherService.getSelectedTeacherSubject().subscribe(teacher => {
+            this.selectedTeacher = teacher;
+        });
     }
 
     private getAllTeacher() {
@@ -24,12 +33,26 @@ export class TeacherListComponent {
     }
 
     selectTeacher(teacherId: number | null) {
-        if (teacherId !== null) this.teacherService.selectTeacher(teacherId);
+        if (teacherId !== null){
+            if(this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
+            this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
+        }
     }
 
-    //TODO nem highlightol pl.: Kelemen -> Kelemenn -> Kelemen
+    addTeacher(){
+        this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Add);
+    }
+
+    modifyTeacher(teacherId: number | null){
+        if (teacherId !== null){
+            if(this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
+            this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Modify);
+        }
+    }
+
     applyFilter() {
         this.filterOnAllTeacher();
+        this.changeDetection.detectChanges();
         this.highlightMatch();
     }
 
@@ -40,7 +63,7 @@ export class TeacherListComponent {
     }
 
     private highlightMatch() {
-        let matchingAttributes = document.getElementsByClassName('all-teacher');
+        let matchingAttributes = document.getElementsByClassName('list-row-name');        
         let lowerFilterText = this.filterText.toLowerCase();
         let lowerAttributeText = '';
         let originalAttributeText = '';

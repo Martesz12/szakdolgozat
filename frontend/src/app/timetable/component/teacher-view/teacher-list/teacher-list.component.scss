@@ -1,8 +1,73 @@
-.teacher-filter-input {
+.list-filter-input {
     width: 100%;
 }
 
+.list-add-element-button {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    width: 100%;
+    justify-content: flex-end;
+    color: #3f51b5;
+    font-size: large;
+    cursor: pointer;
+}
+
+.list-add-element-button-text {
+    position: relative;
+}
+
+.list-add-element-button-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: 0;
+    left: 0;
+    background-color: #3f51b5;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.list-add-element-button-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.list-row-name {
+    font-size: larger;
+    margin: 0vh;
+    width: 90%;
+}
+
 .teacher-card {
-    overflow-y: scroll;
     height: 80vh;
+}
+
+.list-row-button {
+    transition: 0.5s;
+}
+
+.list-row-description-button:hover,
+.list-row-description-button:focus {
+    background-color: #3f51b5;
+}
+
+.list-row-edit-button:hover,
+.list-row-edit-button:focus {
+    background-color: #3f51b5;
+}
+
+.list-row-delete-button:hover,
+.list-row-delete-button:focus {
+    background-color: #f44336;
+}
+
+.list-row:hover {
+    background-color: rgb(223, 223, 223);
+}
+
+.list-row-selected {
+    background-color: rgb(223, 223, 223);
 }

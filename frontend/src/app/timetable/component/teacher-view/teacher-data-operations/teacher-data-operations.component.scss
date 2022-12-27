@@ -1,25 +1,34 @@
-.teacher-form {
-    width: 100%;
-    text-align: center;
-    margin: 0;
-}
-
-.teacher-full-width {
-    width: 80%;
-    margin: 1vh 0vh;
-}
-
 .teacher-card {
     overflow-y: scroll;
     height: 80vh;
 }
 
-.edit-buttons {
+.card-main{
+    height: 100%;
+}
+
+.card-action-buttons {
     margin-top: 2vh;
     position: relative;
 }
 
-.center {
+.card-subtitle-menu {
+    display: flex;
+    justify-content: center;
+    margin: 2vh;
+}
+
+.card-subtitle-menu-element {
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
+.card-title {
+    width: 100%;
+    font-size: larger;
+}
+
+.form-buttons-center {
     margin: 0;
     position: absolute;
     top: 50%;
@@ -28,6 +37,100 @@
     transform: translate(-50%, -50%);
 }
 
+.form-field-full-width {
+    width: 80%;
+    margin: 1vh 0vh;
+}
+
+.form-inputs-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 60%;
+    align-items: center;
+}
+
 .mat-card-content > :first-child {
     margin-top: 2vh;
+}
+
+.no-selected-element{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    align-items: center;
+    font-size: xx-large;
+}
+
+.no-selected-element-icon{
+    font-size: 10vh;
+    width: 10vh;
+    height: 10vh;
+    margin-bottom: 4vh;
+}
+
+.operation-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #3f51b5;
+    font-size: large;
+    cursor: pointer;
+}
+
+.operation-button-text {
+    position: relative;
+    margin-left: 0.5vh;
+}
+
+.operation-button-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 0.2vh;
+    bottom: 0;
+    left: 0;
+    background-color: #3f51b5;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.operation-button-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.description-data-title {
+    font-size: x-large;
+    margin-bottom: 1vh;
+    margin-top: 5vh;
+    font-weight: 600;
+}
+
+.description-data-element-title {
+    margin-left: 4vh;
+    margin-top: 2vh;
+    font-size: large;
+    font-weight: 500;
+}
+
+.description-data-element {
+    font-size: medium;
+    font-weight: 400;
+    margin-left: 1vh;
+}
+
+a{
+    color: #3f51b5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    text-decoration: underline;
 }

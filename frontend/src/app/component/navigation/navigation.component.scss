@@ -58,10 +58,8 @@ div.nav-bar {
 
     div.sticky-nav {
         position: sticky;
-        top: 25px;
 
         div.nav-items-box {
-            margin: 25px;
             background-color: var(--navbar-background-color);
 
             // sticky-box
@@ -100,7 +98,6 @@ div.nav-bar {
 }
 
 .footer-text {
-    //display: block;
     font-size: 12px;
     text-align: center;
 }
@@ -117,4 +114,8 @@ a:active {
 
 mat-icon {
     margin-right: 1vh;
+}
+
+.main-component {
+    // overflow: hidden;
 }

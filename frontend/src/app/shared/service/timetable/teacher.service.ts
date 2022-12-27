@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { TeacherDto } from '../../model/timetable/dto/teacher.dto';
 import { TeacherWebService } from '../api/timetable/teacher-web.service';
 
@@ -9,6 +10,7 @@ import { TeacherWebService } from '../api/timetable/teacher-web.service';
 export class TeacherService {
     allTeacherSubject: BehaviorSubject<TeacherDto[]> = new BehaviorSubject<TeacherDto[]>([]);
     selectedTeacherSubject: BehaviorSubject<TeacherDto> = new BehaviorSubject<TeacherDto>({} as TeacherDto);
+    teacherDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
     constructor(private teacherWebService: TeacherWebService) {
         this.getAllTeacher();
@@ -49,5 +51,13 @@ export class TeacherService {
     updateTeacher(teacher: TeacherDto): Observable<TeacherDto> {
         console.log(teacher);
         return this.teacherWebService.updateTeacher(teacher);
+    }
+
+    getTeacherDataOperationPageState() {
+        return this.teacherDataOperationPageState;
+    }
+
+    setTeacherDataOperationPageState(state: DataOperationPageState) {
+        this.teacherDataOperationPageState = state;
     }
 }

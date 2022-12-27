@@ -1,6 +1,8 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 
@@ -20,11 +22,9 @@ export class TeacherDataOperationsComponent implements OnInit {
     newEmail = new FormControl('');
     newWebpage = new FormControl('');
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar) {
+    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private clipboard: Clipboard) {
         this.getSelectedTeacher();
     }
-
-    //TODO letesztelni és szépíteni a kódon
 
     ngOnInit(): void {
         this.newName?.addValidators(Validators.required);
@@ -56,9 +56,9 @@ export class TeacherDataOperationsComponent implements OnInit {
                 _ => {
                     this.teacherService.getAllTeacher();
                     if (updatedTeacher.id !== null) this.teacherService.selectTeacher(updatedTeacher.id);
-                    this.snackBar.open('Tanár módosítása sikeres!', 'Ok');
+                    this.snackBar.open('Tanár módosítása sikeres!', 'X', {"duration": 2000});
                 },
-                err => this.snackBar.open('Hiba tanár módosítása során: ' + err, 'Ok')
+                err => this.snackBar.open('Hiba tanár módosítása során: ' + err, 'X', {"duration": 10000})
             );
         }
     }
@@ -69,9 +69,9 @@ export class TeacherDataOperationsComponent implements OnInit {
                 _ => {
                     this.teacherService.getAllTeacher();
                     this.teacherService.removeSelectedTeacher();
-                    this.snackBar.open('Tanár törlése sikeres!', 'Ok');
+                    this.snackBar.open('Tanár törlése sikeres!', 'X', {"duration": 2000});
                 },
-                err => this.snackBar.open('Hiba tanár törlése során: ' + err, 'Ok')
+                err => this.snackBar.open('Hiba tanár törlése során: ' + err, 'X', {"duration": 10000})
             );
     }
 
@@ -81,12 +81,12 @@ export class TeacherDataOperationsComponent implements OnInit {
             this.teacherService.addTeacher(newTeacher).subscribe(
                 _ => {
                     this.teacherService.getAllTeacher();
-                    this.snackBar.open('Tanár hozzáadása sikeres!', 'Ok');
+                    this.snackBar.open('Tanár hozzáadása sikeres!', 'X', {"duration": 2000});
                     this.newName.setValue('');
                     this.newEmail.setValue('');
                     this.newWebpage.setValue('');
                 },
-                err => this.snackBar.open('Hiba tanár hozzáadása során: ' + err, 'Ok')
+                err => this.snackBar.open('Hiba tanár hozzáadása során: ' + err, 'X', {"duration": 10000})
             );
         }
     }
@@ -111,5 +111,19 @@ export class TeacherDataOperationsComponent implements OnInit {
         console.log(name + ' ' + webpage + ' ' + email);
 
         return new TeacherDto(name, webpage, email, 3, this.selectedTeacher.id);
+    }
+
+    isStateTheCurrentPageState(state: string): boolean{
+        return state === this.teacherService.getTeacherDataOperationPageState();
+    }
+
+    setPageState(state: string){
+        if(state === DataOperationPageState.Base) this.teacherService.removeSelectedTeacher();
+        this.teacherService.setTeacherDataOperationPageState(state as DataOperationPageState);
+    }
+
+    copyEmail(email: string){
+        this.clipboard.copy(email);
+        this.snackBar.open("Email cím lemásolva!", "X", {"duration": 2000});
     }
 }

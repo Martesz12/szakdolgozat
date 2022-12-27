@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
     declarations: [],
@@ -38,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         FormsModule,
         ReactiveFormsModule,
         MatSnackBarModule,
+        ClipboardModule,
     ],
     exports: [
         CommonModule,
