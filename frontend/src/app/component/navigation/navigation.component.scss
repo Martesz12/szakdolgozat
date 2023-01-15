@@ -1,121 +1,68 @@
-.navigation-items {
-    list-style: none;
-    margin: 1vh;
-    padding: 1vh;
-}
-
-.bounds {
-    min-width: 300px;
-}
-
-.main-mat-toolbar {
+// *********** Toolbar classes ***********
+.mat-toolbar {
     z-index: 10;
+    padding: 0px;
 }
 
-.slide-in-drawer {
-    min-width: 240px;
-}
-
-//sub
-// variables
-div.nav-bar > div.sticky-nav {
-    --navbar-background-color: rgba(0, 0, 0, 0.03);
-    --navbar-scrollbar-thumb-color: rgba(0, 0, 0, 0.26);
-    --navbar-scrollbar-background-color: #f5f5f5;
-}
-
-// styles
-.component-maximize {
-    // makes sure the header stays at the bottom of the page
-    // even if there is very little content.
-    min-height: 100%;
-}
-
-.page-header {
-    min-height: 80px;
-}
-
-.page-header h1 {
-    font-weight: 300;
-    margin: 0;
-    padding: 28px 8px;
-    padding-top: 28px;
-    padding-right: 8px;
-    padding-bottom: 28px;
-    padding-left: 8px;
-    font-size: 20px;
-}
-
-.flex-nav-bar {
-    width: 30vh;
-    max-width: 30vh;
-    min-height: 100%;
-    border-right: 2px solid lightgray;
-}
-
-div.nav-bar {
-    //height: 100%; // ???
-
-    div.sticky-nav {
-        position: sticky;
-
-        div.nav-items-box {
-            background-color: var(--navbar-background-color);
-
-            // sticky-box
-            max-height: 75vh;
-            z-index: 1000;
-            overflow: auto;
-        }
-
-        .scrollbar {
-            background-color: var(--navbar-scrollbar-background-color);
-            overflow-y: scroll;
-        }
-
-        .scrollbar::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-            background-color: var(--navbar-scrollbar-background-color);
-        }
-
-        .scrollbar::-webkit-scrollbar-thumb {
-            background: var(--navbar-scrollbar-thumb-color);
-        }
-    }
-}
-
-.content {
-    padding: 10px;
-}
-
-.footer-margin {
-    margin-top: 25px;
-}
-
-.footer-padding {
+.navigation-title{
     padding: 20px;
 }
 
-.footer-text {
-    font-size: 12px;
-    text-align: center;
+.navigation-icon{
+    margin: 0px;
 }
 
-a {
-    text-decoration: none;
-    color: white;
+.navigation-items {
+    padding: 20px;
+    margin: 0px;
 }
 
-a:hover,
-a:active {
-    color: lightgrey;
+.navigation-item:hover,
+.navigation-item:active{
+    color: var(--neutral200);
+    cursor: pointer;
 }
 
-mat-icon {
-    margin-right: 1vh;
+// *********** Drawer classes ***********
+
+.drawer-element {
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
-.main-component {
-    // overflow: hidden;
+.drawer-element:hover,
+.drawer-element:active {
+    color: var(--primary100);
+    background-color: var(--neutral200);
+    cursor: pointer;
+}
+
+.drawer-element-icon{
+    margin-right: 5px;
+}
+
+// *********** Main page classes ***********
+
+.side-menu-border {
+    height: 100%;
+    width: 175px;
+    border-right: 2px solid lightgray;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+}
+
+.main-page{
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
 }

@@ -1,68 +1,49 @@
-<div class="bounds" fxLayout="column" fxFlexFill="min-height">
-    <mat-toolbar
-        fxFlex="initial"
-        color="primary"
-        class="main-mat-toolbar mat-elevation-z8 no-padding-left"
-        fxLayout="row"
-        fxLayoutAlign="start stretch"
-    >
-        <button mat-button fxFlex="initial" fxHide fxShow.lt-sm (click)="drawer.toggle()">
-            <mat-icon>menu</mat-icon>
+<div fxLayout="column" fxFlexFill="min-height">
+    <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
+        <button mat-button fxFlex="initial" fxHide fxShow.lt-md (click)="drawer.toggle()">
+            <mat-icon class="navigation-icon">menu</mat-icon>
         </button>
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="title-with-padding-left">
-            <span>Szakdolgozat</span>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-title navigation-font">
+            <div>Szakdolgozat</div>
         </div>
 
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-            <ul fxLayout fxLayoutGap="20px" class="navigation-items">
-                <li><a routerLink="/timetable">Órarend</a></li>
-                <li>Fórum</li>
-                <li>Kijelentkezés</li>
-            </ul>
+            <div fxLayout fxLayoutGap="20px" class="navigation-items navigation-font">
+                <div routerLink="/timetable" class="navigation-item">Órarend</div>
+                <div class="navigation-item">Fórum</div>
+                <div class="navigation-item">Kijelentkezés</div>
+            </div>
         </div>
     </mat-toolbar>
 
-    <mat-drawer-container fxFlex autosize>
-        <mat-drawer #drawer class="slide-in-drawer">
-            <mat-nav-list>
-                <a mat-list-item>
-                    <mat-icon>today</mat-icon>
+    <mat-drawer-container fxFlex>
+        <mat-drawer #drawer>
+            <mat-nav-list class="drawer-font-main">
+                <div mat-list-item class="drawer-element">
+                    <mat-icon class="drawer-element-icon">today</mat-icon>
                     <span>Órarend</span>
-                </a>
-                <a mat-list-item>
-                    <mat-icon>forum</mat-icon>
+                </div>
+                <div mat-list-item class="drawer-element">
+                    <mat-icon class="drawer-element-icon">forum</mat-icon>
                     <span>Fórum</span>
-                </a>
-                <a mat-list-item>
-                    <mat-icon>logout</mat-icon>
+                </div>
+                <div mat-list-item class="drawer-element">
+                    <mat-icon class="drawer-element-icon">logout</mat-icon>
                     <span>Kijelentkezés</span>
-                </a>
+                </div>
             </mat-nav-list>
             <mat-divider></mat-divider>
             <app-timetable-side-menu></app-timetable-side-menu>
         </mat-drawer>
 
-        <div fxLayout="column" class="component-maximize">
-            <div fxFlex="auto" fxLayout="row">
-                <div fxFlex class="flex-nav-bar nav-bar" fxShow fxHide.lt-sm>
-                    <div class="sticky-nav">
-                        <div class="nav-items-box scrollbar">
-                            <app-timetable-side-menu></app-timetable-side-menu>
-                        </div>
-                    </div>
-                </div>
-                <div fxFlex>
-                    <div class="content">
-                        <ng-container *ngTemplateOutlet="template"></ng-container>
-                    </div>
-                </div>
+        <div class="main-page">
+            <div fxShow fxHide.lt-md class="side-menu-border">
+                <app-timetable-side-menu></app-timetable-side-menu>
             </div>
-        </div>
-        <ng-template #template>
-            <div class="main-component">
+            <div class="content">
                 <router-outlet></router-outlet>
             </div>
-        </ng-template>
+        </div>
     </mat-drawer-container>
 </div>

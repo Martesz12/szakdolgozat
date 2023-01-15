@@ -1,73 +1,68 @@
-.list-filter-input {
-    width: 100%;
+.teacher-card {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
 }
 
-.list-add-element-button {
+.list-input-and-add{
+    box-sizing: border-box;
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    text-align: right;
-    width: 100%;
-    justify-content: flex-end;
-    color: #3f51b5;
-    font-size: large;
-    cursor: pointer;
 }
 
-.list-add-element-button-text {
-    position: relative;
+.list-add-element-button-icon{
+    margin: 10px;
 }
 
-.list-add-element-button-text::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 1.5px;
-    bottom: 0;
-    left: 0;
-    background-color: #3f51b5;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-}
-
-.list-add-element-button-text:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-}
-
-.list-row-name {
-    font-size: larger;
-    margin: 0vh;
+.list-filter-input {
+    margin: 10px 0px;
     width: 90%;
 }
 
-.teacher-card {
-    height: 80vh;
-}
-
-.list-row-button {
+.list-action-button, .list-delete-button {
     transition: 0.5s;
+    height: 100%;
 }
 
-.list-row-description-button:hover,
-.list-row-description-button:focus {
-    background-color: #3f51b5;
+.list-action-button:hover,
+.list-action-button:focus {
+    background-color: var(--primary100);
+    cursor: pointer;
 }
 
-.list-row-edit-button:hover,
-.list-row-edit-button:focus {
-    background-color: #3f51b5;
+.list-delete-button:hover,
+.list-delete-button:focus {
+    background-color: var(--uberdanger);
+    cursor: pointer;
 }
 
-.list-row-delete-button:hover,
-.list-row-delete-button:focus {
-    background-color: #f44336;
+.list-row:hover, .list-row-selected {
+    background-color: var(--neutral200);
 }
 
-.list-row:hover {
-    background-color: rgb(223, 223, 223);
+.list-row{
+    width: 100%;
+    height: 45px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--neutral);
 }
 
-.list-row-selected {
-    background-color: rgb(223, 223, 223);
+.list-row-buttons{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.list-row-name {
+    width: 100%;
+    margin-left: 10px;
 }

@@ -1,49 +1,40 @@
 <mat-card class="mat-elevation-z4 teacher-card">
-    <mat-card-title>Tanárok</mat-card-title>
-    <mat-card-content>
-        <mat-grid-list cols="5" [gutterSize]="'1vh'">
-            <mat-grid-tile [colspan]="3" [rowspan]="1">
-                <mat-form-field class="list-filter-input" appearance="outline">
-                    <mat-label>Tanár keresése...</mat-label>
-                    <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
-                </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <div class="list-add-element-button" (click)="addTeacher()">
-                    <mat-icon>add</mat-icon>
-                    <div class="list-add-element-button-text">Hozzáadása</div>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-divider></mat-divider>
+    <div class="card-main-title-font">Tanárok</div>
+    <div>
+        <div class="list-input-and-add">
+            <mat-form-field class="list-filter-input" appearance="outline">
+                <mat-label>Tanár keresése...</mat-label>
+                <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
+            </mat-form-field>
+            <mat-icon class="list-add-element-button-icon list-action-button" (click)="addTeacher()">add</mat-icon>
+        </div>
 
         <div
-            *ngFor="let teacher of filteredAllTeacher"
+            *ngFor="let teacher of filteredAllTeacher; let i = index"
             class="list-row"
             [ngClass]="selectedTeacher.id === teacher.id ? 'list-row-selected' : ''"
+            [ngStyle]="{'border-top': i === 0 ? '1px solid var(--neutral);' : 'none'}"
         >
-            <mat-grid-list cols="10">
-                <mat-grid-tile [colspan]="7" [rowspan]="1" (dblclick)="selectTeacher(teacher.id)">
-                    <p class="list-row-name">{{ teacher.name }}</p>
-                </mat-grid-tile>
-                <mat-grid-tile class="list-row-description-button list-row-button" [colspan]="1" [rowspan]="1">
-                    <button mat-icon-button (click)="selectTeacher(teacher.id)">
-                        <mat-icon> description </mat-icon>
-                    </button>
-                </mat-grid-tile>
-                <mat-grid-tile class="list-row-edit-button list-row-button" [colspan]="1" [rowspan]="1">
-                    <button mat-icon-button (click)="modifyTeacher(teacher.id)">
-                        <mat-icon> edit </mat-icon>
-                    </button>
-                </mat-grid-tile>
-                <mat-grid-tile class="list-row-delete-button list-row-button" [colspan]="1" [rowspan]="1">
-                    <button mat-icon-button (click)="modifyTeacher(teacher.id)">
-                        <mat-icon> delete </mat-icon>
-                    </button>
-                </mat-grid-tile>
-            </mat-grid-list>
-            <mat-divider></mat-divider>
+                <div class="list-row-name list-row-name-font" (dblclick)="selectTeacher(teacher.id)">
+                    {{ teacher.name }}
+                </div>
+                <div class="list-row-buttons">
+                    <div class="list-action-button">
+                        <button mat-icon-button (click)="selectTeacher(teacher.id)">
+                            <mat-icon> description </mat-icon>
+                        </button>
+                    </div>
+                    <div class="list-action-button">
+                        <button mat-icon-button (click)="modifyTeacher(teacher.id)">
+                            <mat-icon> edit </mat-icon>
+                        </button>
+                    </div>
+                    <div class="list-delete-button">
+                        <button mat-icon-button (click)="modifyTeacher(teacher.id)">
+                            <mat-icon> delete </mat-icon>
+                        </button>
+                    </div>
+            </div>
         </div>
-    </mat-card-content>
+    </div>
 </mat-card>

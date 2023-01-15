@@ -1,12 +1,9 @@
-.tree-invisible {
-    display: none;
+.tree{
+    height: 100%;
 }
 
-.tree ul,
-.tree li {
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
+.tree-invisible {
+    display: none;
 }
 
 .tree .mat-nested-tree-node div[role='group'] {
@@ -14,30 +11,37 @@
 }
 
 .tree div[role='group'] > .mat-tree-node {
-    padding-left: 40px;
-}
-
-.pointer-node {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -o-user-select: none;
-    user-select: none;
-}
-
-.leaf-button {
-    width: 95%;
-}
-
-mat-tree {
-    background-color: #fafafa;
-}
-
-.mat-tree-node{
-    cursor: pointer;
+    padding-left: 50px;
 }
 
 .root-node{
-    font-size: larger;
-    font-weight: bold;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.root-node-icon{
+    margin-right: 5px;
+}
+
+.mat-nested-tree-node:hover,
+.mat-nested-tree-node:active {
+    color: var(--primary100);
+    background-color: var(--neutral200);
+    cursor: pointer;
+}
+
+.mat-tree-node:hover,
+.mat-tree-node:active {
+    color: var(--primary100);
+    background-color: var(--neutral200);
+    cursor: pointer;
+}
+
+.selected-leaf-node{
+    color: var(--primary100);
+    background-color: var(--neutral200);
 }

@@ -1,10 +1,8 @@
-<div class="content">
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-        <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="100%">
-            <app-teacher-list></app-teacher-list>
-        </div>
-        <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="100%">
-            <app-teacher-data-operations></app-teacher-data-operations>
-        </div>
+<div class="teacher-cards">
+    <div class="teacher-card">
+        <app-teacher-list></app-teacher-list>
+    </div>
+    <div fxHide.lt-sm class="teacher-card">
+        <app-teacher-data-operations></app-teacher-data-operations>
     </div>
 </div>
