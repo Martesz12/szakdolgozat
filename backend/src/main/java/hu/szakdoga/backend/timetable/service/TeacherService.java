@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherService {
@@ -23,21 +24,21 @@ public class TeacherService {
         this.userRepository = userRepository;
     }
 
-    public TeacherEntity addTeacher(TeacherEntity teacher){
-        return teacherRepository.save(teacher);
+    public List<TeacherDTO> findAllTeacher(){
+        return teacherRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<TeacherEntity> findAllTeacher(){
-        return teacherRepository.findAll();
+    public TeacherDTO findTeacherById(Long id){
+        return convertEntityToDto(teacherRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Teacher by id " + id + " was not found.")));
     }
 
-    public TeacherEntity findTeacherById(Long id){
-        return teacherRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Teacher by id " + id + " was not found."));
+    public TeacherDTO addTeacher(TeacherDTO teacher){
+        return convertEntityToDto(teacherRepository.save(convertDtoToEntity(teacher)));
     }
 
-    public TeacherEntity updateTeacher(TeacherEntity teacher){
-        return teacherRepository.save(teacher);
+    public TeacherDTO updateTeacher(TeacherDTO teacher){
+        return convertEntityToDto(teacherRepository.save(convertDtoToEntity(teacher)));
     }
 
     public void deleteTeacher(Long id){

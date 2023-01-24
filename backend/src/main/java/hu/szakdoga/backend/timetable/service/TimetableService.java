@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimetableService {
@@ -23,21 +24,21 @@ public class TimetableService {
         this.userRepository = userRepository;
     }
 
-    public TimetableEntity addTimetable(TimetableEntity timetable){
-        return timetableRepository.save(timetable);
+    public List<TimetableDTO> findAllTimetable(){
+        return timetableRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<TimetableEntity> findAllTimetable(){
-        return timetableRepository.findAll();
+    public TimetableDTO findTimetableById(Long id){
+        return convertEntityToDto(timetableRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Timetable by id " + id + " was not found.")));
     }
 
-    public TimetableEntity findTimetableById(Long id){
-        return timetableRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Timetable by id " + id + " was not found."));
+    public TimetableDTO addTimetable(TimetableDTO timetable){
+        return convertEntityToDto(timetableRepository.save(convertDtoToEntity(timetable)));
     }
 
-    public TimetableEntity updateTimetable(TimetableEntity timetable){
-        return timetableRepository.save(timetable);
+    public TimetableDTO updateTimetable(TimetableDTO timetable){
+        return convertEntityToDto(timetableRepository.save(convertDtoToEntity(timetable)));
     }
 
     public void deleteTimetable(Long id){

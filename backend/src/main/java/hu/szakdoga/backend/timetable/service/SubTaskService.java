@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SubTaskService {
@@ -23,21 +24,21 @@ public class SubTaskService {
         this.mainTaskRepository = mainTaskRepository;
     }
 
-    public SubTaskEntity addSubTask(SubTaskEntity subTask){
-        return subTaskRepository.save(subTask);
+    public List<SubTaskDTO> findAllSubTask(){
+        return subTaskRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<SubTaskEntity> findAllSubTask(){
-        return subTaskRepository.findAll();
+    public SubTaskDTO findSubTaskById(Long id){
+        return convertEntityToDto(subTaskRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SubTask by id " + id + " was not found.")));
     }
 
-    public SubTaskEntity findSubTaskById(Long id){
-        return subTaskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("SubTask by id " + id + " was not found."));
+    public SubTaskDTO addSubTask(SubTaskDTO subTask){
+        return convertEntityToDto(subTaskRepository.save(convertDtoToEntity(subTask)));
     }
 
-    public SubTaskEntity updateSubTask(SubTaskEntity subTask){
-        return subTaskRepository.save(subTask);
+    public SubTaskDTO updateSubTask(SubTaskDTO subTask){
+        return convertEntityToDto(subTaskRepository.save(convertDtoToEntity(subTask)));
     }
 
     public void deleteSubTask(Long id){

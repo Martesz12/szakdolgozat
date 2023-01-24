@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectService {
@@ -24,21 +25,21 @@ public class SubjectService {
         this.userRepository = userRepository;
     }
 
-    public SubjectEntity addSubject(SubjectEntity subject){
-        return subjectRepository.save(subject);
+    public List<SubjectDTO> findAllSubject(){
+        return subjectRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<SubjectEntity> findAllSubject(){
-        return subjectRepository.findAll();
+    public SubjectDTO findSubjectById(Long id){
+        return convertEntityToDto(subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Subject by id " + id + " was not found.")));
     }
 
-    public SubjectEntity findSubjectById(Long id){
-        return subjectRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Subject by id " + id + " was not found."));
+    public SubjectDTO addSubject(SubjectDTO subject){
+        return convertEntityToDto(subjectRepository.save(convertDtoToEntity(subject)));
     }
 
-    public SubjectEntity updateSubject(SubjectEntity subject){
-        return subjectRepository.save(subject);
+    public SubjectDTO updateSubject(SubjectDTO subject){
+        return convertEntityToDto(subjectRepository.save(convertDtoToEntity(subject)));
     }
 
     public void deleteSubject(Long id){

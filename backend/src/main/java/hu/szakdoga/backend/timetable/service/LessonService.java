@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LessonService {
@@ -32,21 +33,21 @@ public class LessonService {
         this.teacherRepository = teacherRepository;
     }
 
-    public LessonEntity addLesson(LessonEntity lesson) {
-        return lessonRepository.save(lesson);
+    public List<LessonDTO> findAllLessons() {
+        return lessonRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<LessonEntity> findAllLessons() {
-        return lessonRepository.findAll();
+    public LessonDTO findLessonById(Long id) {
+        return convertEntityToDto(lessonRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Lesson by id " + id + " was not found.")));
     }
 
-    public LessonEntity findLessonById(Long id) {
-        return lessonRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Lesson by id " + id + " was not found."));
+    public LessonDTO addLesson(LessonDTO lesson) {
+        return convertEntityToDto(lessonRepository.save(convertDtoToEntity(lesson)));
     }
 
-    public LessonEntity updateLesson(LessonEntity lesson) {
-        return lessonRepository.save(lesson);
+    public LessonDTO updateLesson(LessonDTO lesson) {
+        return convertEntityToDto(lessonRepository.save(convertDtoToEntity(lesson)));
     }
 
     public void deleteLesson(Long id) {

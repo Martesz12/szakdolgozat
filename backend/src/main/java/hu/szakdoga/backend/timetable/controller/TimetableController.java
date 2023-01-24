@@ -23,28 +23,25 @@ public class TimetableController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<TimetableDTO>> getAllTimetable() {
-        List<TimetableDTO> timetables = timetableService.findAllTimetable()
-                .stream().map(timetableService::convertEntityToDto).collect(Collectors.toList());
+        List<TimetableDTO> timetables = timetableService.findAllTimetable();
         return new ResponseEntity<>(timetables, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<TimetableDTO> getTimetableById(@PathVariable("id") Long id) {
-        TimetableDTO timetable = timetableService.convertEntityToDto(timetableService.findTimetableById(id));
+        TimetableDTO timetable = timetableService.findTimetableById(id);
         return new ResponseEntity<>(timetable, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<TimetableDTO> addTimetable(@RequestBody TimetableDTO timetable) {
-        TimetableDTO newTimetable = timetableService.convertEntityToDto(
-                timetableService.addTimetable(timetableService.convertDtoToEntity(timetable)));
+        TimetableDTO newTimetable = timetableService.addTimetable(timetable);
         return new ResponseEntity<>(newTimetable, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<TimetableDTO> updateTimetable(@RequestBody(required = true) TimetableDTO timetable) {
-        TimetableDTO updatedTimetable = timetableService.convertEntityToDto(
-                timetableService.updateTimetable(timetableService.convertDtoToEntity(timetable)));
+        TimetableDTO updatedTimetable = timetableService.updateTimetable(timetable);
         return new ResponseEntity<>(updatedTimetable, HttpStatus.OK);
     }
 

@@ -23,28 +23,25 @@ public class TeacherController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<TeacherDTO>> getAllTeacher() {
-        List<TeacherDTO> teachers = teacherService.findAllTeacher()
-                .stream().map(teacherService::convertEntityToDto).collect(Collectors.toList());
+        List<TeacherDTO> teachers = teacherService.findAllTeacher();
         return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable("id") Long id) {
-        TeacherDTO teacher = teacherService.convertEntityToDto(teacherService.findTeacherById(id));
+        TeacherDTO teacher = teacherService.findTeacherById(id);
         return new ResponseEntity<>(teacher, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<TeacherDTO> addTeacher(@RequestBody TeacherDTO teacher) {
-        TeacherDTO newTeacher = teacherService.convertEntityToDto(
-                teacherService.addTeacher(teacherService.convertDtoToEntity(teacher)));
+        TeacherDTO newTeacher = teacherService.addTeacher(teacher);
         return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<TeacherDTO> updateTeacher(@RequestBody(required = true) TeacherDTO teacher) {
-        TeacherDTO updatedTeacher = teacherService.convertEntityToDto(
-                teacherService.updateTeacher(teacherService.convertDtoToEntity(teacher)));
+        TeacherDTO updatedTeacher = teacherService.updateTeacher(teacher);
         return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
     }
 

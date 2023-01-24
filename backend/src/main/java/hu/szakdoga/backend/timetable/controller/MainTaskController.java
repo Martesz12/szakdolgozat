@@ -22,28 +22,25 @@ public class MainTaskController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<MainTaskDTO>> getAllMainTask() {
-        List<MainTaskDTO> mainTasks = mainTaskService.findAllMainTask()
-                .stream().map(mainTaskService::convertEntityToDto).collect(Collectors.toList());
+        List<MainTaskDTO> mainTasks = mainTaskService.findAllMainTask();
         return new ResponseEntity<>(mainTasks, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<MainTaskDTO> getMainTaskById(@PathVariable("id") Long id) {
-        MainTaskDTO mainTask = mainTaskService.convertEntityToDto(mainTaskService.findMainTaskById(id));
+        MainTaskDTO mainTask = mainTaskService.findMainTaskById(id);
         return new ResponseEntity<>(mainTask, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<MainTaskDTO> addMainTask(@RequestBody MainTaskDTO mainTask) {
-        MainTaskDTO newMainTask = mainTaskService.convertEntityToDto(
-                mainTaskService.addMainTask(mainTaskService.convertDtoToEntity(mainTask)));
+        MainTaskDTO newMainTask = mainTaskService.addMainTask(mainTask);
         return new ResponseEntity<>(newMainTask, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<MainTaskDTO> updateMainTask(@RequestBody(required = true) MainTaskDTO mainTask) {
-        MainTaskDTO updatedMainTask = mainTaskService.convertEntityToDto(
-                mainTaskService.updateMainTask(mainTaskService.convertDtoToEntity(mainTask)));
+        MainTaskDTO updatedMainTask = mainTaskService.updateMainTask(mainTask);
         return new ResponseEntity<>(updatedMainTask, HttpStatus.OK);
     }
 

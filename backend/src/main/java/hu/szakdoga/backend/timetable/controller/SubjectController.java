@@ -22,28 +22,25 @@ public class SubjectController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<SubjectDTO>> getAllSubject() {
-        List<SubjectDTO> subjects = subjectService.findAllSubject()
-                .stream().map(subjectService::convertEntityToDto).collect(Collectors.toList());
+        List<SubjectDTO> subjects = subjectService.findAllSubject();
         return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") Long id) {
-        SubjectDTO subject = subjectService.convertEntityToDto(subjectService.findSubjectById(id));
+        SubjectDTO subject = subjectService.findSubjectById(id);
         return new ResponseEntity<>(subject, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<SubjectDTO> addSubject(@RequestBody SubjectDTO subject) {
-        SubjectDTO newSubject = subjectService.convertEntityToDto(
-                subjectService.addSubject(subjectService.convertDtoToEntity(subject)));
+        SubjectDTO newSubject = subjectService.addSubject(subject);
         return new ResponseEntity<>(newSubject, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<SubjectDTO> updateSubject(@RequestBody(required = true) SubjectDTO subject) {
-        SubjectDTO updatedSubject = subjectService.convertEntityToDto(
-                subjectService.updateSubject(subjectService.convertDtoToEntity(subject)));
+        SubjectDTO updatedSubject = subjectService.updateSubject(subject);
         return new ResponseEntity<>(updatedSubject, HttpStatus.OK);
     }
 

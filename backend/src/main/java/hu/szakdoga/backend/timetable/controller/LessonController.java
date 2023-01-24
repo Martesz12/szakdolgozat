@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/lesson")
@@ -22,28 +21,25 @@ public class LessonController {
 
     @GetMapping("/findAll")
     public ResponseEntity<List<LessonDTO>> getAllLesson() {
-        List<LessonDTO> lessons = lessonService.findAllLessons()
-                .stream().map(lessonService::convertEntityToDto).collect(Collectors.toList());
+        List<LessonDTO> lessons = lessonService.findAllLessons();
         return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
     public ResponseEntity<LessonDTO> getLessonById(@PathVariable("id") Long id) {
-        LessonDTO lesson = lessonService.convertEntityToDto(lessonService.findLessonById(id));
+        LessonDTO lesson = lessonService.findLessonById(id);
         return new ResponseEntity<>(lesson, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<LessonDTO> addLesson(@RequestBody LessonDTO lesson) {
-        LessonDTO newLesson = lessonService.convertEntityToDto(
-                lessonService.addLesson(lessonService.convertDtoToEntity(lesson)));
+        LessonDTO newLesson = lessonService.addLesson(lesson);
         return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
     public ResponseEntity<LessonDTO> updateLesson(@RequestBody(required = true) LessonDTO lesson) {
-        LessonDTO updatedLesson = lessonService.convertEntityToDto(
-                lessonService.updateLesson(lessonService.convertDtoToEntity(lesson)));
+        LessonDTO updatedLesson = lessonService.updateLesson(lesson);
         return new ResponseEntity<>(updatedLesson, HttpStatus.OK);
     }
 
