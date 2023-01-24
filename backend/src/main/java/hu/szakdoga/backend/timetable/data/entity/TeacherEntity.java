@@ -1,15 +1,11 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Table(name = "teacher")
@@ -21,19 +17,17 @@ public class TeacherEntity {
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Name must be set (teacher)")
     private String name;
 
     @Column()
     private String webpage;
 
     @Column()
-//    @Email
     private String email;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
 

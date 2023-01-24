@@ -1,14 +1,11 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Table(name = "subject")
@@ -20,23 +17,20 @@ public class SubjectEntity {
     private Long id;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "Name must be set (subject)")
     private String name;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "Abbreviation must be set (subject)")
     private String abbreviation;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "Color must be set (subject)")
     private String color;
 
     @Column()
     private String requirement;
 
     //***Constraints***
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
 

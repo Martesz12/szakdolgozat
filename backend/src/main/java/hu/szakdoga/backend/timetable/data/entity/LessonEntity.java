@@ -1,6 +1,5 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
 @Table(name = "lesson")
@@ -20,36 +18,32 @@ public class LessonEntity implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "Day must be set (lesson)")
     private String day;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "StartTime must be set (lesson)")
     private LocalTime startTime;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "EndTime must be set (lesson)")
     private LocalTime endTime;
 
     @Column()
     private String location;
 
     @Column(nullable = false)
-//    @NotEmpty(message = "Type must be set (lesson)")
     private String type;
 
     //***Constraints***
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "subjectId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private SubjectEntity subject;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "timetableId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private TimetableEntity timetable;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private TeacherEntity teacher;
