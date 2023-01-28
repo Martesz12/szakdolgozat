@@ -1,0 +1,29 @@
+.description-data-title {
+    font-size: x-large;
+    margin-bottom: 1vh;
+    margin-top: 5vh;
+    font-weight: 600;
+}
+
+.description-data-element-title {
+    margin-left: 4vh;
+    margin-top: 2vh;
+    font-size: large;
+    font-weight: 500;
+}
+
+.description-data-element {
+    font-size: medium;
+    font-weight: 400;
+    margin-left: 1vh;
+}
+
+a{
+    color: #3f51b5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    text-decoration: underline;
+}

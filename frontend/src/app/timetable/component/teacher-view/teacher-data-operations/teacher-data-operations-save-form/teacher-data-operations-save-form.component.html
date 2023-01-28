@@ -1,0 +1,40 @@
+<div *ngIf="isStateTheCurrentPageState('modify')" class="card-main-title-font">Módosítás</div>
+<div *ngIf="isStateTheCurrentPageState('add')" class="card-main-title-font">Hozzáadás</div>
+
+<app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
+
+<form class="form-inputs-center">
+    <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-label>Név:</mat-label>
+        <input *ngIf="isStateTheCurrentPageState('modify')" matInput value="{{ selectedTeacher.name }}" [formControl]="updatedName" />
+        <input *ngIf="isStateTheCurrentPageState('add')" matInput type="text" [formControl]="newName" />
+    </mat-form-field>
+    <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-label>Email cím:</mat-label>
+        <input *ngIf="isStateTheCurrentPageState('modify')" matInput value="{{ selectedTeacher.email }}" [formControl]="updatedEmail" />
+        <input *ngIf="isStateTheCurrentPageState('add')" matInput type="text" [formControl]="newEmail" />
+    </mat-form-field>
+    <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-label>Weboldal</mat-label>
+        <input *ngIf="isStateTheCurrentPageState('modify')" matInput value="{{ selectedTeacher.webpage }}" [formControl]="updatedWebpage" />
+        <input *ngIf="isStateTheCurrentPageState('add')" matInput type="text" [formControl]="newWebpage" />
+    </mat-form-field>
+    <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-label>Iroda</mat-label>
+        <input *ngIf="isStateTheCurrentPageState('modify')" matInput value="{{ selectedTeacher.office }}" [formControl]="updatedOffice" />
+        <input *ngIf="isStateTheCurrentPageState('add')" matInput type="text" [formControl]="newOffice" />
+    </mat-form-field>
+    <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-label>További információk</mat-label>
+        <input *ngIf="isStateTheCurrentPageState('modify')" matInput value="{{ selectedTeacher.moreInformation }}" [formControl]="updatedMoreInformation" />
+        <input *ngIf="isStateTheCurrentPageState('add')" matInput type="text" [formControl]="newMoreInformation" />
+    </mat-form-field>
+</form>
+
+<div class="form-action-buttons">
+    <div class="form-buttons-center">
+        <button *ngIf="isStateTheCurrentPageState('modify')" mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
+        <button *ngIf="isStateTheCurrentPageState('modify')" mat-raised-button color="warn" (click)="deleteTeacher(selectedTeacher.id)">Törlés</button>
+        <button *ngIf="isStateTheCurrentPageState('add')" mat-raised-button color="primary" (click)="addTeacher()">Mentés</button>
+    </div>
+</div>

@@ -12,6 +12,9 @@ import { AgendaListViewComponent } from './component/agenda-list-view/agenda-lis
 import { AgendaMonthlyViewComponent } from './component/agenda-monthly-view/agenda-monthly-view.component';
 import { TeacherListComponent } from './component/teacher-view/teacher-list/teacher-list.component';
 import { TeacherDataOperationsComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations.component';
+import { TeacherDataOperationsNavigationComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-navigation/teacher-data-operations-navigation.component';
+import { TeacherDataOperationsDescriptionComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-description/teacher-data-operations-description.component';
+import { TeacherDataOperationsSaveFormComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-save-form/teacher-data-operations-save-form.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +27,9 @@ import { TeacherDataOperationsComponent } from './component/teacher-view/teacher
         AgendaMonthlyViewComponent,
         TeacherListComponent,
         TeacherDataOperationsComponent,
+        TeacherDataOperationsNavigationComponent,
+        TeacherDataOperationsDescriptionComponent,
+        TeacherDataOperationsSaveFormComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],

@@ -1,0 +1,43 @@
+.operations-navigation {
+    display: flex;
+    justify-content: center;
+    margin: 2vh;
+}
+
+.operations-navigation-element {
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
+.operation-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #3f51b5;
+    font-size: large;
+    cursor: pointer;
+}
+
+.operation-button-text {
+    position: relative;
+    margin-left: 0.5vh;
+}
+
+.operation-button-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 0.2vh;
+    bottom: 0;
+    left: 0;
+    background-color: #3f51b5;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.operation-button-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

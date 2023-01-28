@@ -25,18 +25,25 @@ public class TeacherEntity {
     @Column()
     private String email;
 
+    @Column()
+    private String office;
+
+    @Column()
+    private String moreInformation;
+
     //***Constraints***
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
 
-    public TeacherEntity(Long id, String name, String webpage, String email, UserEntity user) {
-        this.id = id;
+    public TeacherEntity(Long id, String name, String webpage, String email, UserEntity user, String office, String moreInformation) {
         this.name = name;
         this.webpage = webpage;
         this.email = email;
         this.user = user;
+        this.office = office;
+        this.moreInformation = moreInformation;
     }
 
     public TeacherEntity() {

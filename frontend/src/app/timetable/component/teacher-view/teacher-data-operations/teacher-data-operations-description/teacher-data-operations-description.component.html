@@ -1,0 +1,27 @@
+<div class="card-main-title-font">Leírás</div>
+
+<app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
+
+<div>
+    <div class="description-data-title">Adatok</div>
+    <mat-divider></mat-divider>
+    <div class="description-data-element-title">
+        Név: <span class="description-data-element">{{ selectedTeacher.name }}</span>
+    </div>
+    <div class="description-data-element-title">
+        Email cím:
+        <span class="description-data-element" (click)="copyEmail(selectedTeacher.email)"
+            ><a>{{ selectedTeacher.email }}</a></span
+        >
+    </div>
+    <div class="description-data-element-title">
+        Weboldal:
+        <span class="description-data-element"
+            ><a target="_blank" href="https://{{ selectedTeacher.webpage }}">{{ selectedTeacher.webpage }}</a></span
+        >
+    </div>
+</div>
+<div>
+    <div class="description-data-title">Tanított kurzusai</div>
+    <mat-divider></mat-divider>
+</div>
