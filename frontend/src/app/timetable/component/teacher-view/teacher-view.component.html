@@ -1,8 +1,9 @@
 <div class="teacher-cards">
-    <div class="teacher-card">
+    <div *ngIf="showTeacherListCard()" class="teacher-card">
         <app-teacher-list></app-teacher-list>
     </div>
-    <div fxHide.lt-sm class="teacher-card">
+    <!-- fxHide.lt-sm -->
+    <div *ngIf="showTeacherDataOperationCard()" class="teacher-card">
         <app-teacher-data-operations></app-teacher-data-operations>
     </div>
 </div>
