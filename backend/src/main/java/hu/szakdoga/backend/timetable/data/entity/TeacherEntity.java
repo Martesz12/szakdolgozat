@@ -38,6 +38,7 @@ public class TeacherEntity {
     private UserEntity user;
 
     public TeacherEntity(Long id, String name, String webpage, String email, UserEntity user, String office, String moreInformation) {
+        this.id = id;
         this.name = name;
         this.webpage = webpage;
         this.email = email;

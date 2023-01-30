@@ -1,12 +1,12 @@
 .operations-navigation {
     display: flex;
     justify-content: center;
-    margin: 2vh;
+    margin: 15px;
 }
 
 .operations-navigation-element {
-    margin-left: 2vh;
-    margin-right: 2vh;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .operation-button {
@@ -15,13 +15,12 @@
     width: 100%;
     justify-content: flex-end;
     color: #3f51b5;
-    font-size: large;
     cursor: pointer;
 }
 
 .operation-button-text {
     position: relative;
-    margin-left: 0.5vh;
+    margin-left: 5px;
 }
 
 .operation-button-text::after {
@@ -29,7 +28,7 @@
     position: absolute;
     width: 100%;
     transform: scaleX(0);
-    height: 0.2vh;
+    height: 1.5px;
     bottom: 0;
     left: 0;
     background-color: #3f51b5;

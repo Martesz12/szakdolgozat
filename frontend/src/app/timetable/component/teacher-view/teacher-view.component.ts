@@ -14,8 +14,6 @@ export class TeacherViewComponent {
     }
 
     showBothCard(): boolean{
-        console.log(this.getScreenWidth());
-        
         return this.getScreenWidth() > 599;
     }
 

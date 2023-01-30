@@ -1,15 +1,6 @@
-.form-buttons-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
 .form-field-full-width {
-    width: 80%;
-    margin: 1vh 0vh;
+    width: 90%;
+    margin: 10px;
 }
 
 .form-inputs-center {
@@ -22,6 +13,7 @@
 }
 
 .form-action-buttons {
-    margin-top: 2vh;
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
