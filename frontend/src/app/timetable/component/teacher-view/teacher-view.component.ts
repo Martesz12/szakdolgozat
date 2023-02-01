@@ -9,6 +9,8 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
 export class TeacherViewComponent {
     constructor(private teacherService: TeacherService) {}
 
+
+    //TODO itt a határon az átváltás nem az igazi
     getScreenWidth(): number{
         return window.innerWidth;
     }

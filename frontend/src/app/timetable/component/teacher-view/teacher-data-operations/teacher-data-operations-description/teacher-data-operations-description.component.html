@@ -1,6 +1,8 @@
 <div class="card-main-title-font">Leírás</div>
 
-<app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
+<div *ngIf="isInMobileView()">
+    <app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
+</div>
 
 <div>
     <div class="description-data-title">Adatok</div>

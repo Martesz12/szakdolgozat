@@ -18,12 +18,24 @@ export class TeacherDataOperationsDescriptionComponent {
 
     copyEmail(email: string) {
         this.clipboard.copy(email);
-        this.snackBar.open('Email cím lemásolva!', 'X', { duration: 2000 });
+        this.snackBar.open('Email cím lemásolva!', 'X', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+        });
     }
 
     private getSelectedTeacher() {
         this.teacherService.getSelectedTeacherSubject().subscribe(teacher => {
             this.selectedTeacher = teacher;
         });
+    }
+
+    getScreenWidth(): number{
+        return window.innerWidth;
+    }
+
+    isInMobileView(): boolean{
+        return this.getScreenWidth() <= 599;
     }
 }

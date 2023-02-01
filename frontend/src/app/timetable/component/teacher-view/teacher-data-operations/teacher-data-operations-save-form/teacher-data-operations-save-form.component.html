@@ -1,15 +1,16 @@
 <div *ngIf="isStateTheCurrentPageState('modify')" class="card-main-title-font">Módosítás</div>
 <div *ngIf="isStateTheCurrentPageState('add')" class="card-main-title-font">Hozzáadás</div>
 
-<div>
+<div *ngIf="isInMobileView()">
     <app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
 </div>
 
-<div *ngIf="isStateTheCurrentPageState('add')">
+<div *ngIf="isStateTheCurrentPageState('add')" class="mt10">
     <form class="form-inputs-center">
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Név</mat-label>
             <input matInput type="text" [formControl]="newName" />
+            <mat-error *ngIf="newName.invalid">Név megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Email cím</mat-label>
@@ -30,11 +31,12 @@
     </form>
 </div>
 
-<div *ngIf="isStateTheCurrentPageState('modify')">
+<div *ngIf="isStateTheCurrentPageState('modify')" class="mt10">
     <form class="form-inputs-center">
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Név</mat-label>
             <input matInput type="text" [formControl]="updatedName" />
+            <mat-error *ngIf="updatedName.invalid">Név megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Email cím</mat-label>

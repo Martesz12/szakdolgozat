@@ -43,17 +43,28 @@ export class TeacherDataOperationsSaveFormComponent {
     }
 
     updateTeacher(): void {
-        let updatedTeacher: TeacherDto = this.createTeacher(true);
-        this.teacherService.updateTeacher(updatedTeacher).subscribe({
-            next: teacher => {
-                this.teacherService.getAllTeacher();
-                this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
-                if (teacher.id !== null) this.teacherService.selectTeacher(teacher.id);
-                this.updatedName.markAsUntouched();
-                this.snackBar.open('Tanár módosítása sikeres!', 'X', { duration: 2000 });
-            },
-            error: error => this.snackBar.open('Hiba tanár módosítása során: ' + error, 'X', { duration: 10000 }),
-        });
+        if (this.updatedName.valid) {
+            let updatedTeacher: TeacherDto = this.createTeacher(true);
+            this.teacherService.updateTeacher(updatedTeacher).subscribe({
+                next: teacher => {
+                    this.teacherService.getAllTeacher();
+                    this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
+                    if (teacher.id !== null) this.teacherService.selectTeacher(teacher.id);
+                    this.updatedName.markAsUntouched();
+                    this.snackBar.open('Tanár módosítása sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba tanár módosítása során: ' + error, 'X', {
+                        duration: 10000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    }),
+            });
+        }
     }
 
     addTeacher(): void {
@@ -65,13 +76,25 @@ export class TeacherDataOperationsSaveFormComponent {
                     this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
                     if (teacher.id !== null) this.teacherService.selectTeacher(teacher.id);
                     this.newName.markAsUntouched();
-                    this.snackBar.open('Tanár hozzáadása sikeres!', 'X', { duration: 2000 });
+                    this.snackBar.open('Tanár hozzáadása sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    });
                 },
-                error: error => this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', { duration: 10000 }),
+                error: error =>
+                    this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', {
+                        duration: 10000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    }),
             });
         }
     }
 
+    //TODO egységes snackbar-t csinálni maybe
+    //TODO Dialog, hogy biztosan akarja e törölni
+    //TODO egységes dialog maybe
     deleteTeacher(teacherId: number | null): void {
         if (teacherId !== null)
             this.teacherService.deleteTeacher(teacherId).subscribe({
@@ -79,9 +102,18 @@ export class TeacherDataOperationsSaveFormComponent {
                     this.teacherService.getAllTeacher();
                     this.teacherService.removeSelectedTeacher();
                     this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Base);
-                    this.snackBar.open('Tanár törlése sikeres!', 'X', { duration: 2000 });
+                    this.snackBar.open('Tanár törlése sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    });
                 },
-                error: error => this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', { duration: 10000 }),
+                error: error =>
+                    this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
+                        duration: 10000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    }),
             });
     }
 
@@ -105,10 +137,18 @@ export class TeacherDataOperationsSaveFormComponent {
             if (this.newOffice.value !== null) office = this.newOffice.value;
             if (this.newMoreInformation.value !== null) moreInformation = this.newMoreInformation.value;
             return new TeacherDto(name, webpage, email, 1, office, moreInformation);
-        } 
+        }
     }
 
     isStateTheCurrentPageState(state: string): boolean {
         return state === this.teacherService.getTeacherDataOperationPageState();
+    }
+
+    getScreenWidth(): number{
+        return window.innerWidth;
+    }
+
+    isInMobileView(): boolean{
+        return this.getScreenWidth() <= 599;
     }
 }

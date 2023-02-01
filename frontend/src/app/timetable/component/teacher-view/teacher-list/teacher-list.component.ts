@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
@@ -14,7 +15,11 @@ export class TeacherListComponent {
     filterText: string = '';
     selectedTeacher: TeacherDto = {} as TeacherDto;
 
-    constructor(private teacherService: TeacherService, private changeDetection: ChangeDetectorRef,) {
+    constructor(
+        private teacherService: TeacherService,
+        private changeDetection: ChangeDetectorRef,
+        private snackBar: MatSnackBar
+    ) {
         this.getAllTeacher();
         this.getSelectedTeacher();
     }
@@ -33,21 +38,43 @@ export class TeacherListComponent {
     }
 
     selectTeacher(teacherId: number | null) {
-        if (teacherId !== null){
-            if(this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
+        if (teacherId !== null) {
+            if (this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
             this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
         }
     }
 
-    addTeacher(){
+    addTeacher() {
         this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Add);
     }
 
-    modifyTeacher(teacherId: number | null){
-        if (teacherId !== null){
-            if(this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
+    modifyTeacher(teacherId: number | null) {
+        if (teacherId !== null) {
+            if (this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
             this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Modify);
         }
+    }
+
+    deleteTeacher(teacherId: number | null): void {
+        if (teacherId !== null)
+            this.teacherService.deleteTeacher(teacherId).subscribe({
+                next: _ => {
+                    this.teacherService.getAllTeacher();
+                    this.teacherService.removeSelectedTeacher();
+                    this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Base);
+                    this.snackBar.open('Tanár törlése sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
+                        duration: 10000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                    }),
+            });
     }
 
     applyFilter() {
@@ -63,7 +90,7 @@ export class TeacherListComponent {
     }
 
     private highlightMatch() {
-        let matchingAttributes = document.getElementsByClassName('list-row-name');        
+        let matchingAttributes = document.getElementsByClassName('list-row-name');
         let lowerFilterText = this.filterText.toLowerCase();
         let lowerAttributeText = '';
         let originalAttributeText = '';
