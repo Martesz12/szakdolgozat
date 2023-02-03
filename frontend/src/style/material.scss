@@ -6,3 +6,25 @@ div.mat-form-field-wrapper{
 .mat-form-field-subscript-wrapper{
     position: unset !important;
 }
+
+.error-snackbar {
+    background: var(--uberdanger);
+    color: var(--white);
+    border: 2px solid var(--black);
+}
+.error-snackbar button {
+    background-color: var(--uberdanger);
+    color: var(--white) !important;
+    border: none;
+}
+
+.info-snackbar {
+    background: var(--primary);
+    color: var(--white);
+    border: 2px solid var(--black);
+}
+.info-snackbar button {
+    background-color: var(--primary);
+    color: var(--white) !important;
+    border: none;
+}

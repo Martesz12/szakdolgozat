@@ -22,6 +22,7 @@ export class TeacherDataOperationsDescriptionComponent {
             duration: 2000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
+            panelClass: ['info-snackbar']
         });
     }
 

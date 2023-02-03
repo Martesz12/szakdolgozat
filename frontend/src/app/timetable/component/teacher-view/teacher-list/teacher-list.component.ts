@@ -66,13 +66,14 @@ export class TeacherListComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar']
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
-                        duration: 10000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar']
                     }),
             });
     }

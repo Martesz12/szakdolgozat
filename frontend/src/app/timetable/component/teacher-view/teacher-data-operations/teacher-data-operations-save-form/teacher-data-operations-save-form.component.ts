@@ -55,13 +55,14 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar']
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár módosítása során: ' + error, 'X', {
-                        duration: 10000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar']
                     }),
             });
         }
@@ -80,19 +81,21 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar']
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', {
-                        duration: 10000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar']
                     }),
             });
         }
     }
 
     //TODO egységes snackbar-t csinálni maybe
+    //TODO icon-t rakni a snackbar-ba
     //TODO Dialog, hogy biztosan akarja e törölni
     //TODO egységes dialog maybe
     deleteTeacher(teacherId: number | null): void {
@@ -106,13 +109,14 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar']
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
-                        duration: 10000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar']
                     }),
             });
     }
