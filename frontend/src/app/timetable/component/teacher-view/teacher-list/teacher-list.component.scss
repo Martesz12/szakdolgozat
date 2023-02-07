@@ -7,18 +7,28 @@
 .list-input-and-add {
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
 }
 
+.list-add-element-button {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .list-add-element-button-icon {
-    margin: 10px;
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.list-add-element-input {
+    width: 80%;
 }
 
 .list-filter-input {
     margin: 10px 0px;
-    width: 90%;
+    width: 100%;
 }
 
 .list-action-button,

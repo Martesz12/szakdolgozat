@@ -59,7 +59,7 @@
 
 <div *ngIf="isStateTheCurrentPageState('modify')" class="form-action-buttons">
     <button style="margin: 15px" mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
-    <button style="margin: 15px" mat-raised-button color="warn" (click)="deleteTeacher(selectedTeacher.id)">
+    <button style="margin: 15px" mat-raised-button color="warn" (click)="openDeleteDialog(selectedTeacher.id)">
         Törlés
     </button>
 </div>

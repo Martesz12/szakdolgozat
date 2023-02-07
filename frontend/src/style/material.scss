@@ -12,6 +12,7 @@ div.mat-form-field-wrapper{
     color: var(--white);
     border: 2px solid var(--black);
 }
+
 .error-snackbar button {
     background-color: var(--uberdanger);
     color: var(--white) !important;
@@ -23,8 +24,13 @@ div.mat-form-field-wrapper{
     color: var(--white);
     border: 2px solid var(--black);
 }
+
 .info-snackbar button {
     background-color: var(--primary);
     color: var(--white) !important;
     border: none;
+}
+
+.list-filter-input .mat-form-field-wrapper .mat-form-field-subscript-wrapper{
+    display: none;
 }

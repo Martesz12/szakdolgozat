@@ -9,13 +9,11 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
 export class TeacherViewComponent {
     constructor(private teacherService: TeacherService) {}
 
-
-    //TODO itt a határon az átváltás nem az igazi
-    getScreenWidth(): number{
+    getScreenWidth(): number {
         return window.innerWidth;
     }
 
-    showBothCard(): boolean{
+    showBothCard(): boolean {
         return this.getScreenWidth() > 599;
     }
 
@@ -23,11 +21,11 @@ export class TeacherViewComponent {
         return state === this.teacherService.getTeacherDataOperationPageState();
     }
 
-    showTeacherListCard(): boolean{
-        return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState("base"))
+    showTeacherListCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState('base'));
     }
 
-    showTeacherDataOperationCard(): boolean{
-        return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState("base"))
+    showTeacherDataOperationCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
     }
 }

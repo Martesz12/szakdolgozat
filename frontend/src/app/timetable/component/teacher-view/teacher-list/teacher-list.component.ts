@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
+import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
@@ -18,7 +21,8 @@ export class TeacherListComponent {
     constructor(
         private teacherService: TeacherService,
         private changeDetection: ChangeDetectorRef,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog,
     ) {
         this.getAllTeacher();
         this.getSelectedTeacher();
@@ -44,6 +48,7 @@ export class TeacherListComponent {
         }
     }
 
+    //TODO plusz jel mobil nézetnél nem látszódik
     addTeacher() {
         this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Add);
     }
@@ -53,6 +58,21 @@ export class TeacherListComponent {
             if (this.selectedTeacher.id !== teacherId) this.teacherService.selectTeacher(teacherId);
             this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Modify);
         }
+    }
+
+    openDeleteDialog(teacherId: number | null): void {
+        const dialogInterface: DialogData = {
+            dialogHeader: 'Tanár törlése',
+            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.',
+            cancelButtonLabel: 'Vissza',
+            confirmButtonLabel: 'Törlés',
+            callbackMethod: () => {
+              this.deleteTeacher(teacherId);
+            },
+          };
+          this.dialog.open(DialogComponent, {
+            data: dialogInterface,
+          });
     }
 
     deleteTeacher(teacherId: number | null): void {

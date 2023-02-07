@@ -17,9 +17,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './component/dialog/dialog.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+    DialogComponent
+  ],
     imports: [
         CommonModule,
         MatSidenavModule,
@@ -40,6 +44,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
         ReactiveFormsModule,
         MatSnackBarModule,
         ClipboardModule,
+        MatDialogModule,
     ],
     exports: [
         CommonModule,
@@ -60,6 +65,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
         FormsModule,
         ReactiveFormsModule,
         MatSnackBarModule,
+        MatDialogModule,
     ],
 })
 export class SharedModule {}

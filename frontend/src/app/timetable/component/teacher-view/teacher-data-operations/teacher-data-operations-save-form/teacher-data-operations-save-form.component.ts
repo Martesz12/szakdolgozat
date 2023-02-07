@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
+import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
@@ -25,7 +28,7 @@ export class TeacherDataOperationsSaveFormComponent {
     updatedOffice = new FormControl('');
     updatedMoreInformation = new FormControl('');
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar) {
+    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private dialog: MatDialog) {
         this.getSelectedTeacher();
         this.newName?.addValidators(Validators.required);
         this.updatedName?.addValidators(Validators.required);
@@ -96,8 +99,22 @@ export class TeacherDataOperationsSaveFormComponent {
 
     //TODO egységes snackbar-t csinálni maybe
     //TODO icon-t rakni a snackbar-ba
-    //TODO Dialog, hogy biztosan akarja e törölni
-    //TODO egységes dialog maybe
+ 
+    openDeleteDialog(teacherId: number | null): void {
+        const dialogInterface: DialogData = {
+            dialogHeader: 'Tanár törlése',
+            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.',
+            cancelButtonLabel: 'Vissza',
+            confirmButtonLabel: 'Törlés',
+            callbackMethod: () => {
+              this.deleteTeacher(teacherId);
+            },
+          };
+          this.dialog.open(DialogComponent, {
+            data: dialogInterface,
+          });
+    }
+
     deleteTeacher(teacherId: number | null): void {
         if (teacherId !== null)
             this.teacherService.deleteTeacher(teacherId).subscribe({

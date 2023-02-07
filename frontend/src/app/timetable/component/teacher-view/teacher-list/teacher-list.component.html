@@ -2,38 +2,43 @@
     <div class="card-main-title-font">Tanárok</div>
     <div>
         <div class="list-input-and-add">
-            <mat-form-field class="list-filter-input" appearance="outline">
-                <mat-label>Tanár keresése...</mat-label>
-                <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
-            </mat-form-field>
-            <mat-icon class="list-add-element-button-icon rotate" (click)="addTeacher()">add</mat-icon>
+            <div class="list-add-element-input">
+                <mat-form-field class="list-filter-input" appearance="outline">
+                    <mat-label>Tanár keresése...</mat-label>
+                    <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
+                    <mat-hint hidden></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="list-add-element-button">
+                <mat-icon class="list-add-element-button-icon rotate" (click)="addTeacher()">add</mat-icon>
+            </div>
         </div>
 
         <div
             *ngFor="let teacher of filteredAllTeacher; let i = index"
             class="list-row"
             [ngClass]="selectedTeacher.id === teacher.id ? 'list-row-selected' : ''"
-            [ngStyle]="{'border-top': i === 0 ? '1px solid var(--neutral);' : 'none'}"
+            [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
         >
-                <div class="list-row-name list-row-name-font" (dblclick)="selectTeacher(teacher.id)">
-                    {{ teacher.name }}
+            <div class="list-row-name list-row-name-font" (dblclick)="selectTeacher(teacher.id)">
+                {{ teacher.name }}
+            </div>
+            <div class="list-row-buttons">
+                <div class="list-action-button">
+                    <button mat-icon-button (click)="selectTeacher(teacher.id)">
+                        <mat-icon> description </mat-icon>
+                    </button>
                 </div>
-                <div class="list-row-buttons">
-                    <div class="list-action-button">
-                        <button mat-icon-button (click)="selectTeacher(teacher.id)">
-                            <mat-icon> description </mat-icon>
-                        </button>
-                    </div>
-                    <div class="list-action-button">
-                        <button mat-icon-button (click)="modifyTeacher(teacher.id)">
-                            <mat-icon> edit </mat-icon>
-                        </button>
-                    </div>
-                    <div class="list-delete-button">
-                        <button mat-icon-button (click)="deleteTeacher(teacher.id)">
-                            <mat-icon> delete </mat-icon>
-                        </button>
-                    </div>
+                <div class="list-action-button">
+                    <button mat-icon-button (click)="modifyTeacher(teacher.id)">
+                        <mat-icon> edit </mat-icon>
+                    </button>
+                </div>
+                <div class="list-delete-button">
+                    <button mat-icon-button (click)="openDeleteDialog(teacher.id)">
+                        <mat-icon> delete </mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

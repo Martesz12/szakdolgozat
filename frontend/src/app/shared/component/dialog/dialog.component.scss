@@ -1,0 +1,21 @@
+.confirm-button{
+    background-color: var(--uberdanger);
+    color: white;
+}
+
+.dialog-component{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.dialog-main-title{
+    margin-bottom: 20px;
+}
+
+.mat-dialog-actions{
+    justify-content: flex-end;
+    align-items: center;
+}
