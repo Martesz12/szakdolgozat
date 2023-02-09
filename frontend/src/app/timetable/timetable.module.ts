@@ -15,6 +15,11 @@ import { TeacherDataOperationsComponent } from './component/teacher-view/teacher
 import { TeacherDataOperationsNavigationComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-navigation/teacher-data-operations-navigation.component';
 import { TeacherDataOperationsDescriptionComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-description/teacher-data-operations-description.component';
 import { TeacherDataOperationsSaveFormComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-save-form/teacher-data-operations-save-form.component';
+import { SubjectListComponent } from './component/subject-view/subject-list/subject-list.component';
+import { SubjectDataOperationsComponent } from './component/subject-view/subject-data-operations/subject-data-operations.component';
+import { SubjectDataOperationsSaveFormComponent } from './component/subject-view/subject-data-operations/subject-data-operations-save-form/subject-data-operations-save-form.component';
+import { SubjectDataOperationsNavigationComponent } from './component/subject-view/subject-data-operations/subject-data-operations-navigation/subject-data-operations-navigation.component';
+import { SubjectDataOperationsDescriptionComponent } from './component/subject-view/subject-data-operations/subject-data-operations-description/subject-data-operations-description.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +35,11 @@ import { TeacherDataOperationsSaveFormComponent } from './component/teacher-view
         TeacherDataOperationsNavigationComponent,
         TeacherDataOperationsDescriptionComponent,
         TeacherDataOperationsSaveFormComponent,
+        SubjectListComponent,
+        SubjectDataOperationsComponent,
+        SubjectDataOperationsSaveFormComponent,
+        SubjectDataOperationsNavigationComponent,
+        SubjectDataOperationsDescriptionComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],

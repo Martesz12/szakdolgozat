@@ -1,1 +1,9 @@
-<p>subject-view works!</p>
+<div class="subject-cards">
+    <div *ngIf="showSubjectListCard()" class="subject-card">
+        <app-subject-list></app-subject-list>
+    </div>
+    <!-- fxHide.lt-sm -->
+    <div *ngIf="showSubjectDataOperationCard()" class="subject-card">
+        <app-subject-data-operations></app-subject-data-operations>
+    </div>
+</div>
