@@ -1,0 +1,36 @@
+.operations-navigation {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.operation-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    color: #3f51b5;
+    cursor: pointer;
+}
+
+.operation-button-text {
+    position: relative;
+}
+
+.operation-button-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: 0;
+    left: 0;
+    background-color: #3f51b5;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.operation-button-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

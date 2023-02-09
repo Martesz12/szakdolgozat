@@ -7,10 +7,8 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
     templateUrl: './teacher-data-operations-navigation.component.html',
     styleUrls: ['./teacher-data-operations-navigation.component.scss'],
 })
-export class TeacherDataOperationsNavigationComponent implements OnInit {
+export class TeacherDataOperationsNavigationComponent {
     constructor(private teacherService: TeacherService) {}
-
-    ngOnInit(): void {}
 
     setPageState(state: string) {
         if (state === DataOperationPageState.Base) this.teacherService.removeSelectedTeacher();
