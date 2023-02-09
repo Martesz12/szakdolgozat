@@ -48,7 +48,6 @@ export class TeacherListComponent {
         }
     }
 
-    //TODO plusz jel mobil nézetnél nem látszódik
     addTeacher() {
         this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Add);
     }

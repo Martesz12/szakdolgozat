@@ -1,1 +1,45 @@
-<p>subject-list works!</p>
+<mat-card class="mat-elevation-z4 subject-card">
+    <div class="main-title-font card-main-title">Tantárgyak</div>
+    <div>
+        <div class="list-input-and-add">
+            <div class="list-add-element-input">
+                <mat-form-field class="list-filter-input" appearance="outline">
+                    <mat-label>Tantárgy keresése...</mat-label>
+                    <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
+                    <mat-hint hidden></mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="list-add-element-button">
+                <mat-icon class="list-add-element-button-icon rotate" (click)="addSubject()">add</mat-icon>
+            </div>
+        </div>
+
+        <div
+            *ngFor="let subject of filteredAllSubject; let i = index"
+            class="list-row"
+            [ngClass]="selectedSubject.id === subject.id ? 'list-row-selected' : ''"
+            [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
+        >
+            <div class="list-row-name ml-10 content-font" (dblclick)="selectSubject(subject.id)">
+                {{ subject.name }}
+            </div>
+            <div class="list-row-buttons">
+                <div class="list-action-button">
+                    <button mat-icon-button (click)="selectSubject(subject.id)">
+                        <mat-icon> description </mat-icon>
+                    </button>
+                </div>
+                <div class="list-action-button">
+                    <button mat-icon-button (click)="modifySubject(subject.id)">
+                        <mat-icon> edit </mat-icon>
+                    </button>
+                </div>
+                <div class="list-delete-button">
+                    <button mat-icon-button (click)="openDeleteDialog(subject.id)">
+                        <mat-icon> delete </mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>

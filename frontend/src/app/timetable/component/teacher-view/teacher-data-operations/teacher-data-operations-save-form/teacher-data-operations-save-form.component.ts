@@ -97,9 +97,6 @@ export class TeacherDataOperationsSaveFormComponent {
         }
     }
 
-    //TODO egységes snackbar-t csinálni maybe
-    //TODO icon-t rakni a snackbar-ba
-
     openDeleteDialog(teacherId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tanár törlése',
