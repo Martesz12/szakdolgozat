@@ -8,13 +8,8 @@
     padding: 20px;
 }
 
-.navigation-icon{
-    margin: 0px;
-}
-
 .navigation-items {
     padding: 20px;
-    margin: 0px;
 }
 
 .navigation-item:hover,
@@ -39,10 +34,6 @@
     color: var(--primary100);
     background-color: var(--neutral200);
     cursor: pointer;
-}
-
-.drawer-element-icon{
-    margin-right: 5px;
 }
 
 // *********** Main page classes ***********

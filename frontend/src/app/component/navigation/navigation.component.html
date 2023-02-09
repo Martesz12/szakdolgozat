@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFlexFill="min-height">
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
         <button mat-button fxFlex="initial" fxHide fxShow.lt-md (click)="drawer.toggle()">
-            <mat-icon class="navigation-icon">menu</mat-icon>
+            <mat-icon>menu</mat-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-title navigation-main-font">
@@ -21,15 +21,15 @@
         <mat-drawer #drawer>
             <mat-nav-list class="navigation-main-font">
                 <div mat-list-item class="drawer-element">
-                    <mat-icon class="drawer-element-icon">today</mat-icon>
+                    <mat-icon class="mr-5">today</mat-icon>
                     <span>Órarend</span>
                 </div>
                 <div mat-list-item class="drawer-element">
-                    <mat-icon class="drawer-element-icon">forum</mat-icon>
+                    <mat-icon class="mr-5">forum</mat-icon>
                     <span>Fórum</span>
                 </div>
                 <div mat-list-item class="drawer-element">
-                    <mat-icon class="drawer-element-icon">logout</mat-icon>
+                    <mat-icon class="mr-5">logout</mat-icon>
                     <span>Kijelentkezés</span>
                 </div>
             </mat-nav-list>

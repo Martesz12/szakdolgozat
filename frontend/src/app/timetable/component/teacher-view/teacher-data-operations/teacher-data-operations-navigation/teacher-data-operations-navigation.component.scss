@@ -4,11 +4,6 @@
     margin: 15px;
 }
 
-.operations-navigation-element {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 .operation-button {
     display: flex;
     align-items: center;
@@ -20,7 +15,6 @@
 
 .operation-button-text {
     position: relative;
-    margin-left: 5px;
 }
 
 .operation-button-text::after {

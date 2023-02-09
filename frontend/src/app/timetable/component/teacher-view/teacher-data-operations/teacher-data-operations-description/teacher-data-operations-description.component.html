@@ -5,50 +5,50 @@
 </div>
 
 <div>
-    <div class="main-title-font card-description-title">Adatok</div>
-    <mat-divider></mat-divider>
+    <div class="main-title-font mb-5 mt-30">Adatok</div>
+    <mat-divider class="mb-15"></mat-divider>
 
     <div class="secondary-title-font card-description-element-title">
-        <mat-icon>person</mat-icon>
+        <mat-icon class="mr-5">person</mat-icon>
         Név:
     </div>
-    <div class="card-description-data-element content-font">{{ selectedTeacher.name }}</div>
+    <div class="ml-50 mb-20 content-font">{{ selectedTeacher.name }}</div>
 
     <div class="secondary-title-font card-description-element-title">
-        <mat-icon>mail</mat-icon>
+        <mat-icon class="mr-5">mail</mat-icon>
         Email cím:
     </div>
-    <div class="card-description-data-element content-font" (click)="copyEmail(selectedTeacher.email)">
+    <div class="ml-50 mb-20 content-font" (click)="copyEmail(selectedTeacher.email)">
         <a>{{ selectedTeacher.email }}</a>
     </div>
 
     <div class="secondary-title-font card-description-element-title">
-        <mat-icon>public</mat-icon>
+        <mat-icon class="mr-5">public</mat-icon>
         Weboldal:
     </div>
-    <div class="card-description-data-element content-font">
+    <div class="ml-50 mb-20 content-font">
         <a target="_blank" href="https://{{ selectedTeacher.webpage }}">{{ selectedTeacher.webpage }}</a>
     </div>
 
     <div class="secondary-title-font card-description-element-title">
-        <mat-icon>location_city</mat-icon>
+        <mat-icon class="mr-5">location_city</mat-icon>
         Iroda:
     </div>
-    <div class="card-description-data-element content-font">{{ selectedTeacher.office }}</div>
+    <div class="ml-50 mb-20 content-font">{{ selectedTeacher.office }}</div>
 
     <div class="secondary-title-font card-description-element-title">
-        <mat-icon>info</mat-icon>
+        <mat-icon class="mr-5">info</mat-icon>
         További információk:
     </div>
     <div
         *ngFor="let element of selectedTeacher.moreInformation.split('\n')"
-        class="card-description-data-element content-font"
+        class="ml-50 mb-20 content-font"
     >
         {{ element }}
     </div>
 </div>
 <div>
-    <div class="main-title-font card-description-title">Tanított kurzusai</div>
-    <mat-divider></mat-divider>
+    <div class="main-title-font mb-5 mt-30">Tanított kurzusai</div>
+    <mat-divider class="mb-15"></mat-divider>
     <!-- TODO ha meglesznek a kurzusok -->
 </div>
