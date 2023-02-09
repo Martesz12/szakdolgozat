@@ -144,7 +144,7 @@ export class SubjectDataOperationsSaveFormComponent {
       if (isUpdated) {
           if (this.updatedName.value !== null) name = this.updatedName.value;
           if (this.updatedColor.value !== null)
-              color = this.updatedColor.value
+              color = this.updatedColor.value;
           if (this.updatedAbbreviation.value !== null) abbreviation = this.updatedAbbreviation.value;
           if (this.updatedRequirement.value !== null) requirement = this.updatedRequirement.value;
           return new SubjectDto(name, abbreviation, color, requirement, 1, this.selectedSubject.id);

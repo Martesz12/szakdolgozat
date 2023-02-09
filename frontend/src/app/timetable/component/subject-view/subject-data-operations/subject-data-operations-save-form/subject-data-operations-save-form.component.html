@@ -19,9 +19,7 @@
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Szín</mat-label>
-            <input matInput [ngxMatColorPicker]="picker" [formControl]="newColor" />
-            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-            <ngx-mat-color-picker #picker [touchUi]="false"></ngx-mat-color-picker>
+            <input matInput type="text" [formControl]="newColor" />
             <mat-error *ngIf="newColor.invalid">Szín megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
@@ -45,10 +43,8 @@
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Szín</mat-label>
-            <input matInput [ngxMatColorPicker]="picker" [formControl]="newColor" />
-            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-            <ngx-mat-color-picker #picker [touchUi]="false"></ngx-mat-color-picker>
-            <mat-error *ngIf="newColor.invalid">Szín megadása kötelező!</mat-error>
+            <input matInput type="text" [formControl]="updatedColor" />
+            <mat-error *ngIf="updatedColor.invalid">Szín megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Követelmények</mat-label>
