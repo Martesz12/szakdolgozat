@@ -48,8 +48,8 @@ export class TeacherService {
     deleteTeacher(teacherId: number) {
         return this.teacherWebService.deleteTeacher(teacherId);
     }
+
     updateTeacher(teacher: TeacherDto): Observable<TeacherDto> {
-        console.log(teacher);
         return this.teacherWebService.updateTeacher(teacher);
     }
 

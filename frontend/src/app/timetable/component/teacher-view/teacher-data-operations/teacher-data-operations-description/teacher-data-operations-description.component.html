@@ -1,29 +1,54 @@
-<div class="card-main-title-font">Leírás</div>
+<div class="card-main-title-font card-main-title">Leírás</div>
 
 <div *ngIf="isInMobileView()">
     <app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
 </div>
 
 <div>
-    <div class="description-data-title">Adatok</div>
+    <div class="card-description-title-font card-description-title">Adatok</div>
     <mat-divider></mat-divider>
-    <div class="description-data-element-title">
-        Név: <span class="description-data-element">{{ selectedTeacher.name }}</span>
+
+    <div class="card-description-element-title-font card-description-element-title">
+        <mat-icon>person</mat-icon>
+        Név:
     </div>
-    <div class="description-data-element-title">
+    <div class="card-description-data-element card-description-data-element-font">{{ selectedTeacher.name }}</div>
+
+    <div class="card-description-element-title-font card-description-element-title">
+        <mat-icon>mail</mat-icon>
         Email cím:
-        <span class="description-data-element" (click)="copyEmail(selectedTeacher.email)"
-            ><a>{{ selectedTeacher.email }}</a></span
-        >
     </div>
-    <div class="description-data-element-title">
+    <div class="card-description-data-element card-description-data-element-font" (click)="copyEmail(selectedTeacher.email)">
+        <a>{{ selectedTeacher.email }}</a>
+    </div>
+
+    <div class="card-description-element-title-font card-description-element-title">
+        <mat-icon>public</mat-icon>
         Weboldal:
-        <span class="description-data-element"
-            ><a target="_blank" href="https://{{ selectedTeacher.webpage }}">{{ selectedTeacher.webpage }}</a></span
-        >
+    </div>
+    <div class="card-description-data-element card-description-data-element-font">
+        <a target="_blank" href="https://{{ selectedTeacher.webpage }}">{{ selectedTeacher.webpage }}</a>
+    </div>
+
+    <div class="card-description-element-title-font card-description-element-title">
+        <mat-icon>location_city</mat-icon>
+        Iroda:
+    </div>
+    <div class="card-description-data-element card-description-data-element-font">{{ selectedTeacher.office }}</div>
+
+    <div class="card-description-element-title-font card-description-element-title">
+        <mat-icon>info</mat-icon>
+        További információk:
+    </div>
+    <div
+        *ngFor="let element of selectedTeacher.moreInformation.split('\n')"
+        class="card-description-data-element card-description-data-element-font"
+    >
+        {{ element }}
     </div>
 </div>
 <div>
-    <div class="description-data-title">Tanított kurzusai</div>
+    <div class="card-description-title-font card-description-title">Tanított kurzusai</div>
     <mat-divider></mat-divider>
+    <!-- TODO ha meglesznek a kurzusok -->
 </div>

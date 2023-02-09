@@ -1,21 +1,36 @@
-.description-data-title {
-    font-size: x-large;
-    margin-bottom: 1vh;
-    margin-top: 5vh;
-    font-weight: 600;
+.card-main-title{
+    display: flex;
+    justify-content: center;
 }
 
-.description-data-element-title {
-    margin-left: 4vh;
-    margin-top: 2vh;
-    font-size: large;
-    font-weight: 500;
+.card-description-title {
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 
-.description-data-element {
-    font-size: medium;
-    font-weight: 400;
-    margin-left: 1vh;
+.mat-divider{
+    margin-bottom: 15px;
+}
+
+.card-description-element-title{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.mat-icon{
+    margin-right: 5px;
+}
+
+.card-description-data-element {
+    display: flex;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+
+.card-description-more-information-element{
+    margin-left: 50px;
+    display:list-item;
 }
 
 a{

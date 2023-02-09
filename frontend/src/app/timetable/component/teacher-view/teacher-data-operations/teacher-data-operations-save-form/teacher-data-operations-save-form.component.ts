@@ -58,14 +58,14 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar']
+                        panelClass: ['info-snackbar'],
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár módosítása során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar']
+                        panelClass: ['error-snackbar'],
                     }),
             });
         }
@@ -84,14 +84,14 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar']
+                        panelClass: ['info-snackbar'],
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar']
+                        panelClass: ['error-snackbar'],
                     }),
             });
         }
@@ -99,7 +99,7 @@ export class TeacherDataOperationsSaveFormComponent {
 
     //TODO egységes snackbar-t csinálni maybe
     //TODO icon-t rakni a snackbar-ba
- 
+
     openDeleteDialog(teacherId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tanár törlése',
@@ -107,12 +107,12 @@ export class TeacherDataOperationsSaveFormComponent {
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
-              this.deleteTeacher(teacherId);
+                this.deleteTeacher(teacherId);
             },
-          };
-          this.dialog.open(DialogComponent, {
+        };
+        this.dialog.open(DialogComponent, {
             data: dialogInterface,
-          });
+        });
     }
 
     deleteTeacher(teacherId: number | null): void {
@@ -126,14 +126,14 @@ export class TeacherDataOperationsSaveFormComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar']
+                        panelClass: ['info-snackbar'],
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar']
+                        panelClass: ['error-snackbar'],
                     }),
             });
     }
@@ -146,14 +146,16 @@ export class TeacherDataOperationsSaveFormComponent {
         let moreInformation: string = '';
         if (isUpdated) {
             if (this.updatedName.value !== null) name = this.updatedName.value;
-            if (this.updatedWebpage.value !== null) webpage = this.updatedWebpage.value;
+            if (this.updatedWebpage.value !== null)
+                webpage = this.updatedWebpage.value.replace('http://', '').replace('https://', '');
             if (this.updatedEmail.value !== null) email = this.updatedEmail.value;
             if (this.updatedOffice.value !== null) office = this.updatedOffice.value;
             if (this.updatedMoreInformation.value !== null) moreInformation = this.updatedMoreInformation.value;
             return new TeacherDto(name, webpage, email, 1, office, moreInformation, this.selectedTeacher.id);
         } else {
             if (this.newName.value !== null) name = this.newName.value;
-            if (this.newWebpage.value !== null) webpage = this.newWebpage.value;
+            if (this.newWebpage.value !== null)
+                webpage = this.newWebpage.value.replace('http://', '').replace('https://', '');
             if (this.newEmail.value !== null) email = this.newEmail.value;
             if (this.newOffice.value !== null) office = this.newOffice.value;
             if (this.newMoreInformation.value !== null) moreInformation = this.newMoreInformation.value;
@@ -165,11 +167,11 @@ export class TeacherDataOperationsSaveFormComponent {
         return state === this.teacherService.getTeacherDataOperationPageState();
     }
 
-    getScreenWidth(): number{
+    getScreenWidth(): number {
         return window.innerWidth;
     }
 
-    isInMobileView(): boolean{
+    isInMobileView(): boolean {
         return this.getScreenWidth() <= 599;
     }
 }
