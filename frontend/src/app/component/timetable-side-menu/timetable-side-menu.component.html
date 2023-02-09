@@ -3,7 +3,7 @@
         *matTreeNodeDef="let node"
         matTreeNodeToggle
         [ngClass]="selectedMenuElement === node.id ? 'selected-leaf-node' : ''"
-        (click)="onMenuElementSelected(node.id)" class="drawer-font-secondary"
+        (click)="onMenuElementSelected(node.id)" class="content-font"
     >
         <div>
             {{ node.name }}
@@ -14,7 +14,7 @@
             <mat-icon class="root-node-icon">
                 {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
             </mat-icon>
-            <div class="drawer-font-main">{{ node.name }}</div>
+            <div class="navigation-main-font">{{ node.name }}</div>
         </div>
         <div [class.tree-invisible]="!treeControl.isExpanded(node)" role="group">
             <ng-container matTreeNodeOutlet></ng-container>

@@ -4,12 +4,12 @@
             <mat-icon class="navigation-icon">menu</mat-icon>
         </button>
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-title navigation-font">
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-title navigation-main-font">
             <div>Szakdolgozat</div>
         </div>
 
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-            <div fxLayout fxLayoutGap="20px" class="navigation-items navigation-font">
+            <div fxLayout fxLayoutGap="20px" class="navigation-items navigation-main-font">
                 <div routerLink="/timetable" class="navigation-item">Órarend</div>
                 <div class="navigation-item">Fórum</div>
                 <div class="navigation-item">Kijelentkezés</div>
@@ -19,7 +19,7 @@
 
     <mat-drawer-container fxFlex>
         <mat-drawer #drawer>
-            <mat-nav-list class="drawer-font-main">
+            <mat-nav-list class="navigation-main-font">
                 <div mat-list-item class="drawer-element">
                     <mat-icon class="drawer-element-icon">today</mat-icon>
                     <span>Órarend</span>

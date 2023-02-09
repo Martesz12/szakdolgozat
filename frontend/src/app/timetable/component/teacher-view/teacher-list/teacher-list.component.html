@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z4 teacher-card">
-    <div class="card-main-title-font card-main-title">Tanárok</div>
+    <div class="main-title-font card-main-title">Tanárok</div>
     <div>
         <div class="list-input-and-add">
             <div class="list-add-element-input">
@@ -20,7 +20,7 @@
             [ngClass]="selectedTeacher.id === teacher.id ? 'list-row-selected' : ''"
             [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
         >
-            <div class="list-row-name list-row-name-font" (dblclick)="selectTeacher(teacher.id)">
+            <div class="list-row-name content-font" (dblclick)="selectTeacher(teacher.id)">
                 {{ teacher.name }}
             </div>
             <div class="list-row-buttons">

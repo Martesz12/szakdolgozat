@@ -1,5 +1,5 @@
-<div *ngIf="isStateTheCurrentPageState('modify')" class="card-main-title-font card-main-title">Módosítás</div>
-<div *ngIf="isStateTheCurrentPageState('add')" class="card-main-title-font card-main-title">Hozzáadás</div>
+<div *ngIf="isStateTheCurrentPageState('modify')" class="main-title-font card-main-title">Módosítás</div>
+<div *ngIf="isStateTheCurrentPageState('add')" class="main-title-font card-main-title">Hozzáadás</div>
 
 <div *ngIf="isInMobileView()">
     <app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
@@ -57,13 +57,13 @@
     </form>
 </div>
 
-<div *ngIf="isStateTheCurrentPageState('modify')" class="form-action-buttons">
-    <button style="margin: 15px" mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
-    <button style="margin: 15px" mat-raised-button color="warn" (click)="openDeleteDialog(selectedTeacher.id)">
+<div *ngIf="isStateTheCurrentPageState('modify')" class="form-action-buttons ">
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="warn" (click)="openDeleteDialog(selectedTeacher.id)">
         Törlés
     </button>
 </div>
 
 <div *ngIf="isStateTheCurrentPageState('add')" class="form-action-buttons">
-    <button style="margin: 15px" mat-raised-button color="primary" (click)="addTeacher()">Mentés</button>
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="addTeacher()">Mentés</button>
 </div>

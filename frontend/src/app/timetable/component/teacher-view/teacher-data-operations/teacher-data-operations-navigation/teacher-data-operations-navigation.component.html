@@ -1,18 +1,18 @@
 <div class="operations-navigation">
     <div class="operations-navigation-element">
-        <div class="card-navigation-font operation-button" (click)="setPageState('base')">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('base')">
             <mat-icon>arrow_back</mat-icon>
             <div class="operation-button-text">Lista</div>
         </div>
     </div>
     <div *ngIf="isStateTheCurrentPageState('description')" class="operations-navigation-element">
-        <div class="card-navigation-font operation-button" (click)="setPageState('modify')">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('modify')">
             <mat-icon>edit</mat-icon>
             <div class="operation-button-text">Szerkesztés</div>
         </div>
     </div>
     <div *ngIf="isStateTheCurrentPageState('modify')" class="operations-navigation-element">
-        <div class="card-navigation-font operation-button" (click)="setPageState('description')">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('description')">
             <mat-icon>description</mat-icon>
             <div class="operation-button-text">Leírás</div>
         </div>

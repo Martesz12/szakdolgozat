@@ -1,64 +1,39 @@
-.navigation-font{
-    font-size: 20px;
-    font-weight: 500;
+:root {
+    --fw-400: 400;
+    --fw-500: 500;
+    --fs-16: 16px;
+    --fs-18: 18px;
+    --fs-20: 20px;
+    --fs-25: 25px;
+    --fs-40: 40px;
 }
 
-.drawer-font-main{
-    font-size: 20px;
-    font-weight: 500;
+.navigation-main-font{
+    font-size: var(--fs-20);
+    font-weight: var(--fw-500);
 }
 
-.drawer-font-secondary{
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.card-main-title-font{
-    font-size: 25px;
-    font-weight: 500;
-}
-
-.card-navigation-font{
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.list-row-name-font{
-    font-size: 18px;
-    font-weight: 400;
-}
-
-.no-selected-element-font{
-    font-size: 40px;
-    font-weight: 600;
+.navigation-secondary-font{
+    font-size: var(--fs-20);
+    font-weight: var(--fw-400);
 }
 
 .main-title-font{
-    font-size: 25px;
-    font-weight: 500;
+    font-size: var(--fs-25);
+    font-weight: var(--fw-500);
+}
+
+.secondary-title-font{
+    font-size: var(--fs-20);
+    font-weight: var(--fw-500);
 }
 
 .content-font{
-    font-size: 16px;
-    font-weight: 400;
+    font-size: var(--fs-16);
+    font-weight: var(--fw-400);
 }
 
-.button-font{
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.card-description-title-font{
-    font-size: 25px;
-    font-weight: 500;
-}
-
-.card-description-element-title-font{
-    font-size: 18px;
-    font-weight: 500;
-}
-
-.card-description-data-element-font{
-    font-size: 16px;
-    font-weight: 400;
+.no-element-found-font{
+    font-size: var(--fs-40);
+    font-weight: var(--fw-500);
 }
