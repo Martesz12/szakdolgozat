@@ -1,1 +1,85 @@
-<p>subject-data-operations-save-form works!</p>
+<div *ngIf="isStateTheCurrentPageState('modify')" class="main-title-font card-main-title">Módosítás</div>
+<div *ngIf="isStateTheCurrentPageState('add')" class="main-title-font card-main-title">Hozzáadás</div>
+
+<div *ngIf="isInMobileView()">
+    <app-subject-data-operations-navigation></app-subject-data-operations-navigation>
+</div>
+
+<div *ngIf="isStateTheCurrentPageState('add')" class="mt-10">
+    <form class="form-inputs-center">
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Név</mat-label>
+            <input matInput type="text" [formControl]="newName" />
+            <mat-error *ngIf="newName.invalid">Név megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Rövidítés</mat-label>
+            <input matInput type="text" [formControl]="newAbbreviation" />
+            <mat-error *ngIf="newAbbreviation.invalid">Rövidítés megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Szín</mat-label>
+            <input matInput [ngxMatColorPicker]="picker" [formControl]="newColor" />
+            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker #picker [touchUi]="false"></ngx-mat-color-picker>
+            <mat-error *ngIf="newColor.invalid">Szín megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Követelmények</mat-label>
+            <textarea matInput rows="5" type="text" [formControl]="newRequirement"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+
+<div *ngIf="isStateTheCurrentPageState('modify')" class="mt-10">
+    <form class="form-inputs-center">
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Név</mat-label>
+            <input matInput type="text" [formControl]="updatedName" />
+            <mat-error *ngIf="updatedName.invalid">Név megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Rövidítés</mat-label>
+            <input matInput type="text" [formControl]="updatedAbbreviation" />
+            <mat-error *ngIf="updatedAbbreviation.invalid">Rövidítés megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Szín</mat-label>
+            <input matInput [ngxMatColorPicker]="picker" [formControl]="newColor" />
+            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker #picker [touchUi]="false"></ngx-mat-color-picker>
+            <mat-error *ngIf="newColor.invalid">Szín megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Követelmények</mat-label>
+            <textarea matInput rows="5" type="text" [formControl]="updatedRequirement"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+
+<div *ngIf="isStateTheCurrentPageState('modify')" class="form-action-buttons">
+    <button
+        style="margin: 15px"
+        class="navigation-main-font"
+        mat-raised-button
+        color="primary"
+        (click)="updateSubject()"
+    >
+        Mentés
+    </button>
+    <button
+        style="margin: 15px"
+        class="navigation-main-font"
+        mat-raised-button
+        color="warn"
+        (click)="openDeleteDialog(selectedSubject.id)"
+    >
+        Törlés
+    </button>
+</div>
+
+<div *ngIf="isStateTheCurrentPageState('add')" class="form-action-buttons">
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="addSubject()">
+        Mentés
+    </button>
+</div>

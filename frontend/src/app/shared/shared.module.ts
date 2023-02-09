@@ -19,11 +19,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './component/dialog/dialog.component';
+import {
+    MAT_COLOR_FORMATS,
+    NgxMatColorPickerModule,
+    NGX_MAT_COLOR_FORMATS,
+} from '@angular-material-components/color-picker';
 
 @NgModule({
-    declarations: [
-    DialogComponent
-  ],
+    declarations: [DialogComponent],
     imports: [
         CommonModule,
         MatSidenavModule,
@@ -45,6 +48,7 @@ import { DialogComponent } from './component/dialog/dialog.component';
         MatSnackBarModule,
         ClipboardModule,
         MatDialogModule,
+        NgxMatColorPickerModule,
     ],
     exports: [
         CommonModule,
@@ -66,6 +70,8 @@ import { DialogComponent } from './component/dialog/dialog.component';
         ReactiveFormsModule,
         MatSnackBarModule,
         MatDialogModule,
+        NgxMatColorPickerModule,
     ],
+    providers: [{ provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }],
 })
 export class SharedModule {}
