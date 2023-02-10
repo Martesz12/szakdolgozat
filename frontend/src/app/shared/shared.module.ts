@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './component/dialog/dialog.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
     declarations: [DialogComponent],
@@ -43,6 +44,7 @@ import { DialogComponent } from './component/dialog/dialog.component';
         MatSnackBarModule,
         ClipboardModule,
         MatDialogModule,
+        MatSliderModule,
     ],
     exports: [
         CommonModule,
@@ -64,6 +66,7 @@ import { DialogComponent } from './component/dialog/dialog.component';
         ReactiveFormsModule,
         MatSnackBarModule,
         MatDialogModule,
+        MatSliderModule,
     ],
 })
 export class SharedModule {}

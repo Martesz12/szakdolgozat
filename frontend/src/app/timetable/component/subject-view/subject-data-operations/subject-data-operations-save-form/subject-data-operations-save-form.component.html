@@ -41,11 +41,15 @@
             <input matInput type="text" [formControl]="updatedAbbreviation" />
             <mat-error *ngIf="updatedAbbreviation.invalid">Rövidítés megadása kötelező!</mat-error>
         </mat-form-field>
-        <mat-form-field class="form-field-full-width" appearance="outline">
-            <mat-label>Szín</mat-label>
-            <input matInput type="text" [formControl]="updatedColor" />
-            <mat-error *ngIf="updatedColor.invalid">Szín megadása kötelező!</mat-error>
-        </mat-form-field>
+        <fieldset class="color-picker-fieldset form-field-full-width">
+            <legend [align]="'left'" class="legend-font">Szín *</legend>
+            <div class="color-picker">
+                <mat-slider #slider min="0" max="19" step="1" value="0">
+                    <input matSliderThumb />
+                </mat-slider>
+                <div class="color-picker-sample ml-10" [ngStyle]="{ 'background-color': SUBJECT_COLORS[slider.value] }"></div>
+            </div>
+        </fieldset>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Követelmények</mat-label>
             <textarea matInput rows="5" type="text" [formControl]="updatedRequirement"></textarea>
