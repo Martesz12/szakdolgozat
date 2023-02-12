@@ -1,1 +1,44 @@
-<p>subject-data-operations-description works!</p>
+<div class="main-title-font card-main-title">Leírás</div>
+
+<div *ngIf="isInMobileView()">
+    <app-subject-data-operations-navigation></app-subject-data-operations-navigation>
+</div>
+
+<div>
+    <div class="main-title-font mb-5 mt-30">Adatok</div>
+    <mat-divider class="mb-15"></mat-divider>
+
+    <div class="secondary-title-font card-description-element-title">
+        <mat-icon class="mr-5">school</mat-icon>
+        Tantárgy:
+    </div>
+    <div class="ml-50 mb-20 content-font">{{ selectedSubject.name }}</div>
+
+    <div class="secondary-title-font card-description-element-title">
+        <mat-icon class="mr-5"><span class="material-symbols-outlined"> text_format </span></mat-icon>
+        Rövidítés:
+    </div>
+    <div class="ml-50 mb-20 content-font">
+        {{ selectedSubject.abbreviation }}
+    </div>
+
+    <div class="secondary-title-font card-description-element-title">
+        <mat-icon class="mr-5">palette</mat-icon>
+        Szín:
+    </div>
+    <div class="ml-50 mb-20 content-font">
+        <div  class="color-picker-sample" [ngStyle]="{ 'background-color': selectedSubject.color }"></div>
+    </div>
+
+    <div class="secondary-title-font card-description-element-title">
+        <mat-icon class="mr-5">info</mat-icon>
+        Követelmények:
+    </div>
+    <div *ngFor="let element of selectedSubject.requirement.split('\n')" class="ml-50 mb-20 content-font">
+        {{ element }}
+    </div>
+</div>
+<!-- <div>
+    <div class="main-title-font mb-5 mt-30">Tanított kurzusai</div>
+    <mat-divider class="mb-15"></mat-divider>
+</div> -->
