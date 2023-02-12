@@ -3,8 +3,12 @@
         <app-subject-data-operations-description></app-subject-data-operations-description>
     </div>
 
-    <div *ngIf="isStateTheCurrentPageState('modify') || isStateTheCurrentPageState('add')" class="card-main">
+    <div *ngIf="isStateTheCurrentPageState('add')" class="card-main">
         <app-subject-data-operations-save-form></app-subject-data-operations-save-form>
+    </div>
+
+    <div *ngIf="isStateTheCurrentPageState('modify')" class="card-main">
+        <app-subject-data-operations-update-form></app-subject-data-operations-update-form>
     </div>
 
     <div *ngIf="isStateTheCurrentPageState('base')" class="card-main">

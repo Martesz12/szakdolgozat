@@ -1,0 +1,67 @@
+.card-main-title {
+    display: flex;
+    justify-content: center;
+}
+
+.form-field-full-width {
+    width: 90%;
+    margin: 10px;
+}
+
+.form-inputs-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.form-action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.mat-slider {
+    width: 80%;
+}
+
+.color-picker-sample {
+    height: 30px;
+    width: 20%;
+    background-color: #bbb;
+    border-radius: 5px;
+    display: inline-block;
+    border: 2px solid black;
+}
+
+.color-picker-fieldset{
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 10px;
+}
+
+.color-picker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.legend-font {
+    color: rgba(0,0,0,.6);
+    font-size: 11px;
+}
+
+.color-picker-error .color-picker-fieldset{
+    border: 2px solid var(--material-error);
+}
+
+.color-picker-error .color-picker-fieldset .legend-font, .color-picker-error .legend-font {
+    color: var(--material-error)
+}
+
+.color-picker-error {
+    text-align: left;
+    margin-top: 5px;
+    margin-left: 10px
+}
