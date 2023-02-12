@@ -25,9 +25,36 @@
             <mat-error *ngIf="newTeacherId.invalid">Tanár megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Nap</mat-label>
+            <mat-select [formControl]="newDay" disableOptionCentering>
+                <mat-option *ngFor="let day of DAYS" [value]="day">
+                    {{ day }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="newDay.invalid">Nap megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Kezdés ideje</mat-label>
-            <input type="time" matInput name="week" min="09:00" max="18:00" />
+            <input type="time" matInput [formControl]="newStartTime" />
             <mat-error *ngIf="newTeacherId.invalid">Kezdés idejének megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Végzés ideje</mat-label>
+            <input type="time" matInput [formControl]="newEndTime" />
+            <mat-error *ngIf="newTeacherId.invalid">Végzés idejének megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Típus</mat-label>
+            <mat-select [formControl]="newType" disableOptionCentering>
+                <mat-option *ngFor="let type of TYPES" [value]="type">
+                    {{ type }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="newType.invalid">Típus megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Helyszín</mat-label>
+            <input matInput type="text" [formControl]="newLocation" />
         </mat-form-field>
     </form>
 </div>

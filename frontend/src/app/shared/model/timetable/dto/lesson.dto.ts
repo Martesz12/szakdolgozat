@@ -3,8 +3,8 @@ import { Time } from '@angular/common';
 export class LessonDto {
     public readonly id: number | null;
     public readonly day: string;
-    public readonly startTime: Time;
-    public readonly endTime: Time;
+    public readonly startTime: string;
+    public readonly endTime: string;
     public readonly location: string;
     public readonly type: string;
     public readonly subjectId: number;
@@ -13,8 +13,8 @@ export class LessonDto {
 
     constructor(
         day: string,
-        startTime: Time,
-        endTime: Time,
+        startTime: string,
+        endTime: string,
         location: string,
         type: string,
         subjectId: number,

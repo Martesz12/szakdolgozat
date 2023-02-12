@@ -1,5 +1,4 @@
-import { Time } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
@@ -16,6 +15,21 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
     styleUrls: ['./lesson-data-operations-save-form.component.scss'],
 })
 export class LessonDataOperationsSaveFormComponent {
+    readonly DAYS: string[] = [
+        'Hétfő',
+        'Kedd',
+        'Szerda',
+        'Csütörtök',
+        'Péntek',
+        'Szombat',
+        'Vasárnap',
+    ];
+
+    readonly TYPES: string[] = [
+        'Előadás',
+        'Gyakorlat',
+    ];
+
     allSubject: SubjectDto[] = [];
     allTeacher: TeacherDto[] = [];
     newDay = new FormControl('');
@@ -98,17 +112,17 @@ export class LessonDataOperationsSaveFormComponent {
 
     private createLesson(): LessonDto {
         let day: string = '';
-        let startTime: Time = {} as Time;
-        let endTime: Time = {} as Time;
+        let startTime: string = '';
+        let endTime: string = '';
         let location: string = '';
         let type: string = '';
         let subjectId: number = -1;
         let teacherId: number = -1;
         if (this.newDay.value !== null) day = this.newDay.value;
-        // if (this.newStartTime.value !== null)
-        //     startTime = this.newStartTime.value;
-        // if (this.newEndTime.value !== null)
-        //     endTime = this.newEndTime.value;
+        if (this.newStartTime.value !== null)
+            startTime = this.newStartTime.value;
+        if (this.newEndTime.value !== null)
+            endTime = this.newEndTime.value;
         if (this.newType.value !== null) type = this.newType.value;
         if (this.newLocation.value !== null) location = this.newLocation.value;
         if (this.newSubjectId.value !== null) subjectId = +this.newSubjectId.value;
