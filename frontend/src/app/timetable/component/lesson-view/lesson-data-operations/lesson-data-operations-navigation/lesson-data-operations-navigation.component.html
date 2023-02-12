@@ -1,1 +1,20 @@
-<p>lesson-data-operations-navigation works!</p>
+<div class="operations-navigation">
+    <div class="ml-10 mr-10">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('base')">
+            <mat-icon>arrow_back</mat-icon>
+            <div class="operation-button-text ml-5">Lista</div>
+        </div>
+    </div>
+    <div *ngIf="isStateTheCurrentPageState('description')" class="ml-10 mr-10">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('modify')">
+            <mat-icon>edit</mat-icon>
+            <div class="operation-button-text ml-5">Szerkesztés</div>
+        </div>
+    </div>
+    <div *ngIf="isStateTheCurrentPageState('modify')" class="ml-10 mr-10">
+        <div class="navigation-secondary-font operation-button" (click)="setPageState('description')">
+            <mat-icon>description</mat-icon>
+            <div class="operation-button-text ml-5">Leírás</div>
+        </div>
+    </div>
+</div>
