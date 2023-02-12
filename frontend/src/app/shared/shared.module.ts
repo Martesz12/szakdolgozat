@@ -20,6 +20,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './component/dialog/dialog.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     declarations: [DialogComponent],
@@ -45,6 +46,7 @@ import { MatSliderModule } from '@angular/material/slider';
         ClipboardModule,
         MatDialogModule,
         MatSliderModule,
+        MatSelectModule,
     ],
     exports: [
         CommonModule,
@@ -67,6 +69,7 @@ import { MatSliderModule } from '@angular/material/slider';
         MatSnackBarModule,
         MatDialogModule,
         MatSliderModule,
+        MatSelectModule,
     ],
 })
 export class SharedModule {}
