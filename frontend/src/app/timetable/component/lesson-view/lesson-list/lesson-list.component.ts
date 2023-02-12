@@ -27,7 +27,6 @@ export class LessonListComponent {
     ) {
         this.getAllLesson();
         this.getSelectedLesson();
-        this.setAllLessonListName();
     }
 
     private getSelectedLesson() {
@@ -40,11 +39,14 @@ export class LessonListComponent {
         this.lessonService.getAllLessonSubject().subscribe(lessons => {
             this.allLesson = lessons;
             this.filteredAllLesson = lessons;
+            this.setAllLessonListName();
         });
     }
 
     private setAllLessonListName(){
       this.allLesson.forEach((lesson, i) => this.allLessonListName[i] = lesson.day + " - " + lesson.subjectId + " - " + lesson.type);
+      console.log(this.allLessonListName);
+      
     }
 
     selectLesson(lessonId: number | null) {
