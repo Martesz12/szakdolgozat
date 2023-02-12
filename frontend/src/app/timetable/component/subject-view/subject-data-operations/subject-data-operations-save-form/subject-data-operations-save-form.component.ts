@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,50 +14,25 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
     styleUrls: ['./subject-data-operations-save-form.component.scss'],
 })
 export class SubjectDataOperationsSaveFormComponent {
-    readonly SUBJECT_COLORS: string[] = [
-        '#1abc9c',
-        '#16a085',
-        '#2ecc71',
-        '#27ae60',
-        '#3498db',
-        '#2980b9',
-        '#9b59b6',
-        '#8e44ad',
-        '#34495e',
-        '#2c3e50',
-        '#f1c40f',
-        '#f39c12',
-        '#e67e22',
-        '#d35400',
-        '#e74c3c',
-        '#95a5a6',
-        '#666b5e',
-        '#a98467',
-        '#4e3524',
-        '#411900'
-    ];
+    colorPickerValid: boolean = true;
     //TODO kell változó, hogy betöltéskor egyből arra ugorjon, lementeni ennek értékét
 
     selectedSubject: SubjectDto = {} as SubjectDto;
 
     newName = new FormControl('');
     newAbbreviation = new FormControl('');
-    newColor = new FormControl('');
     newRequirement = new FormControl('');
 
     updatedName = new FormControl('');
     updatedAbbreviation = new FormControl('');
-    updatedColor = new FormControl('');
     updatedRequirement = new FormControl('');
 
-    constructor(private subjectService: SubjectService, private snackBar: MatSnackBar, private dialog: MatDialog) {
+    constructor(public subjectService: SubjectService, private snackBar: MatSnackBar, private dialog: MatDialog) {
         this.getSelectedSubject();
         this.newName?.addValidators(Validators.required);
         this.newAbbreviation?.addValidators(Validators.required);
-        this.newColor?.addValidators(Validators.required);
         this.updatedName?.addValidators(Validators.required);
         this.updatedAbbreviation?.addValidators(Validators.required);
-        this.updatedColor?.addValidators(Validators.required);
     }
 
     private getSelectedSubject(): void {
@@ -65,13 +40,14 @@ export class SubjectDataOperationsSaveFormComponent {
             this.selectedSubject = subject;
             this.updatedName.setValue(subject.name);
             this.updatedAbbreviation.setValue(subject.abbreviation);
-            this.updatedColor.setValue(subject.color);
+            let index = this.subjectService.SUBJECT_COLORS.indexOf(subject.color);
+            this.subjectService.colorPickerIndex = index !== -1 ? index : 0;
             this.updatedRequirement.setValue(subject.requirement);
         });
     }
 
     updateSubject(): void {
-        if (this.updatedName.valid && this.updatedAbbreviation.valid && this.updatedColor.valid) {
+        if (this.updatedName.valid && this.updatedAbbreviation.valid && this.colorPickerValid) {
             let updatedSubject: SubjectDto = this.createSubject(true);
             this.subjectService.updateSubject(updatedSubject).subscribe({
                 next: subject => {
@@ -93,11 +69,15 @@ export class SubjectDataOperationsSaveFormComponent {
                         panelClass: ['error-snackbar'],
                     }),
             });
+        } else {
+            if (this.subjectService.colorPickerIndex === 0) this.colorPickerValid = false;
+            if (this.updatedName.invalid) this.updatedName.markAsTouched();
+            if (this.updatedAbbreviation.invalid) this.updatedAbbreviation.markAsTouched();
         }
     }
 
     addSubject(): void {
-        if (this.newName.valid && this.newAbbreviation.valid && this.newColor.valid) {
+        if (this.newName.valid && this.newAbbreviation.valid && this.colorPickerValid) {
             let newSubject: SubjectDto = this.createSubject();
             this.subjectService.addSubject(newSubject).subscribe({
                 next: subject => {
@@ -119,6 +99,10 @@ export class SubjectDataOperationsSaveFormComponent {
                         panelClass: ['error-snackbar'],
                     }),
             });
+        } else {
+            if (this.subjectService.colorPickerIndex === 0) this.colorPickerValid = false;
+            if (this.newName.invalid) this.newName.markAsTouched();
+            if (this.newAbbreviation.invalid) this.newAbbreviation.markAsTouched();
         }
     }
 
@@ -167,13 +151,13 @@ export class SubjectDataOperationsSaveFormComponent {
         let requirement: string = '';
         if (isUpdated) {
             if (this.updatedName.value !== null) name = this.updatedName.value;
-            if (this.updatedColor.value !== null) color = this.updatedColor.value;
+            color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
             if (this.updatedAbbreviation.value !== null) abbreviation = this.updatedAbbreviation.value;
             if (this.updatedRequirement.value !== null) requirement = this.updatedRequirement.value;
             return new SubjectDto(name, abbreviation, color, requirement, 1, this.selectedSubject.id);
         } else {
             if (this.newName.value !== null) name = this.newName.value;
-            if (this.newColor.value !== null) color = this.newColor.value;
+            color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
             if (this.newAbbreviation.value !== null) abbreviation = this.newAbbreviation.value;
             if (this.newRequirement.value !== null) requirement = this.newRequirement.value;
             return new SubjectDto(name, abbreviation, color, requirement, 1);
@@ -190,5 +174,11 @@ export class SubjectDataOperationsSaveFormComponent {
 
     isInMobileView(): boolean {
         return this.getScreenWidth() <= 599;
+    }
+
+    colorSliderChange(value: number) {
+        if (value !== 0) this.colorPickerValid = true;
+        else this.colorPickerValid = false;
+        this.subjectService.colorPickerIndex = value;
     }
 }

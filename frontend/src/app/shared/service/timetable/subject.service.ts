@@ -11,6 +11,30 @@ export class SubjectService {
   allSubjectSubject: BehaviorSubject<SubjectDto[]> = new BehaviorSubject<SubjectDto[]>([]);
   selectedSubjectSubject: BehaviorSubject<SubjectDto> = new BehaviorSubject<SubjectDto>({} as SubjectDto);
   subjectDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
+  colorPickerIndex: number = 0;
+  readonly SUBJECT_COLORS: string[] = [
+    '',
+    '#1abc9c',
+    '#16a085',
+    '#2ecc71',
+    '#27ae60',
+    '#3498db',
+    '#2980b9',
+    '#9b59b6',
+    '#8e44ad',
+    '#34495e',
+    '#2c3e50',
+    '#f1c40f',
+    '#f39c12',
+    '#e67e22',
+    '#d35400',
+    '#e74c3c',
+    '#95a5a6',
+    '#666b5e',
+    '#a98467',
+    '#4e3524',
+    '#411900',
+];
 
   constructor(private subjectWebService: SubjectWebService) {
       this.getAllSubject();
@@ -58,6 +82,7 @@ export class SubjectService {
   }
 
   setSubjectDataOperationPageState(state: DataOperationPageState) {
+    if(state === DataOperationPageState.Add) this.colorPickerIndex = 0;
       this.subjectDataOperationPageState = state;
   }
 }
