@@ -21,6 +21,7 @@ import { SubjectDataOperationsSaveFormComponent } from './component/subject-view
 import { SubjectDataOperationsNavigationComponent } from './component/subject-view/subject-data-operations/subject-data-operations-navigation/subject-data-operations-navigation.component';
 import { SubjectDataOperationsDescriptionComponent } from './component/subject-view/subject-data-operations/subject-data-operations-description/subject-data-operations-description.component';
 import { SubjectDataOperationsUpdateFormComponent } from './component/subject-view/subject-data-operations/subject-data-operations-update-form/subject-data-operations-update-form.component';
+import { TeacherDataOperationsUpdateFormComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-update-form/teacher-data-operations-update-form.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { SubjectDataOperationsUpdateFormComponent } from './component/subject-vi
         SubjectDataOperationsNavigationComponent,
         SubjectDataOperationsDescriptionComponent,
         SubjectDataOperationsUpdateFormComponent,
+        TeacherDataOperationsUpdateFormComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],

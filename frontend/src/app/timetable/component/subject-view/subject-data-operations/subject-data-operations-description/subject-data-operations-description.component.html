@@ -34,9 +34,12 @@
         <mat-icon class="mr-5">info</mat-icon>
         Követelmények:
     </div>
-    <div *ngFor="let element of selectedSubject.requirement.split('\n')" class="ml-50 mb-20 content-font">
-        {{ element }}
+    <div *ngIf="selectedSubject.requirement">
+        <div *ngFor="let element of selectedSubject.requirement.split('\n')" class="ml-50 mb-20 content-font">
+            {{ element }}
+        </div>
     </div>
+    
 </div>
 <!-- <div>
     <div class="main-title-font mb-5 mt-30">Tanított kurzusai</div>

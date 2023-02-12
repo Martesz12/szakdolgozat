@@ -40,11 +40,10 @@
         <mat-icon class="mr-5">info</mat-icon>
         További információk:
     </div>
-    <div
-        *ngFor="let element of selectedTeacher.moreInformation.split('\n')"
-        class="ml-50 mb-20 content-font"
-    >
-        {{ element }}
+    <div *ngIf="selectedTeacher.moreInformation">
+        <div *ngFor="let element of selectedTeacher.moreInformation.split('\n')" class="ml-50 mb-20 content-font">
+            {{ element }}
+        </div>
     </div>
 </div>
 <div>

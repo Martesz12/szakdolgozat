@@ -3,8 +3,12 @@
         <app-teacher-data-operations-description></app-teacher-data-operations-description>
     </div>
 
-    <div *ngIf="isStateTheCurrentPageState('modify') || isStateTheCurrentPageState('add')" class="card-main">
+    <div *ngIf="isStateTheCurrentPageState('add')" class="card-main">
         <app-teacher-data-operations-save-form></app-teacher-data-operations-save-form>
+    </div>
+
+    <div *ngIf="isStateTheCurrentPageState('modify')" class="card-main">
+        <app-teacher-data-operations-update-form></app-teacher-data-operations-update-form>
     </div>
 
     <div *ngIf="isStateTheCurrentPageState('base')" class="card-main">
