@@ -1,1 +1,9 @@
-<p>lesson-view works!</p>
+<div class="lesson-cards">
+    <div *ngIf="showLessonListCard()" class="lesson-card">
+        <app-lesson-list></app-lesson-list>
+    </div>
+    <!-- fxHide.lt-sm -->
+    <div *ngIf="showLessonDataOperationCard()" class="lesson-card">
+        <app-lesson-data-operations></app-lesson-data-operations>
+    </div>
+</div>

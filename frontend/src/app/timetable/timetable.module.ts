@@ -22,6 +22,12 @@ import { SubjectDataOperationsNavigationComponent } from './component/subject-vi
 import { SubjectDataOperationsDescriptionComponent } from './component/subject-view/subject-data-operations/subject-data-operations-description/subject-data-operations-description.component';
 import { SubjectDataOperationsUpdateFormComponent } from './component/subject-view/subject-data-operations/subject-data-operations-update-form/subject-data-operations-update-form.component';
 import { TeacherDataOperationsUpdateFormComponent } from './component/teacher-view/teacher-data-operations/teacher-data-operations-update-form/teacher-data-operations-update-form.component';
+import { LessonListComponent } from './component/lesson-view/lesson-list/lesson-list.component';
+import { LessonDataOperationsComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations.component';
+import { LessonDataOperationsDescriptionComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations-description/lesson-data-operations-description.component';
+import { LessonDataOperationsNavigationComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations-navigation/lesson-data-operations-navigation.component';
+import { LessonDataOperationsSaveFormComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations-save-form/lesson-data-operations-save-form.component';
+import { LessonDataOperationsUpdateFormComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations-update-form/lesson-data-operations-update-form.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +50,12 @@ import { TeacherDataOperationsUpdateFormComponent } from './component/teacher-vi
         SubjectDataOperationsDescriptionComponent,
         SubjectDataOperationsUpdateFormComponent,
         TeacherDataOperationsUpdateFormComponent,
+        LessonListComponent,
+        LessonDataOperationsComponent,
+        LessonDataOperationsDescriptionComponent,
+        LessonDataOperationsNavigationComponent,
+        LessonDataOperationsSaveFormComponent,
+        LessonDataOperationsUpdateFormComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],
