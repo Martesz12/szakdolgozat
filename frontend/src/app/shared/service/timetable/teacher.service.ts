@@ -53,6 +53,10 @@ export class TeacherService {
         return this.teacherWebService.updateTeacher(teacher);
     }
 
+    getTeacherById(id: number): Observable<TeacherDto>{
+        return this.teacherWebService.getTeacherById(id);
+    }
+
     getTeacherDataOperationPageState() {
         return this.teacherDataOperationPageState;
     }

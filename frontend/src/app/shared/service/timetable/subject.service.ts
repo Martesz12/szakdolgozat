@@ -77,6 +77,10 @@ export class SubjectService {
       return this.subjectWebService.updateSubject(subject);
   }
 
+  getSubjectById(id: number): Observable<SubjectDto> {
+    return this.subjectWebService.getSubjectById(id);
+  }
+
   getSubjectDataOperationPageState() {
       return this.subjectDataOperationPageState;
   }

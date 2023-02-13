@@ -1,7 +1,7 @@
 <div class="main-title-font card-main-title">Leírás</div>
 
 <div *ngIf="isInMobileView()">
-    <app-teacher-data-operations-navigation></app-teacher-data-operations-navigation>
+    <app-lesson-data-operations-navigation></app-lesson-data-operations-navigation>
 </div>
 
 <div>
@@ -12,13 +12,13 @@
         <mat-icon class="mr-5">school</mat-icon>
         Tantárgy:
     </div>
-    <div class="ml-50 mb-20 content-font">{{ allSubject[selectedLessonSubjectId].name }}</div>
+    <div class="ml-50 mb-20 content-font">{{ selectedLessonSubject.name }}</div>
 
     <div class="secondary-title-font card-description-element-title">
         <mat-icon class="mr-5">person</mat-icon>
         Tanár:
     </div>
-    <div class="ml-50 mb-20 content-font">{{ allTeacher[selectedLessonTeacherId].name }}</div>
+    <div class="ml-50 mb-20 content-font">{{ selectedLessonTeacher.name }}</div>
 
     <div class="secondary-title-font card-description-element-title">
         <mat-icon class="mr-5">event</mat-icon>

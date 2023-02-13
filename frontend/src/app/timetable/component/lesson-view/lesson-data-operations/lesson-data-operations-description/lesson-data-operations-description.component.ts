@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject, map, mergeMap, switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
@@ -14,41 +15,33 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
 })
 export class LessonDataOperationsDescriptionComponent {
     selectedLesson: LessonDto = {} as LessonDto;
-    allSubject: SubjectDto[] = [];
-    allTeacher: TeacherDto[] = [];
-    selectedLessonSubjectId: number = -1;
-    selectedLessonTeacherId: number = -1;
+    allSubject: SubjectDto[] = [] as SubjectDto[];
+    allTeacher: TeacherDto[] = [] as TeacherDto[];
+    selectedLessonSubject: SubjectDto = {} as SubjectDto;
+    selectedLessonTeacher: TeacherDto = {} as TeacherDto;
 
     constructor(
         private lessonService: LessonService,
         private subjectService: SubjectService,
         private teacherService: TeacherService
     ) {
-        this.getAllSubject();
-        // this.getAllTeacher();
-        // this.getSelectedLesson();
+        this.initializeDataForDescription();
     }
 
-    private getSelectedLesson() {
-        this.lessonService.getSelectedLessonSubject().subscribe(lesson => {
-            this.selectedLesson = lesson;
-            this.selectedLessonSubjectId = this.allSubject.findIndex(subject => subject.id === lesson.subjectId);
-            this.selectedLessonTeacherId = this.allTeacher.findIndex(teacher => teacher.id === lesson.teacherId);
-        });
-    }
-
-    getAllSubject(): void {
-        this.subjectService.getAllSubjectSubject().subscribe(subjects => {
-            this.allSubject = subjects;
-            this.getAllTeacher();
-        });
-    }
-
-    getAllTeacher(): void {
-        this.teacherService.getAllTeacherSubject().subscribe(teachers => {
-            this.allTeacher = teachers;
-            this.getSelectedLesson();
-        });
+    initializeDataForDescription() {
+        this.lessonService
+            .getSelectedLessonSubject()
+            .pipe(
+                switchMap(lesson => {
+                    this.selectedLesson = lesson;
+                    return this.teacherService.getTeacherById(this.selectedLesson.teacherId);
+                }),
+                switchMap(teacher => {
+                    this.selectedLessonTeacher = teacher;
+                    return this.subjectService.getSubjectById(this.selectedLesson.subjectId);
+                })
+            )
+            .subscribe(subject => (this.selectedLessonSubject = subject));
     }
 
     getScreenWidth(): number {
