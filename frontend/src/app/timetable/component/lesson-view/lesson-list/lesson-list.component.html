@@ -15,27 +15,27 @@
         </div>
 
         <div
-            *ngFor="let lesson of filteredAllLesson; let i = index"
+            *ngFor="let lesson of filteredAllLessonName | keyvalue; let i = index"
             class="list-row"
-            [ngClass]="selectedLesson.id === lesson.id ? 'list-row-selected' : ''"
+            [ngClass]="selectedLesson.id === lesson.key ? 'list-row-selected' : ''"
             [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
         >
-            <div class="list-row-name ml-10 content-font" (dblclick)="selectLesson(lesson.id)">
-                {{ allLessonListName[i] }}
+            <div class="list-row-name ml-10 content-font" (dblclick)="selectLesson(lesson.key)">
+                {{ lesson.value }}
             </div>
             <div class="list-row-buttons">
                 <div class="list-action-button">
-                    <button mat-icon-button (click)="selectLesson(lesson.id)">
+                    <button mat-icon-button (click)="selectLesson(lesson.key)">
                         <mat-icon> description </mat-icon>
                     </button>
                 </div>
                 <div class="list-action-button">
-                    <button mat-icon-button (click)="modifyLesson(lesson.id)">
+                    <button mat-icon-button (click)="modifyLesson(lesson.key)">
                         <mat-icon> edit </mat-icon>
                     </button>
                 </div>
                 <div class="list-delete-button">
-                    <button mat-icon-button (click)="openDeleteDialog(lesson.id)">
+                    <button mat-icon-button (click)="openDeleteDialog(lesson.key)">
                         <mat-icon> delete </mat-icon>
                     </button>
                 </div>

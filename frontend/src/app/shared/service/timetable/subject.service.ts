@@ -43,7 +43,6 @@ export class SubjectService {
   getAllSubject() {
       this.subjectWebService.getAllSubject().subscribe(subjects => {
           this.allSubjectSubject.next(subjects);
-          console.log(subjects);
       });
   }
 

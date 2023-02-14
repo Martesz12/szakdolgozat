@@ -1,11 +1,14 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
+import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 
 @Component({
     selector: 'app-lesson-list',
@@ -17,13 +20,15 @@ export class LessonListComponent {
     filteredAllLesson: LessonDto[] = [];
     filterText: string = '';
     selectedLesson: LessonDto = {} as LessonDto;
-    allLessonListName: string[] = [];
+    allLessonName: Map<number, string> = new Map<number, string>();
+    filteredAllLessonName: Map<number, string> = new Map<number, string>();
 
     constructor(
         private lessonService: LessonService,
         private changeDetection: ChangeDetectorRef,
         private snackBar: MatSnackBar,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private subjectService: SubjectService
     ) {
         this.getAllLesson();
         this.getSelectedLesson();
@@ -36,17 +41,34 @@ export class LessonListComponent {
     }
 
     private getAllLesson() {
-        this.lessonService.getAllLessonSubject().subscribe(lessons => {
-            this.allLesson = lessons;
-            this.filteredAllLesson = lessons;
-            this.setAllLessonListName();
-        });
+        this.lessonService
+            .getAllLessonSubject()
+            .pipe(
+                switchMap(lessons => {
+                    this.allLesson = lessons;
+                    this.filteredAllLesson = lessons;
+                    return this.subjectService.getAllSubjectSubject();
+                })
+            )
+            .subscribe(subjects => {
+                if (subjects && subjects.length) this.createLessonListName(subjects);
+            });
     }
 
-    private setAllLessonListName(){
-      this.allLesson.forEach((lesson, i) => this.allLessonListName[i] = lesson.day + " - " + lesson.subjectId + " - " + lesson.type);
-      console.log(this.allLessonListName);
-      
+    createLessonListName(allSubject: SubjectDto[]): void {
+        this.filteredAllLessonName = new Map<number, string>();
+        this.allLessonName = new Map<number, string>();
+        
+        this.allLesson.forEach(lesson => {
+            let lessonId: number = -1;
+            if(lesson.id !== null) lessonId = lesson.id;
+            this.allLessonName.set(lessonId, lesson.day +
+                ' - ' +
+                allSubject.filter(subject => subject.id === lesson.subjectId)[0].name +
+                ' - ' +
+                lesson.type);
+        });
+        this.filteredAllLessonName = new Map(this.allLessonName);
     }
 
     selectLesson(lessonId: number | null) {
@@ -86,9 +108,9 @@ export class LessonListComponent {
         if (lessonId !== null)
             this.lessonService.deleteLesson(lessonId).subscribe({
                 next: _ => {
-                    this.lessonService.getAllLesson();
-                    this.lessonService.removeSelectedLesson();
                     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
+                    this.lessonService.removeSelectedLesson();
+                    this.lessonService.getAllLesson();
                     this.snackBar.open('Tanóra törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
@@ -112,9 +134,10 @@ export class LessonListComponent {
     }
 
     private filterOnAllLesson() {
-        this.filteredAllLesson = this.allLesson.filter((lesson, i) =>
-            this.allLessonListName[i].toLowerCase().includes(this.filterText.toLowerCase())
-        );
+        this.filteredAllLessonName = new Map<number, string>();
+        this.allLessonName.forEach((value, key) => {
+            if(value.toLowerCase().includes(this.filterText.toLowerCase())) this.filteredAllLessonName.set(key, value)
+        });
     }
 
     private highlightMatch() {

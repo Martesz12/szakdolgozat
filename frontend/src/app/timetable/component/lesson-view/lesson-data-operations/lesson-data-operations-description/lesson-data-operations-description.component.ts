@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subject, map, mergeMap, switchMap } from 'rxjs';
+import { Component } from '@angular/core';
+import { filter, switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
@@ -32,6 +31,7 @@ export class LessonDataOperationsDescriptionComponent {
         this.lessonService
             .getSelectedLessonSubject()
             .pipe(
+                filter(lesson => lesson !== undefined && Object.keys(lesson).length !== 0),
                 switchMap(lesson => {
                     this.selectedLesson = lesson;
                     return this.teacherService.getTeacherById(this.selectedLesson.teacherId);
