@@ -36,7 +36,7 @@ export class TimetableSideMenuComponent {
         else if (menuElementId === 32) this.router.navigateByUrl('timetable/agenda-monthly');
     }
 
-    addTimetable(){
+    editTimetables(){
         console.log("haluuu");
         
     }
