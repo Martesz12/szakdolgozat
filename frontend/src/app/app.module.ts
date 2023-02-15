@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './component/navigation/navigation.component';
 import { SharedModule } from './shared/shared.module';
 import { TimetableModule } from './timetable/timetable.module';
-import { TimetableSideMenuComponent } from './component/timetable-side-menu/timetable-side-menu.component';
+import { TimetableSideMenuComponent } from './timetable/component/timetable-side-menu/timetable-side-menu.component';
 
 @NgModule({
     declarations: [AppComponent, NavigationComponent, TimetableSideMenuComponent],
