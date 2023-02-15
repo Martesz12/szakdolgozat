@@ -1,9 +1,25 @@
+<div class="timetable-form">
+    <mat-form-field class="timetable-form-field" appearance="outline">
+        <mat-label>Órarend</mat-label>
+        <mat-select disableOptionCentering>
+            <mat-option [value]="1"> Órarend 1 </mat-option>
+            <mat-option [value]="2"> Órarend 2 </mat-option>
+            <div class="timetable-select-button">
+                <button mat-raised-button color="primary" (click)="addTimetable()">
+                    Órarendek szerkesztése
+                </button>
+            </div>
+        </mat-select>
+    </mat-form-field>
+</div>
+
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
     <mat-tree-node
         *matTreeNodeDef="let node"
         matTreeNodeToggle
         [ngClass]="selectedMenuElement === node.id ? 'selected-leaf-node' : ''"
-        (click)="onMenuElementSelected(node.id)" class="content-font"
+        (click)="onMenuElementSelected(node.id)"
+        class="content-font"
     >
         <div>
             {{ node.name }}

@@ -1,5 +1,5 @@
-.tree{
-    height: 100%;
+.tree {
+    background-color: #fafafa;
 }
 
 .tree-invisible {
@@ -14,7 +14,7 @@
     padding-left: 50px;
 }
 
-.root-node{
+.root-node {
     padding: 10px;
     box-sizing: border-box;
     display: flex;
@@ -37,7 +37,23 @@
     cursor: pointer;
 }
 
-.selected-leaf-node{
+.selected-leaf-node {
     color: var(--primary100);
     background-color: var(--neutral200);
+}
+
+.timetable-form-field {
+    width: 90%;
+}
+
+.timetable-form {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px
+}
+
+.timetable-select-button{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
 }
