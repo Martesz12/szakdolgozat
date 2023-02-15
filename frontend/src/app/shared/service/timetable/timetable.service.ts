@@ -7,7 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class TimetableService {
-    allTimetableSubject: BehaviorSubject<TimetableDto[]> = new BehaviorSubject<TimetableDto[]>([]);
+    private allTimetableSubject: BehaviorSubject<TimetableDto[]> = new BehaviorSubject<TimetableDto[]>([]);
+    private selectedTimetableId: number = 1;
 
     constructor(private timetableWebService: TimetableWebService) {
         this.getAllTimetable();
@@ -37,5 +38,13 @@ export class TimetableService {
 
     getTimetableById(number: number): Observable<TimetableDto> {
         return this.timetableWebService.getTimetableById(number);
+    }
+
+    setSelectedTimetableId(selectedId: number): void {
+        this.selectedTimetableId = selectedId;
+    }
+
+    getSelectedTimetableId(): number {
+        return this.selectedTimetableId;
     }
 }

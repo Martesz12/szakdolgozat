@@ -1,0 +1,97 @@
+.timetable-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.timetable-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.timetable-dialog-list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 200px;
+}
+
+.list-row-first {
+    border-top: 1px solid var(--neutral);
+}
+
+.list-row {
+    width: 100%;
+    height: 45px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--neutral);
+}
+
+.list-row-buttons {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.list-action-button,
+.list-delete-button {
+    transition: 0.3s;
+    height: 100%;
+}
+
+.list-action-button:hover,
+.list-action-button:focus {
+    background-color: var(--primary100);
+    color: var(--neutral200);
+    cursor: pointer;
+}
+
+.list-delete-button:hover,
+.list-delete-button:focus {
+    background-color: var(--uberdanger);
+    color: var(--neutral200);
+    cursor: pointer;
+}
+
+.add-timetable-button {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-timetable-button-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.rotate {
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    font-weight: 900;
+}
+.rotate:hover {
+    transform: rotate(90deg);
+    color: var(--primary);
+}
+
+.timetable-save-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dialog-buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0;
+}
