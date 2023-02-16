@@ -1,12 +1,19 @@
 <div class="timetable-form">
     <mat-form-field class="timetable-form-field" appearance="outline">
         <mat-label>Órarend</mat-label>
-        <mat-select #timetableSelect disableOptionCentering (selectionChange)="onTimetableSelected($event)">
+        <mat-select
+            #timetableSelect
+            disableOptionCentering
+            (selectionChange)="onTimetableSelected($event)"
+            [value]="timetableService.getSelectedTimetableId()"
+        >
             <mat-option *ngFor="let element of allTimetable$ | async" [value]="element.id">
                 {{ element.name }}
             </mat-option>
             <div class="timetable-select-button">
-                <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">Órarendek szerkesztése</button>
+                <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">
+                    Órarendek szerkesztése
+                </button>
             </div>
         </mat-select>
     </mat-form-field>

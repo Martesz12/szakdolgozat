@@ -28,7 +28,7 @@ export class TimetableSideMenuComponent {
     constructor(
         private router: Router,
         private navigationService: NavigationService,
-        private timetableService: TimetableService,
+        public timetableService: TimetableService,
         private dialog: MatDialog
     ) {
         this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
@@ -60,6 +60,6 @@ export class TimetableSideMenuComponent {
     }
 
     onTimetableSelected(selectChangeEvent: MatSelectChange) {
-        console.log(selectChangeEvent.value);
+        this.timetableService.setSelectedTimetableId(selectChangeEvent.value);
     }
 }

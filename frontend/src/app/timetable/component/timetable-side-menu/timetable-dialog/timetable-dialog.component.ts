@@ -18,13 +18,20 @@ export class TimetableDialogComponent {
     timetableName = new FormControl('', Validators.required);
     selectedForEditIds: number[] = [];
     editedTimetables: Map<number, string> = new Map<number, string>();
+    numberOfTimetables: number = 0;
 
     constructor(
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
         public timetableService: TimetableService,
         public dialog: MatDialog,
         public snackBar: MatSnackBar
-    ) {}
+    ) {
+        this.timetableService.getAllTimetableSubject().subscribe(timetables => {
+            this.numberOfTimetables = timetables.length;
+            if (this.numberOfTimetables === 1 || this.timetableService.getSelectedTimetableId() === 0)
+                this.timetableService.setSelectedTimetableId(timetables[0].id!);
+        });
+    }
 
     modifyTimetable(timetable: TimetableDto): void {
         if (timetable.id) this.editedTimetables.set(timetable.id, timetable.name);
@@ -97,7 +104,6 @@ export class TimetableDialogComponent {
         });
     }
 
-    //TODO valamiért nem mindig jó a törlés
     //TODO kiválasztott órarendet megcsinálni, az alapján töltődjenek be a dolgok
     //TODO ha törölsz órarendet, akkor a tanórák törlődjenek
     //TODO egyszer megnézni mindent hogy hogy van a törlésénél a cascade-olás
@@ -105,6 +111,12 @@ export class TimetableDialogComponent {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({
                 next: _ => {
+                    if (this.numberOfTimetables === 1) {
+                        this.addTimetable();
+                    }
+                    if (timetableId === this.timetableService.getSelectedTimetableId()) {
+                        this.timetableService.setSelectedTimetableId(0);
+                    }
                     this.timetableService.getAllTimetable();
                     this.editedTimetables.delete(timetableId);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {

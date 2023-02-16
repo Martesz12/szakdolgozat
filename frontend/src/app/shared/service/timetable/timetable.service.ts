@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class TimetableService {
     private allTimetableSubject: BehaviorSubject<TimetableDto[]> = new BehaviorSubject<TimetableDto[]>([]);
-    private selectedTimetableId: number = 1;
+    private selectedTimetableId: number = 0;
 
     constructor(private timetableWebService: TimetableWebService) {
         this.getAllTimetable();
