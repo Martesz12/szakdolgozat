@@ -104,20 +104,21 @@ export class TimetableDialogComponent {
         });
     }
 
-    //TODO kiválasztott órarendet megcsinálni, az alapján töltődjenek be a dolgok
     //TODO ha törölsz órarendet, akkor a tanórák törlődjenek
-    //TODO egyszer megnézni mindent hogy hogy van a törlésénél a cascade-olás
+    //TODO megnézni hogy hogy van a törlésénél a cascade-olás
+    //TODO Valami subject vagy nem tudom, ami felimseri a timetable változást
     deleteTimetable(timetableId: number | null): void {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({
                 next: _ => {
                     if (this.numberOfTimetables === 1) {
                         this.addTimetable();
+                    } else {
+                        if (timetableId === this.timetableService.getSelectedTimetableId()) {
+                            this.timetableService.setSelectedTimetableId(0);
+                        }
+                        this.timetableService.getAllTimetable();
                     }
-                    if (timetableId === this.timetableService.getSelectedTimetableId()) {
-                        this.timetableService.setSelectedTimetableId(0);
-                    }
-                    this.timetableService.getAllTimetable();
                     this.editedTimetables.delete(timetableId);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {
                         duration: 2000,
