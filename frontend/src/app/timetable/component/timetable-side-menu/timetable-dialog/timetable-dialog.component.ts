@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
+import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { TimetableDto } from 'src/app/shared/model/timetable/dto/timetable.dto';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
-
-export const timetableOperationStates = ['base', 'add', 'modify'] as const;
-export type TimetableOperationStates = typeof timetableOperationStates[number];
 
 @Component({
     selector: 'app-timetable-dialog',
@@ -15,45 +15,119 @@ export type TimetableOperationStates = typeof timetableOperationStates[number];
 })
 export class TimetableDialogComponent {
     allTimetable$: Observable<TimetableDto[]> = this.timetableService.getAllTimetableSubject();
-    selectedTimetableId: number | null = null;
     timetableName = new FormControl('', Validators.required);
-    currentOperationState: TimetableOperationStates = 'base';
+    selectedForEditIds: number[] = [];
+    editedTimetables: Map<number, string> = new Map<number, string>();
 
-    constructor(public dialogRef: MatDialogRef<TimetableDialogComponent>, public timetableService: TimetableService) {
-        this.selectedTimetableId = timetableService.getSelectedTimetableId();
-    }
-
-    setSelectedTimetable(selectedId: number | null): void {
-        this.selectedTimetableId = selectedId;
-    }
+    constructor(
+        public dialogRef: MatDialogRef<TimetableDialogComponent>,
+        public timetableService: TimetableService,
+        public dialog: MatDialog,
+        public snackBar: MatSnackBar
+    ) {}
 
     modifyTimetable(timetable: TimetableDto): void {
-        //TODO beállítani a nevet meg selected Timetable esetleg
-        this.currentOperationState = 'modify';
+        if (timetable.id) this.editedTimetables.set(timetable.id, timetable.name);
     }
-
-    openDeleteDialog(timetableId: number | null): void {}
 
     addTimetable(): void {
-        //TODO csinálni új timetable-t és az a selected Timetable esetleg
-        this.currentOperationState = 'add';
+        let timetable: TimetableDto = new TimetableDto('Új órarend', 1);
+        this.timetableService.addTimetable(timetable).subscribe({
+            next: newTimetable => {
+                this.timetableService.getAllTimetable();
+                this.modifyTimetable(newTimetable);
+                this.snackBar.open('Órarend hozzáadása sikeres!', 'X', {
+                    duration: 2000,
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['info-snackbar'],
+                });
+            },
+            error: error =>
+                this.snackBar.open('Hiba órarend hozzáadása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        });
     }
 
-    saveTimetable(): void {
-        if (this.currentOperationState === 'add') {
-            //TODO
-        } else if (this.currentOperationState === 'modify') {
-            //TODO
+    saveTimetable(timetable: TimetableDto): void {
+        if (timetable.id) {
+            if (this.editedTimetables.get(timetable.id)) {
+                let updatedTimetable: TimetableDto = new TimetableDto(
+                    this.editedTimetables.get(timetable.id)!,
+                    timetable.userId,
+                    timetable.id
+                );
+                this.timetableService.updateTimetable(updatedTimetable).subscribe({
+                    next: _ => {
+                        this.timetableService.getAllTimetable();
+                        this.editedTimetables.delete(timetable.id!);
+                        this.snackBar.open('Órarend módosítása sikeres!', 'X', {
+                            duration: 2000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['info-snackbar'],
+                        });
+                    },
+                    error: error =>
+                        this.snackBar.open('Hiba órarend módosítása során: ' + error, 'X', {
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['error-snackbar'],
+                        }),
+                });
+            }
         }
-        this.currentOperationState = 'base';
     }
 
-    saveDialog(): void {
-        //TODO átírni az aktuális kijelöltre a selected timetable-t
-        this.dialogRef.close();
+    openDeleteDialog(timetableId: number | null): void {
+        const dialogInterface: DialogData = {
+            dialogHeader: 'Órarend törlése',
+            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.',
+            cancelButtonLabel: 'Vissza',
+            confirmButtonLabel: 'Törlés',
+            callbackMethod: () => {
+                this.deleteTimetable(timetableId);
+            },
+        };
+        this.dialog.open(DialogComponent, {
+            data: dialogInterface,
+        });
+    }
+
+    //TODO valamiért nem mindig jó a törlés
+    //TODO kiválasztott órarendet megcsinálni, az alapján töltődjenek be a dolgok
+    //TODO ha törölsz órarendet, akkor a tanórák törlődjenek
+    //TODO egyszer megnézni mindent hogy hogy van a törlésénél a cascade-olás
+    deleteTimetable(timetableId: number | null): void {
+        if (timetableId)
+            this.timetableService.deleteTimetable(timetableId).subscribe({
+                next: _ => {
+                    this.timetableService.getAllTimetable();
+                    this.editedTimetables.delete(timetableId);
+                    this.snackBar.open('Órarend törlése sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar'],
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba órarend törlése során: ' + error, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    }),
+            });
     }
 
     closeDialog(): void {
         this.dialogRef.close();
+    }
+
+    changeUpdatedName(id: number, updatedName: string): void {
+        this.editedTimetables.set(id, updatedName);
     }
 }

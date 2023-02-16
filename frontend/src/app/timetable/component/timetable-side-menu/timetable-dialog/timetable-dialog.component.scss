@@ -14,7 +14,7 @@
 .timetable-dialog-list {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 200px;
+    height: 300px;
 }
 
 .list-row-first {
@@ -94,4 +94,10 @@
     align-items: flex-end;
     justify-content: space-between;
     margin: 0;
+}
+
+.timetable-dialog-input-field{
+    border: 2px solid var(--grey);
+    padding: 0px 4px;
+    margin: 0px 4px;
 }

@@ -13,17 +13,29 @@
                 class="list-row"
                 [class.list-row-first]="i === 0"
             >
-                <mat-checkbox
-                    class="ml-5"
-                    [checked]="timetable.id === selectedTimetableId"
-                    (change)="setSelectedTimetable(timetable.id)"
+                <div
+                    *ngIf="timetable.id && !editedTimetables.has(timetable.id)"
+                    class="content-font ml-10"
+                    style="width: 100%"
                 >
-                </mat-checkbox>
-                <div class="content-font ml-10" style="width: 100%">{{ timetable.name }}</div>
+                    {{ timetable.name }}
+                </div>
+                <div
+                    *ngIf="timetable.id && editedTimetables.has(timetable.id)"
+                    class="content-font timetable-dialog-input-field"
+                    style="width: 100%"
+                >
+                    <input matInput type="text" #updatedName [value]="timetable.name" (change)="changeUpdatedName(timetable.id, updatedName.value)" />
+                </div>
                 <div class="list-row-buttons">
-                    <div class="list-action-button">
+                    <div *ngIf="timetable.id && !editedTimetables.has(timetable.id)" class="list-action-button">
                         <button mat-icon-button (click)="modifyTimetable(timetable)">
                             <mat-icon> edit </mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="timetable.id && editedTimetables.has(timetable.id)" class="list-action-button">
+                        <button mat-icon-button (click)="saveTimetable(timetable)">
+                            <mat-icon> save </mat-icon>
                         </button>
                     </div>
                     <div class="list-delete-button">
@@ -34,24 +46,9 @@
                 </div>
             </div>
         </div>
-
-        <div *ngIf="currentOperationState !== 'base'" class="timetable-operations mt-10">
-            <div *ngIf="currentOperationState === 'modify'" class="main-title-font">Módosítás</div>
-            <div *ngIf="currentOperationState === 'add'" class="main-title-font">Hozzáadás</div>
-            <div class="timetable-save-form mt-10">
-                <mat-form-field class="form-field-full-width" appearance="outline">
-                    <mat-label>Név</mat-label>
-                    <input matInput type="text" [formControl]="timetableName" />
-                </mat-form-field>
-                <div>
-                    <button class="ml-10" mat-raised-button color="primary" (click)="saveTimetable()">Mentés</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="dialog-buttons">
-        <button mat-raised-button color="warn" (click)="closeDialog()">Mégse</button>
-        <button mat-raised-button color="primary" (click)="saveDialog()">Megerősít</button>
+        <button mat-raised-button color="primary" (click)="closeDialog()">Vissza</button>
     </div>
 </div>

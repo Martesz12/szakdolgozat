@@ -1,7 +1,7 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -22,6 +22,8 @@ export class TimetableSideMenuComponent {
     dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
     selectedMenuElement: number = 0;
     allTimetable$: Observable<TimetableDto[]> = this.timetableService.getAllTimetableSubject();
+
+    @ViewChild('timetableSelect') timetableSelect!: MatSelect;
 
     constructor(
         private router: Router,
@@ -49,9 +51,11 @@ export class TimetableSideMenuComponent {
     }
 
     onEditTimetableClicked(): void {
+        this.timetableSelect.close()
         this.dialog.open(TimetableDialogComponent, {
             height: '500px',
             width: '400px',
+            disableClose: true,
           });
     }
 
