@@ -10,13 +10,13 @@
             <mat-option *ngFor="let element of allTimetable$ | async" [value]="element.id">
                 {{ element.name }}
             </mat-option>
-            <div class="timetable-select-button">
-                <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">
-                    Órarendek szerkesztése
-                </button>
-            </div>
         </mat-select>
     </mat-form-field>
+    <div class="timetable-select-button">
+        <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">
+            Órarendek szerkesztése
+        </button>
+    </div>
 </div>
 
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="tree">
