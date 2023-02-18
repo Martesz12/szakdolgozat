@@ -2,10 +2,13 @@ package hu.szakdoga.backend.timetable.data.entity;
 
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "timetable")
@@ -24,6 +27,9 @@ public class TimetableEntity {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "timetable", cascade = {CascadeType.REMOVE})
+    private List<LessonEntity> lessons = new ArrayList<>();
 
     public TimetableEntity(Long id, String name, UserEntity user) {
         this.id = id;

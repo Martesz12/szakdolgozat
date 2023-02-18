@@ -1,6 +1,7 @@
 package hu.szakdoga.backend.timetable.data.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
