@@ -1,10 +1,13 @@
 <div fxLayout="column" fxFlexFill="min-height">
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
-        <button mat-button fxFlex="initial" fxHide fxShow.lt-md (click)="drawer.toggle()">
+        <button *ngIf="!drawer.opened" mat-button fxFlex="initial" (click)="drawer.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
+        <button *ngIf="drawer.opened" mat-button fxFlex="initial" (click)="drawer.toggle()">
+            <mat-icon>close</mat-icon>
+        </button>
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-title navigation-main-font">
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-main-font">
             <div>Szakdolgozat</div>
         </div>
 
@@ -18,8 +21,8 @@
     </mat-toolbar>
 
     <mat-drawer-container fxFlex>
-        <mat-drawer #drawer>
-            <mat-nav-list class="navigation-main-font">
+        <mat-drawer #drawer [mode]="drawerMode" [opened]="!isInMobileView()">
+            <mat-nav-list fxHide fxShow.xs class="navigation-main-font">
                 <div mat-list-item class="drawer-element">
                     <mat-icon class="mr-5">today</mat-icon>
                     <span>Órarend</span>
@@ -38,9 +41,6 @@
         </mat-drawer>
 
         <div class="main-page">
-            <div fxShow fxHide.lt-md class="side-menu-border">
-                <app-timetable-side-menu></app-timetable-side-menu>
-            </div>
             <div class="content">
                 <router-outlet></router-outlet>
             </div>
