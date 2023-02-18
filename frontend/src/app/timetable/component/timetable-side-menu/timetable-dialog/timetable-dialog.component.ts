@@ -16,9 +16,7 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 export class TimetableDialogComponent {
     allTimetable$: Observable<TimetableDto[]> = this.timetableService.getAllTimetableSubject();
     timetableName = new FormControl('', Validators.required);
-    selectedForEditIds: number[] = [];
     editedTimetables: Map<number, string> = new Map<number, string>();
-    numberOfTimetables: number = 0;
 
     constructor(
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
@@ -27,9 +25,7 @@ export class TimetableDialogComponent {
         public snackBar: MatSnackBar
     ) {
         this.timetableService.getAllTimetableSubject().subscribe(timetables => {
-            this.numberOfTimetables = timetables.length;
-            if (this.numberOfTimetables === 1 || this.timetableService.getSelectedTimetableId() === 0)
-                this.timetableService.setSelectedTimetableId(timetables[0].id!);
+            if (timetables.length === 0) this.addTimetable();
         });
     }
 
@@ -111,14 +107,7 @@ export class TimetableDialogComponent {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({
                 next: _ => {
-                    if (this.numberOfTimetables === 1) {
-                        this.addTimetable();
-                    } else {
-                        if (timetableId === this.timetableService.getSelectedTimetableId()) {
-                            this.timetableService.setSelectedTimetableId(0);
-                        }
-                        this.timetableService.getAllTimetable();
-                    }
+                    this.timetableService.getAllTimetable();
                     this.editedTimetables.delete(timetableId);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {
                         duration: 2000,

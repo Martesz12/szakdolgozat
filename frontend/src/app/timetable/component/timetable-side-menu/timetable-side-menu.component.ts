@@ -61,5 +61,6 @@ export class TimetableSideMenuComponent {
 
     onTimetableSelected(selectChangeEvent: MatSelectChange) {
         this.timetableService.setSelectedTimetableId(selectChangeEvent.value);
+        //TODO ide váltós subject
     }
 }
