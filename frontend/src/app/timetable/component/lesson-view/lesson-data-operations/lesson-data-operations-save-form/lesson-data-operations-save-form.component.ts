@@ -8,6 +8,7 @@ import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
     selector: 'app-lesson-data-operations-save-form',
@@ -15,20 +16,9 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
     styleUrls: ['./lesson-data-operations-save-form.component.scss'],
 })
 export class LessonDataOperationsSaveFormComponent {
-    readonly DAYS: string[] = [
-        'Hétfő',
-        'Kedd',
-        'Szerda',
-        'Csütörtök',
-        'Péntek',
-        'Szombat',
-        'Vasárnap',
-    ];
+    readonly DAYS: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
 
-    readonly TYPES: string[] = [
-        'Előadás',
-        'Gyakorlat',
-    ];
+    readonly TYPES: string[] = ['Előadás', 'Gyakorlat'];
 
     allSubject: SubjectDto[] = [];
     allTeacher: TeacherDto[] = [];
@@ -38,14 +28,16 @@ export class LessonDataOperationsSaveFormComponent {
     newLocation = new FormControl('');
     newType = new FormControl('');
     newSubjectId = new FormControl('');
-    // newTimetableId = new FormControl('');
     newTeacherId = new FormControl('');
+
+    selectedTimetableId: number = 0;
 
     constructor(
         private lessonService: LessonService,
         private snackBar: MatSnackBar,
         private subjectService: SubjectService,
-        private teacherService: TeacherService
+        private teacherService: TeacherService,
+        private timetableService: TimetableService
     ) {
         this.getAllSubject();
         this.getAllTeacher();
@@ -55,6 +47,13 @@ export class LessonDataOperationsSaveFormComponent {
         this.newType?.addValidators(Validators.required);
         this.newSubjectId?.addValidators(Validators.required);
         this.newTeacherId?.addValidators(Validators.required);
+        this.getSelecterTimetableId();
+    }
+
+    getSelecterTimetableId() {
+        this.timetableService
+            .getSelectedTimetableId()
+            .subscribe(timetableId => (this.selectedTimetableId = timetableId));
     }
 
     getAllSubject(): void {
@@ -77,7 +76,7 @@ export class LessonDataOperationsSaveFormComponent {
             let newLesson: LessonDto = this.createLesson();
             this.lessonService.addLesson(newLesson).subscribe({
                 next: lesson => {
-                    this.lessonService.getAllLesson();
+                    this.lessonService.getLessonsByTimetableId();
                     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Description);
                     if (lesson.id !== null) this.lessonService.selectLesson(lesson.id);
                     this.newDay.markAsUntouched();
@@ -93,12 +92,14 @@ export class LessonDataOperationsSaveFormComponent {
                         panelClass: ['info-snackbar'],
                     });
                 },
-                error: error =>
+                error: error => {
+                    if(this.selectedTimetableId === 0) error = "Nincs kiválasztott órarend!"
                     this.snackBar.open('Hiba tanóra hozzáadása során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
                         panelClass: ['error-snackbar'],
-                    }),
+                    });
+                },
             });
         } else {
             if (this.newDay.invalid) this.newDay.markAsTouched();
@@ -119,15 +120,13 @@ export class LessonDataOperationsSaveFormComponent {
         let subjectId: number = -1;
         let teacherId: number = -1;
         if (this.newDay.value !== null) day = this.newDay.value;
-        if (this.newStartTime.value !== null)
-            startTime = this.newStartTime.value;
-        if (this.newEndTime.value !== null)
-            endTime = this.newEndTime.value;
+        if (this.newStartTime.value !== null) startTime = this.newStartTime.value;
+        if (this.newEndTime.value !== null) endTime = this.newEndTime.value;
         if (this.newType.value !== null) type = this.newType.value;
         if (this.newLocation.value !== null) location = this.newLocation.value;
         if (this.newSubjectId.value !== null) subjectId = +this.newSubjectId.value;
         if (this.newTeacherId.value !== null) teacherId = +this.newTeacherId.value;
-        return new LessonDto(day, startTime, endTime, location, type, subjectId, 1, teacherId);
+        return new LessonDto(day, startTime, endTime, location, type, subjectId, this.selectedTimetableId, teacherId);
     }
 
     getScreenWidth(): number {

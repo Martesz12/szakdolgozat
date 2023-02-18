@@ -42,6 +42,10 @@ public class LessonService {
                 .orElseThrow(() -> new EntityNotFoundException("Lesson by id " + id + " was not found.")));
     }
 
+    public List<LessonDTO> getLessonsByTimetableId(Long timetableId) {
+        return lessonRepository.findByTimetable_Id(timetableId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public LessonDTO addLesson(LessonDTO lesson) {
         return convertEntityToDto(lessonRepository.save(convertDtoToEntity(lesson)));
     }

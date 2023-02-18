@@ -25,6 +25,12 @@ public class LessonController {
         return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
+    @GetMapping("/findByTimetableId/{timetableId}")
+    public ResponseEntity<List<LessonDTO>> getLessonsByUserIdAndTimetableId(@PathVariable("timetableId") Long timetableId) {
+        List<LessonDTO> lessons = lessonService.getLessonsByTimetableId(timetableId);
+        return new ResponseEntity<>(lessons, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<LessonDTO> getLessonById(@PathVariable("id") Long id) {
         LessonDTO lesson = lessonService.findLessonById(id);

@@ -5,7 +5,7 @@
             #timetableSelect
             disableOptionCentering
             (selectionChange)="onTimetableSelected($event)"
-            [value]="timetableService.getSelectedTimetableId()"
+            [value]="selectedTimetableId"
         >
             <mat-option *ngFor="let element of allTimetable$ | async" [value]="element.id">
                 {{ element.name }}

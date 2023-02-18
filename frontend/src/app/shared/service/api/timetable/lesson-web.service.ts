@@ -28,6 +28,12 @@ export class LessonWebService {
         return this.http.get<LessonDto>(fullPath);
     }
 
+    getLessonsByTimetableId(timetableId: number): Observable<LessonDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByTimetableId);
+        fullPath += '/' + timetableId;
+        return this.http.get<LessonDto[]>(fullPath);
+    }
+
     addLesson(lesson: LessonDto): Observable<LessonDto> {
         const fullPath = this.buildFullPath(ApiPath.Add);
         return this.http.post<LessonDto>(fullPath, lesson);

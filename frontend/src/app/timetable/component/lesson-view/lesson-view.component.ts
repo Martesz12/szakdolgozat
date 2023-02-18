@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
     selector: 'app-lesson-view',
@@ -7,7 +9,16 @@ import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
     styleUrls: ['./lesson-view.component.scss'],
 })
 export class LessonViewComponent {
-    constructor(private lessonService: LessonService) {}
+    constructor(private lessonService: LessonService, private timetableService: TimetableService) {
+        this.resetIfTimetableChanged();
+    }
+
+    resetIfTimetableChanged(){
+        this.timetableService.getSelectedTimetableId().subscribe(_ => {
+            this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
+            this.lessonService.removeSelectedLesson();
+        });
+    }
 
     getScreenWidth(): number {
         return window.innerWidth;

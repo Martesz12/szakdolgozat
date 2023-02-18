@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { LessonDto } from '../../model/timetable/dto/lesson.dto';
 import { LessonWebService } from '../api/timetable/lesson-web.service';
+import { TimetableService } from './timetable.service';
 
 @Injectable({
     providedIn: 'root',
@@ -12,12 +13,17 @@ export class LessonService {
     selectedLessonSubject: BehaviorSubject<LessonDto> = new BehaviorSubject<LessonDto>({} as LessonDto);
     lessonDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
-    constructor(private lessonWebService: LessonWebService) {
-        this.getAllLesson();
+    constructor(private lessonWebService: LessonWebService, private timetableService: TimetableService) {
+        this.getLessonsByTimetableId();
     }
 
-    getAllLesson() {
-        this.lessonWebService.getAllLesson().subscribe(lessons => {
+    getLessonsByTimetableId() {
+        this.timetableService.getSelectedTimetableId().pipe(
+            filter(timetableId => timetableId !== 0),
+            switchMap(timetableId => {
+                return this.lessonWebService.getLessonsByTimetableId(timetableId);
+            }),
+        ).subscribe(lessons => {
             this.allLessonSubject.next(lessons);
             console.log(lessons);
         });
@@ -32,9 +38,7 @@ export class LessonService {
     }
 
     selectLesson(lessonId: number) {
-        this.lessonWebService
-            .getLessonById(lessonId)
-            .subscribe(lesson => this.selectedLessonSubject.next(lesson));
+        this.lessonWebService.getLessonById(lessonId).subscribe(lesson => this.selectedLessonSubject.next(lesson));
     }
 
     removeSelectedLesson() {

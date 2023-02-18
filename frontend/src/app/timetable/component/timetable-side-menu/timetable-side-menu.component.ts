@@ -22,6 +22,7 @@ export class TimetableSideMenuComponent {
     dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
     selectedMenuElement: number = 0;
     allTimetable$: Observable<TimetableDto[]> = this.timetableService.getAllTimetableSubject();
+    selectedTimetableId: number = 0;
 
     @ViewChild('timetableSelect') timetableSelect!: MatSelect;
 
@@ -35,6 +36,13 @@ export class TimetableSideMenuComponent {
         this.treeControl.dataNodes = this.dataSource.data;
         this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
         this.treeControl.expandAll();
+        this.getSelecterTimetableId();
+    }
+
+    getSelecterTimetableId() {
+        this.timetableService
+            .getSelectedTimetableId()
+            .subscribe(timetableId => (this.selectedTimetableId = timetableId));
     }
 
     hasChild = (_: number, node: TimetableSideMenuNode) => !!node.children && node.children.length > 0;

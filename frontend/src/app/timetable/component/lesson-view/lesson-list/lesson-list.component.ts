@@ -9,6 +9,7 @@ import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
     selector: 'app-lesson-list',
@@ -23,15 +24,25 @@ export class LessonListComponent {
     allLessonName: Map<number, string> = new Map<number, string>();
     filteredAllLessonName: Map<number, string> = new Map<number, string>();
 
+    selectedTimetableId: number = 0;
+
     constructor(
         private lessonService: LessonService,
         private changeDetection: ChangeDetectorRef,
         private snackBar: MatSnackBar,
         private dialog: MatDialog,
-        private subjectService: SubjectService
+        private subjectService: SubjectService,
+        private timetableService: TimetableService
     ) {
         this.getAllLesson();
         this.getSelectedLesson();
+        this.getSelecterTimetableId();
+    }
+
+    getSelecterTimetableId() {
+        this.timetableService
+            .getSelectedTimetableId()
+            .subscribe(timetableId => (this.selectedTimetableId = timetableId));
     }
 
     private getSelectedLesson() {
@@ -58,15 +69,18 @@ export class LessonListComponent {
     createLessonListName(allSubject: SubjectDto[]): void {
         this.filteredAllLessonName = new Map<number, string>();
         this.allLessonName = new Map<number, string>();
-        
+
         this.allLesson.forEach(lesson => {
             let lessonId: number = -1;
-            if(lesson.id !== null) lessonId = lesson.id;
-            this.allLessonName.set(lessonId, lesson.day +
-                ' - ' +
-                allSubject.filter(subject => subject.id === lesson.subjectId)[0].name +
-                ' - ' +
-                lesson.type);
+            if (lesson.id !== null) lessonId = lesson.id;
+            this.allLessonName.set(
+                lessonId,
+                lesson.day +
+                    ' - ' +
+                    allSubject.filter(subject => subject.id === lesson.subjectId)[0].name +
+                    ' - ' +
+                    lesson.type
+            );
         });
         this.filteredAllLessonName = new Map(this.allLessonName);
     }
@@ -110,7 +124,7 @@ export class LessonListComponent {
                 next: _ => {
                     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
                     this.lessonService.removeSelectedLesson();
-                    this.lessonService.getAllLesson();
+                    this.lessonService.getLessonsByTimetableId();
                     this.snackBar.open('Tanóra törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
@@ -136,7 +150,7 @@ export class LessonListComponent {
     private filterOnAllLesson() {
         this.filteredAllLessonName = new Map<number, string>();
         this.allLessonName.forEach((value, key) => {
-            if(value.toLowerCase().includes(this.filterText.toLowerCase())) this.filteredAllLessonName.set(key, value)
+            if (value.toLowerCase().includes(this.filterText.toLowerCase())) this.filteredAllLessonName.set(key, value);
         });
     }
 

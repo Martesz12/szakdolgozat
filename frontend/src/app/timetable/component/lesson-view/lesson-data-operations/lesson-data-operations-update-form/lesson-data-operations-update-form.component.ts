@@ -30,10 +30,8 @@ export class LessonDataOperationsUpdateFormComponent {
     updatedType = new FormControl('');
     updatedSubjectId = new FormControl(0);
     updatedTeacherId = new FormControl(0);
-    // newTimetableId = new FormControl('');
 
     selectedLesson: LessonDto = {} as LessonDto;
-    selectedLessonSubject: number = 2;
 
     constructor(
         private lessonService: LessonService,
@@ -88,7 +86,7 @@ export class LessonDataOperationsUpdateFormComponent {
             let updatedLesson: LessonDto = this.createLesson();
             this.lessonService.updateLesson(updatedLesson).subscribe({
                 next: lesson => {
-                    this.lessonService.getAllLesson();
+                    this.lessonService.getLessonsByTimetableId();
                     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Description);
                     if (lesson.id !== null) this.lessonService.selectLesson(lesson.id);
                     this.updatedDay.markAsUntouched();
@@ -140,7 +138,7 @@ export class LessonDataOperationsUpdateFormComponent {
         if (lessonId !== null)
             this.lessonService.deleteLesson(lessonId).subscribe({
                 next: _ => {
-                    this.lessonService.getAllLesson();
+                    this.lessonService.getLessonsByTimetableId();
                     this.lessonService.removeSelectedLesson();
                     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
                     this.snackBar.open('Tanóra törlése sikeres!', 'X', {
@@ -174,7 +172,7 @@ export class LessonDataOperationsUpdateFormComponent {
         if (this.updatedLocation.value !== null) location = this.updatedLocation.value;
         if (this.updatedSubjectId.value !== null) subjectId = +this.updatedSubjectId.value;
         if (this.updatedTeacherId.value !== null) teacherId = +this.updatedTeacherId.value;
-        return new LessonDto(day, startTime, endTime, location, type, subjectId, 1, teacherId, this.selectedLesson.id);
+        return new LessonDto(day, startTime, endTime, location, type, subjectId, this.selectedLesson.timetableId, teacherId, this.selectedLesson.id);
     }
 
     getScreenWidth(): number {
