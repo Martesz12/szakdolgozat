@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, of, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { LessonDto } from '../../model/timetable/dto/lesson.dto';
 import { LessonWebService } from '../api/timetable/lesson-web.service';
@@ -19,9 +19,9 @@ export class LessonService {
 
     getLessonsByTimetableId() {
         this.timetableService.getSelectedTimetableId().pipe(
-            filter(timetableId => timetableId !== 0),
             switchMap(timetableId => {
-                return this.lessonWebService.getLessonsByTimetableId(timetableId);
+                if(timetableId !== 0) return this.lessonWebService.getLessonsByTimetableId(timetableId);
+                else return of([]);
             }),
         ).subscribe(lessons => {
             this.allLessonSubject.next(lessons);
