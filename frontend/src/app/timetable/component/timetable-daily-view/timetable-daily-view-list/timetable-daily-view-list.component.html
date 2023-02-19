@@ -1,0 +1,30 @@
+<mat-card class="mat-elevation-z4 daily-view-list-card">
+    <div *ngIf="selectedTimetableId">
+        <div class="main-title-font card-main-title mb-15">Órarend</div>
+        <div>
+            <mat-tab-group animationDuration="500ms">
+                <mat-tab *ngFor="let day of DAYS" [label]="day" class="mb-15">
+                    <div
+                        *ngFor="let lesson of getLessonsByDay(day); let i = index"
+                        class="lesson-row"
+                        (click)="selectLesson(lesson)"
+                    >
+                        <div
+                            class="color-picker-sample mr-10"
+                            [ngStyle]="{ 'background-color': subjectIdNameMap.get(lesson.subjectId)!.color }"
+                        ></div>
+                        <div class="content-font mr-20">
+                            {{ formatTime(lesson.startTime) | date : 'HH:mm' }} -
+                            {{ formatTime(lesson.endTime) | date : 'HH:mm' }}
+                        </div>
+                        <div class="content-font">{{ subjectIdNameMap.get(lesson.subjectId)!.name }}</div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+    <div *ngIf="!selectedTimetableId" class="no-selected-element">
+        <mat-icon class="no-selected-element-icon mb-20">info_outline</mat-icon>
+        <div class="no-element-found-font">Még nem választottál órarendet...</div>
+    </div>
+</mat-card>

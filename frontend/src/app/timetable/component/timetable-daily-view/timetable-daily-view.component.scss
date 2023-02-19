@@ -1,0 +1,20 @@
+.timetable-daily-cards {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+.timetable-daily-card{
+    width: 50%;
+    padding: 10px;
+}
+
+@media (max-width: 599px) {
+    .timetable-daily-card{
+        width: 100%;
+        padding: 10px;
+    }
+  }
+
+
