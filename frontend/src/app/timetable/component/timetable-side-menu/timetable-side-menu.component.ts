@@ -36,10 +36,11 @@ export class TimetableSideMenuComponent {
         this.treeControl.dataNodes = this.dataSource.data;
         this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
         this.treeControl.expandAll();
-        this.getSelecterTimetableId();
+        this.getSelectedTimetableId();
+        this.onMenuElementSelected(11);
     }
 
-    getSelecterTimetableId() {
+    getSelectedTimetableId(): void {
         this.timetableService
             .getSelectedTimetableId()
             .subscribe(timetableId => (this.selectedTimetableId = timetableId));
@@ -67,8 +68,7 @@ export class TimetableSideMenuComponent {
           });
     }
 
-    onTimetableSelected(selectChangeEvent: MatSelectChange) {
+    onTimetableSelected(selectChangeEvent: MatSelectChange): void {
         this.timetableService.setSelectedTimetableId(selectChangeEvent.value);
-        //TODO ide váltós subject
     }
 }
