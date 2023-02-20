@@ -8,6 +8,7 @@
                         *ngFor="let lesson of getLessonsByDay(day); let i = index"
                         class="lesson-row"
                         (click)="selectLesson(lesson)"
+                        [ngClass]="selectedLesson.id === lesson.id ? 'lesson-row-selected' : ''"
                     >
                         <div
                             class="color-picker-sample mr-10"

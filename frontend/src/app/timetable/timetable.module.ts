@@ -30,6 +30,7 @@ import { LessonDataOperationsSaveFormComponent } from './component/lesson-view/l
 import { LessonDataOperationsUpdateFormComponent } from './component/lesson-view/lesson-data-operations/lesson-data-operations-update-form/lesson-data-operations-update-form.component';
 import { TimetableDialogComponent } from './component/timetable-side-menu/timetable-dialog/timetable-dialog.component';
 import { TimetableDailyViewListComponent } from './component/timetable-daily-view/timetable-daily-view-list/timetable-daily-view-list.component';
+import { TimetableDailyViewDescriptionComponent } from './component/timetable-daily-view/timetable-daily-view-description/timetable-daily-view-description.component';
 
 @NgModule({
     declarations: [
@@ -60,6 +61,7 @@ import { TimetableDailyViewListComponent } from './component/timetable-daily-vie
         LessonDataOperationsUpdateFormComponent,
         TimetableDialogComponent,
         TimetableDailyViewListComponent,
+        TimetableDailyViewDescriptionComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],

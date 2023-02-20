@@ -1,8 +1,8 @@
 <div class="timetable-daily-cards">
-    <div class="timetable-daily-card">
+    <div *ngIf="showLessonListCard()" class="timetable-daily-card">
         <app-timetable-daily-view-list></app-timetable-daily-view-list>
     </div>
-    <div class="timetable-daily-card">
-        <!-- <app-timetable-daily-data-operations></app-timetable-daily-data-operations> -->
+    <div *ngIf="showLessonDescriptionCard()" class="timetable-daily-card">
+        <app-timetable-daily-view-description></app-timetable-daily-view-description>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { LessonDto } from '../../model/timetable/dto/lesson.dto';
 import { LessonWebService } from '../api/timetable/lesson-web.service';

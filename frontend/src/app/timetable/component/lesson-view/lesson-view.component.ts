@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
@@ -8,9 +8,13 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     templateUrl: './lesson-view.component.html',
     styleUrls: ['./lesson-view.component.scss'],
 })
-export class LessonViewComponent {
+export class LessonViewComponent implements OnDestroy {
     constructor(private lessonService: LessonService, private timetableService: TimetableService) {
         this.resetIfTimetableChanged();
+    }
+
+    ngOnDestroy(): void {
+        this.lessonService.removeSelectedLesson();
     }
 
     resetIfTimetableChanged(){

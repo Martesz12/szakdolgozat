@@ -16,6 +16,7 @@ export class TimetableDailyViewListComponent {
     selectedTimetableId: number = 0;
     allLesson: LessonDto[] = [];
     subjectIdNameMap: Map<number, SubjectDto> = new Map<number, SubjectDto>();
+    selectedLesson: LessonDto = {} as LessonDto;
 
     constructor(
         private timetableService: TimetableService,
@@ -23,6 +24,7 @@ export class TimetableDailyViewListComponent {
         private subjectService: SubjectService
     ) {
         this.getAllLesson();
+        this.getSelectedLesson();
         this.getSelecterTimetableId();
     }
 
@@ -30,6 +32,12 @@ export class TimetableDailyViewListComponent {
         this.timetableService
             .getSelectedTimetableId()
             .subscribe(timetableId => (this.selectedTimetableId = timetableId));
+    }
+
+    private getSelectedLesson() {
+        this.lessonService.getSelectedLessonSubject().subscribe(lesson => {
+            this.selectedLesson = lesson;
+        });
     }
 
     private getAllLesson(): void {
@@ -60,7 +68,6 @@ export class TimetableDailyViewListComponent {
     }
 
     selectLesson(lesson: LessonDto): void {
-        //TODO kiválasztani a lessonhoz a dolgokat
-        //TODO a mellette lévő card-nál megjeleníteni adatokat
+        this.lessonService.selectLesson(lesson.id!);
     }
 }
