@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,12 @@ public class MainTaskService {
 
     public List<MainTaskDTO> findAllMainTask() {
         return mainTaskRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
+    public List<MainTaskDTO> getMainTasksByLessonIds(int[] lessonIds) {
+        return mainTaskRepository.getMainTasksByLessonIds
+                        (Arrays.stream( lessonIds ).boxed().toArray( Integer[]::new ))
+                .stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
     public MainTaskDTO findMainTaskById(Long id) {

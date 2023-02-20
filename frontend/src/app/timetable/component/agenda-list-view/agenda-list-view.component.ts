@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
     selector: 'app-agenda-list-view',
@@ -6,36 +8,33 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./agenda-list-view.component.scss'],
 })
 export class AgendaListViewComponent {
-    constructor() {
+    constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
         this.resetIfTimetableChanged();
     }
 
     resetIfTimetableChanged(){
-        // this.timetableService.getSelectedTimetableId().subscribe(_ => {
-        //     this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
-        //     this.lessonService.removeSelectedLesson();
-        // });
+        this.timetableService.getSelectedTimetableId().subscribe(_ => {
+            
+        });
     }
 
-    // getScreenWidth(): number {
-    //     return window.innerWidth;
-    // }
-
-    // showBothCard(): boolean {
-    //     return this.getScreenWidth() > 599;
-    // }
-
-    // isStateTheCurrentPageState(state: string): boolean {
-    //     return state === this.lessonService.getLessonDataOperationPageState();
-    // }
-
-    showLessonListCard(): boolean {
-        return true;
-        // return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState('base'));
+    getScreenWidth(): number {
+        return window.innerWidth;
     }
 
-    showLessonDataOperationCard(): boolean {
-        return true;
-        // return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
+    showBothCard(): boolean {
+        return this.getScreenWidth() > 599;
+    }
+
+    isStateTheCurrentPageState(state: string): boolean {
+        return state === this.mainTaskService.getMainTaskDataOperationPageState();
+    }
+
+    showMainTaskListCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState('base'));
+    }
+
+    showMainTaskDataOperationCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
     }
 }

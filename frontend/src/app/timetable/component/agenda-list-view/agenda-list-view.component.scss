@@ -1,17 +1,17 @@
-.lesson-cards {
+.agenda-list-view-cards {
     height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
 }
 
-.lesson-card{
+.agenda-list-view-card{
     width: 50%;
     padding: 10px;
 }
 
 @media (max-width: 599px) {
-    .lesson-card{
+    .agenda-list-view-card{
         width: 100%;
         padding: 10px;
     }

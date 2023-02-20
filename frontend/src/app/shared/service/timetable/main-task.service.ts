@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { MainTaskDto } from '../../model/timetable/dto/main-task.dto';
 import { MainTaskWebService } from '../api/timetable/main-task-web.service';
+import { LessonService } from './lesson.service';
 
 @Injectable({
     providedIn: 'root',
@@ -12,14 +13,26 @@ export class MainTaskService {
     selectedMainTaskSubject: BehaviorSubject<MainTaskDto> = new BehaviorSubject<MainTaskDto>({} as MainTaskDto);
     mainTaskDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
-    constructor(private mainTaskWebService: MainTaskWebService) {
-        this.getAllMainTask();
+    constructor(
+        private mainTaskWebService: MainTaskWebService,
+        private lessonService: LessonService
+    ) {
+        this.getMainTasksByLessonIds();
     }
 
-    getAllMainTask() {
-        this.mainTaskWebService.getAllMainTask().subscribe(mainTasks => {
-            this.allMainTaskSubject.next(mainTasks);
-        });
+    getMainTasksByLessonIds() {
+        this.lessonService
+            .getAllLessonSubject()
+            .pipe(
+                switchMap(lessons => {
+                    let lessonIds: number[] = [];
+                    lessons.forEach(lesson => lessonIds.push(lesson.id!));
+                    return this.mainTaskWebService.getMainTasksByLessonIds(lessonIds);
+                })
+            )
+            .subscribe(mainTasks => {
+                this.allMainTaskSubject.next(mainTasks);
+            });
     }
 
     getAllMainTaskSubject(): Observable<MainTaskDto[]> {
@@ -52,7 +65,7 @@ export class MainTaskService {
         return this.mainTaskWebService.updateMainTask(mainTask);
     }
 
-    getMainTaskById(id: number): Observable<MainTaskDto>{
+    getMainTaskById(id: number): Observable<MainTaskDto> {
         return this.mainTaskWebService.getMainTaskById(id);
     }
 

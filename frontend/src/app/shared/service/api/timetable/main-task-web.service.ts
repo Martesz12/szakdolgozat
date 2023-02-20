@@ -22,6 +22,11 @@ export class MainTaskWebService {
         return this.http.get<MainTaskDto[]>(fullPath);
     }
 
+    getMainTasksByLessonIds(lessonIds: number[]): Observable<MainTaskDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByLessonIds);
+        return this.http.post<MainTaskDto[]>(fullPath, lessonIds);
+    }
+
     getMainTaskById(mainTaskId: number): Observable<MainTaskDto> {
         var fullPath = this.buildFullPath(ApiPath.FindById);
         fullPath += '/' + mainTaskId;

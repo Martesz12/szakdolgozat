@@ -32,6 +32,12 @@ public class MainTaskController {
         return new ResponseEntity<>(mainTask, HttpStatus.OK);
     }
 
+    @PostMapping("/findByLessonIds")
+    public ResponseEntity<List<MainTaskDTO>> getMainTasksByLessonIds(@RequestBody int[] lessonIds) {
+        List<MainTaskDTO> mainTasks = mainTaskService.getMainTasksByLessonIds(lessonIds);
+        return new ResponseEntity<>(mainTasks, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<MainTaskDTO> addMainTask(@RequestBody MainTaskDTO mainTask) {
         MainTaskDTO newMainTask = mainTaskService.addMainTask(mainTask);
