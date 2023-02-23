@@ -27,6 +27,7 @@ export class AgendaListViewListComponent {
     //TODO a típusok szerinti színezést megcsinálni
     //TODO description-t megcsinálni
     //TODO szűrést megcsinálni
+    //TODO valami szín hogy melyik tantárgyhoz tartozik a feladat
     constructor(
         private mainTaskService: MainTaskService,
         private dialog: MatDialog,

@@ -14,8 +14,6 @@ import { TeacherService } from 'src/app/shared/service/timetable/teacher.service
 })
 export class LessonDataOperationsDescriptionComponent {
     selectedLesson: LessonDto = {} as LessonDto;
-    allSubject: SubjectDto[] = [] as SubjectDto[];
-    allTeacher: TeacherDto[] = [] as TeacherDto[];
     selectedLessonSubject: SubjectDto = {} as SubjectDto;
     selectedLessonTeacher: TeacherDto = {} as TeacherDto;
 

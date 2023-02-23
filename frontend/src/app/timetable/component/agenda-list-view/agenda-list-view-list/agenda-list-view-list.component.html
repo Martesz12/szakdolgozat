@@ -53,18 +53,32 @@
                                 </div>
                             </div>
                             <div class="sub-task-buttons">
-                                <div *ngIf="!editedSubTasks.has(subTask.id!)" style="width: 100%" class="list-action-button">
-                                    <button mat-icon-button (click)="modifySubTask(subTask)">
+                                <div
+                                    *ngIf="!editedSubTasks.has(subTask.id!)"
+                                    style="width: 100%"
+                                    class="list-action-button"
+                                    (click)="modifySubTask(subTask)"
+                                >
+                                    <button mat-icon-button>
                                         <mat-icon> edit </mat-icon>
                                     </button>
                                 </div>
-                                <div *ngIf="editedSubTasks.has(subTask.id!)" style="width: 100%" class="list-action-button">
-                                    <button mat-icon-button (click)="saveSubTask(subTask)">
+                                <div
+                                    *ngIf="editedSubTasks.has(subTask.id!)"
+                                    style="width: 100%"
+                                    class="list-action-button"
+                                    (click)="saveSubTask(subTask)"
+                                >
+                                    <button mat-icon-button>
                                         <mat-icon> save </mat-icon>
                                     </button>
                                 </div>
-                                <div style="width: 100%" class="list-delete-button">
-                                    <button mat-icon-button (click)="deleteSubTask(mainTask.id!)">
+                                <div
+                                    style="width: 100%"
+                                    class="list-delete-button"
+                                    (click)="deleteSubTask(mainTask.id!)"
+                                >
+                                    <button mat-icon-button>
                                         <mat-icon> delete </mat-icon>
                                     </button>
                                 </div>
@@ -72,23 +86,23 @@
                         </div>
                         <mat-divider></mat-divider>
                         <div class="list-row-buttons">
-                            <div class="list-action-button">
-                                <button mat-icon-button (click)="addSubTask(mainTask.id!)">
+                            <div class="list-action-button" (click)="addSubTask(mainTask.id!)">
+                                <button mat-icon-button>
                                     <mat-icon> add </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-action-button">
-                                <button mat-icon-button (click)="selectMainTask(mainTask.id)">
+                            <div class="list-action-button" (click)="selectMainTask(mainTask.id)">
+                                <button mat-icon-button>
                                     <mat-icon> description </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-action-button">
-                                <button mat-icon-button (click)="modifyMainTask(mainTask.id)">
+                            <div class="list-action-button" (click)="modifyMainTask(mainTask.id)">
+                                <button mat-icon-button>
                                     <mat-icon> edit </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-delete-button">
-                                <button mat-icon-button (click)="openDeleteDialog(mainTask.id)">
+                            <div class="list-delete-button" (click)="openDeleteDialog(mainTask.id)">
+                                <button mat-icon-button>
                                     <mat-icon> delete </mat-icon>
                                 </button>
                             </div>

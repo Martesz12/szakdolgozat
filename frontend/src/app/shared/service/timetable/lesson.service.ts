@@ -57,6 +57,10 @@ export class LessonService {
         return this.lessonWebService.updateLesson(lesson);
     }
 
+    getLessonById(lessonId: number): Observable<LessonDto> {
+        return this.lessonWebService.getLessonById(lessonId);
+    }
+
     getLessonDataOperationPageState() {
         return this.lessonDataOperationPageState;
     }
