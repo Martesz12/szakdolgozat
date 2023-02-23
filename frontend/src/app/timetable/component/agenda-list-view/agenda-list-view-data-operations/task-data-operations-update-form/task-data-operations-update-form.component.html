@@ -1,1 +1,46 @@
-<p>task-data-operations-update-form works!</p>
+<div class="main-title-font card-main-title">Hozzáadás</div>
+
+<div *ngIf="isInMobileView()">
+    <app-task-data-operations-navigation></app-task-data-operations-navigation>
+</div>
+
+<div class="mt-10">
+    <form class="form-inputs-center">
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Tanóra</mat-label>
+            <mat-select [formControl]="updatedLesson" disableOptionCentering>
+                <mat-option *ngFor="let lesson of allLesson$ | async" [value]="lesson.id">
+                    {{ getSubjectName(lesson.subjectId) + " - " + lesson.type }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Név</mat-label>
+            <input matInput type="text" [formControl]="updatedName" />
+            <mat-error *ngIf="updatedName.invalid">Név megadása kötelező!</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Határidő</mat-label>
+            <input matInput type="date" [formControl]="updatedDeadline" />
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Típus</mat-label>
+            <mat-select [formControl]="updatedType" disableOptionCentering>
+                <mat-option *ngFor="let type of TYPES" [value]="type">
+                    {{ type }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field-full-width" appearance="outline">
+            <mat-label>Jegyzet</mat-label>
+            <textarea matInput rows="5" type="text" [formControl]="updatedNote"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+
+<div class="form-action-buttons">
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="updateMainTask()">Mentés</button>
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="warn" (click)="openDeleteDialog(selectedMainTaskId)">
+        Törlés
+    </button>
+</div>
