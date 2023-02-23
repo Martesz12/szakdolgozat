@@ -31,16 +31,40 @@
                         <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
                             <div class="sub-task-main">
                                 <div><mat-checkbox></mat-checkbox></div>
-                                <div class="ml-10 content-font">{{ subTask.name }}</div>
+                                <div
+                                    *ngIf="!editedSubTasks.has(subTask.id!)"
+                                    class="content-font ml-10"
+                                    style="width: 100%"
+                                >
+                                    {{ subTask.name }}
+                                </div>
+                                <div
+                                    *ngIf="editedSubTasks.has(subTask.id!)"
+                                    class="content-font edited-sub-task-name"
+                                    style="width: 100%"
+                                >
+                                    <input
+                                        matInput
+                                        type="text"
+                                        #updatedName
+                                        [value]="subTask.name"
+                                        (change)="changeUpdatedName(subTask.id!, updatedName.value)"
+                                    />
+                                </div>
                             </div>
                             <div class="sub-task-buttons">
-                                <div style="width: 100%" class="list-action-button">
-                                    <button mat-icon-button (click)="modifyMainTask(mainTask.id)">
+                                <div *ngIf="!editedSubTasks.has(subTask.id!)" style="width: 100%" class="list-action-button">
+                                    <button mat-icon-button (click)="modifySubTask(subTask)">
                                         <mat-icon> edit </mat-icon>
                                     </button>
                                 </div>
+                                <div *ngIf="editedSubTasks.has(subTask.id!)" style="width: 100%" class="list-action-button">
+                                    <button mat-icon-button (click)="saveSubTask(subTask)">
+                                        <mat-icon> save </mat-icon>
+                                    </button>
+                                </div>
                                 <div style="width: 100%" class="list-delete-button">
-                                    <button mat-icon-button (click)="openDeleteDialog(mainTask.id)">
+                                    <button mat-icon-button (click)="deleteSubTask(mainTask.id!)">
                                         <mat-icon> delete </mat-icon>
                                     </button>
                                 </div>

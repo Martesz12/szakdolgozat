@@ -21,6 +21,7 @@ export class AgendaListViewListComponent {
     selectedMainTask: MainTaskDto = {} as MainTaskDto;
 
     selectedTimetableId: number = 0;
+    editedSubTasks: Map<number, string> = new Map<number, string>();
 
     constructor(
         private mainTaskService: MainTaskService,
@@ -121,6 +122,7 @@ export class AgendaListViewListComponent {
                 next: subTask => {
                     this.subTaskService.getSubTasksByLessonIds();
                     this.subTaskService.setSubTaskDataOperationPageState(DataOperationPageState.Description);
+                    this.modifySubTask(subTask);
                     if (subTask.id !== null) this.subTaskService.selectSubTask(subTask.id);
                     this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
                         duration: 2000,
@@ -140,5 +142,63 @@ export class AgendaListViewListComponent {
 
     filterSubTasksByMainTaskId(mainTaskId: number): SubTaskDto[] {
         return this.allSubTask.filter(subTask => subTask.mainTaskId === mainTaskId);
+    }
+
+    modifySubTask(subTask: SubTaskDto): void {
+        if (subTask.id) this.editedSubTasks.set(subTask.id, subTask.name);
+    }
+
+    changeUpdatedName(id: number, updatedName: string): void {
+        this.editedSubTasks.set(id, updatedName);
+    }
+
+    saveSubTask(subTask: SubTaskDto): void {
+        if (this.editedSubTasks.get(subTask.id!)) {
+            let updatedSubTask: SubTaskDto = new SubTaskDto(
+                this.editedSubTasks.get(subTask.id!)!,
+                subTask.fulfilled,
+                subTask.mainTaskId,
+                subTask.id
+            );
+            this.subTaskService.updateSubTask(updatedSubTask).subscribe({
+                next: _ => {
+                    this.subTaskService.getSubTasksByLessonIds();
+                    this.editedSubTasks.delete(subTask.id!);
+                    this.snackBar.open('Alfeladat módosítása sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar'],
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    }),
+            });
+        }
+    }
+
+    deleteSubTask(subTaskId: number): void {
+        this.subTaskService.deleteSubTask(subTaskId).subscribe({
+            next: _ => {
+                this.subTaskService.getSubTasksByLessonIds();
+                this.editedSubTasks.delete(subTaskId);
+                this.snackBar.open('Alfeladat törlése sikeres!', 'X', {
+                    duration: 2000,
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['info-snackbar'],
+                });
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat törlése során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        });
     }
 }
