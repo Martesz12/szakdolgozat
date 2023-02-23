@@ -36,6 +36,7 @@ import { AgendaListViewDataOperationsComponent } from './component/agenda-list-v
 import { TaskDataOperationsDescriptionComponent } from './component/agenda-list-view/agenda-list-view-data-operations/task-data-operations-description/task-data-operations-description.component';
 import { TaskDataOperationsSaveFormComponent } from './component/agenda-list-view/agenda-list-view-data-operations/task-data-operations-save-form/task-data-operations-save-form.component';
 import { TaskDataOperationsUpdateFormComponent } from './component/agenda-list-view/agenda-list-view-data-operations/task-data-operations-update-form/task-data-operations-update-form.component';
+import { TaskDataOperationsNavigationComponent } from './component/agenda-list-view/agenda-list-view-data-operations/task-data-operations-navigation/task-data-operations-navigation.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +73,7 @@ import { TaskDataOperationsUpdateFormComponent } from './component/agenda-list-v
         TaskDataOperationsDescriptionComponent,
         TaskDataOperationsSaveFormComponent,
         TaskDataOperationsUpdateFormComponent,
+        TaskDataOperationsNavigationComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],
