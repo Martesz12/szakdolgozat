@@ -1,1 +1,20 @@
-<p>agenda-list-view-data-operations works!</p>
+<mat-card class="mat-elevation-z4 main-task-card">
+    <div *ngIf="isStateTheCurrentPageState('description')" class="card-main">
+        <app-task-data-operations-description></app-task-data-operations-description>
+    </div>
+
+    <div *ngIf="isStateTheCurrentPageState('add')" class="card-main">
+        <app-task-data-operations-save-form></app-task-data-operations-save-form>
+    </div>
+
+    <div *ngIf="isStateTheCurrentPageState('modify')" class="card-main">
+        <app-task-data-operations-update-form></app-task-data-operations-update-form>
+    </div>
+
+    <div *ngIf="isStateTheCurrentPageState('base')" class="card-main">
+        <div class="no-selected-element">
+            <mat-icon class="no-selected-element-icon mb-20">info_outline</mat-icon>
+            <div class="no-element-found-font">Még nem választottál feladatot...</div>
+        </div>
+    </div>
+</mat-card>

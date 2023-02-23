@@ -1,0 +1,26 @@
+.main-task-card {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.card-main{
+    height: 100%;
+}
+
+.no-selected-element{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    align-items: center;
+    line-height: normal;
+}
+
+.no-selected-element-icon{
+    font-size: 60px;
+    font-weight: 600;
+    width: 60px;
+    height: 60px;
+}
