@@ -108,9 +108,6 @@ export class TimetableDialogComponent {
         });
     }
 
-    //TODO ha törölsz órarendet, akkor a tanórák törlődjenek
-    //TODO megnézni hogy hogy van a törlésénél a cascade-olás
-    //TODO Valami subject vagy nem tudom, ami felimseri a timetable változást
     deleteTimetable(timetableId: number | null): void {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({

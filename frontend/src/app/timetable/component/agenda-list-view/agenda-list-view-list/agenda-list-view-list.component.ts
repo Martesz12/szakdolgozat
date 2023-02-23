@@ -23,6 +23,10 @@ export class AgendaListViewListComponent {
     selectedTimetableId: number = 0;
     editedSubTasks: Map<number, string> = new Map<number, string>();
 
+
+    //TODO a típusok szerinti színezést megcsinálni
+    //TODO description-t megcsinálni
+    //TODO szűrést megcsinálni
     constructor(
         private mainTaskService: MainTaskService,
         private dialog: MatDialog,
@@ -93,6 +97,7 @@ export class AgendaListViewListComponent {
         });
     }
 
+    //TODO backend-en nem jó a törlés a subtask-ok miatt
     deleteMainTask(mainTaskId: number | null): void {
         if (mainTaskId !== null)
             this.mainTaskService.deleteMainTask(mainTaskId).subscribe({
