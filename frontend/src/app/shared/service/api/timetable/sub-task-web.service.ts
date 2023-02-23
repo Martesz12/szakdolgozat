@@ -22,6 +22,11 @@ export class SubTaskWebService {
         return this.http.get<SubTaskDto[]>(fullPath);
     }
 
+    getSubTasksByMainTaskIds(mainTaskIds: number[]): Observable<SubTaskDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByMainTaskIds);
+        return this.http.post<SubTaskDto[]>(fullPath, mainTaskIds);
+    }
+
     getSubTaskById(subTaskId: number): Observable<SubTaskDto> {
         var fullPath = this.buildFullPath(ApiPath.FindById);
         fullPath += '/' + subTaskId;

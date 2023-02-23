@@ -5,7 +5,9 @@ import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
+import { SubTaskDto } from 'src/app/shared/model/timetable/dto/sub-task.dto';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
@@ -15,8 +17,7 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 })
 export class AgendaListViewListComponent {
     allMainTask: MainTaskDto[] = [];
-    filteredAllMainTask: MainTaskDto[] = [];
-    filterText: string = '';
+    allSubTask: SubTaskDto[] = [];
     selectedMainTask: MainTaskDto = {} as MainTaskDto;
 
     selectedTimetableId: number = 0;
@@ -25,19 +26,24 @@ export class AgendaListViewListComponent {
         private mainTaskService: MainTaskService,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
-        private changeDetection: ChangeDetectorRef,
         private timetableService: TimetableService,
+        private subTaskService: SubTaskService
     ) {
         this.getAllMainTask();
+        this.getAllSubTask();
         this.getSelectedMainTask();
         this.getSelecterTimetableId();
     }
 
-    getAllMainTask() {
+    getAllMainTask(): void {
         this.mainTaskService.getAllMainTaskSubject().subscribe(mainTasks => {
-            console.log(mainTasks);
             this.allMainTask = mainTasks;
-            this.filteredAllMainTask = mainTasks;
+        });
+    }
+
+    getAllSubTask(): void {
+        this.subTaskService.getAllSubTaskSubject().subscribe(subTasks => {
+            this.allSubTask = subTasks;
         });
     }
 
@@ -109,45 +115,30 @@ export class AgendaListViewListComponent {
             });
     }
 
-    applyFilter() {
-        this.filterOnAllMainTask();
-        this.changeDetection.detectChanges();
-        this.highlightMatch();
+    addSubTask(mainTaskId: number): void {
+        let newSubTask: SubTaskDto = new SubTaskDto('Új Alfeladat', false, mainTaskId);
+            this.subTaskService.addSubTask(newSubTask).subscribe({
+                next: subTask => {
+                    this.subTaskService.getSubTasksByLessonIds();
+                    this.subTaskService.setSubTaskDataOperationPageState(DataOperationPageState.Description);
+                    if (subTask.id !== null) this.subTaskService.selectSubTask(subTask.id);
+                    this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar'],
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba alfeladat hozzáadása során: ' + error, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    }),
+            });
     }
 
-    private filterOnAllMainTask() {
-        this.filteredAllMainTask = this.allMainTask.filter(mainTask =>
-            mainTask.name.toLowerCase().includes(this.filterText.toLowerCase())
-        );
-    }
-
-    private highlightMatch() {
-        let matchingAttributes = document.getElementsByClassName('list-row-name');
-        let lowerFilterText = this.filterText.toLowerCase();
-        let lowerAttributeText = '';
-        let originalAttributeText = '';
-        let indexOfMatching = 0;
-        let highlightOpeningTag = '<span style="color: red">';
-        let highlightClosingTag = '</span>';
-
-        for (let i = 0; i < matchingAttributes.length; i++) {
-            originalAttributeText = matchingAttributes[i].innerHTML;
-            if (originalAttributeText.includes(highlightOpeningTag)) {
-                originalAttributeText = originalAttributeText.replace(highlightOpeningTag, '');
-                originalAttributeText = originalAttributeText.replace(highlightClosingTag, '');
-            }
-            lowerAttributeText = originalAttributeText.toLowerCase();
-            if (lowerAttributeText.includes(lowerFilterText)) {
-                indexOfMatching = lowerAttributeText.indexOf(lowerFilterText);
-                matchingAttributes[i].innerHTML =
-                    originalAttributeText.substring(0, indexOfMatching) +
-                    highlightOpeningTag +
-                    originalAttributeText.substring(indexOfMatching, indexOfMatching + lowerFilterText.length) +
-                    highlightClosingTag +
-                    originalAttributeText.substring(indexOfMatching + lowerFilterText.length);
-            } else {
-                matchingAttributes[i].innerHTML = originalAttributeText;
-            }
-        }
+    filterSubTasksByMainTaskId(mainTaskId: number): SubTaskDto[] {
+        return this.allSubTask.filter(subTask => subTask.mainTaskId === mainTaskId);
     }
 }

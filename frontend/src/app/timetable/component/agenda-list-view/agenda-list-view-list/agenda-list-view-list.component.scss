@@ -118,3 +118,20 @@
     width: 60px;
     height: 60px;
 }
+
+.sub-task-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0px 15px 20px;
+}
+
+.sub-task-main {
+    display: flex;
+    align-items: center;
+}
+
+.sub-task-buttons {
+    display: flex;
+    align-items: center;
+}

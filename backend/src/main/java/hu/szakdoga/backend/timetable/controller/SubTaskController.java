@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.timetable.controller;
 
+import hu.szakdoga.backend.timetable.data.dto.MainTaskDTO;
 import hu.szakdoga.backend.timetable.data.dto.SubTaskDTO;
 import hu.szakdoga.backend.timetable.service.SubTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class SubTaskController {
     public ResponseEntity<SubTaskDTO> getSubTaskById(@PathVariable("id") Long id) {
         SubTaskDTO subTask = subTaskService.findSubTaskById(id);
         return new ResponseEntity<>(subTask, HttpStatus.OK);
+    }
+
+    @PostMapping("/findByMainTaskIds")
+    public ResponseEntity<List<SubTaskDTO>> getMainTasksByLessonIds(@RequestBody long[] mainTaskIds) {
+        List<SubTaskDTO> subTasks = subTaskService.getSubTasksByMainTaskIds(mainTaskIds);
+        return new ResponseEntity<>(subTasks, HttpStatus.OK);
     }
 
     @PostMapping("/add")

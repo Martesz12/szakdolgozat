@@ -3,6 +3,7 @@ export enum ApiPath {
     FindById = 'find',
     FindByTimetableId = 'findByTimetableId',
     FindByLessonIds = 'findByLessonIds',
+    FindByMainTaskIds = 'findByMainTaskIds',
     Add = 'add',
     Update = 'update',
     Delete = 'delete',

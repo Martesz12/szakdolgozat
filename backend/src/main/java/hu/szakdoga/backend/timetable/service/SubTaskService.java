@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.timetable.service;
 
+import hu.szakdoga.backend.timetable.data.dto.MainTaskDTO;
 import hu.szakdoga.backend.timetable.data.dto.SubTaskDTO;
 import hu.szakdoga.backend.timetable.data.entity.MainTaskEntity;
 import hu.szakdoga.backend.timetable.data.entity.SubTaskEntity;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +33,13 @@ public class SubTaskService {
     public SubTaskDTO findSubTaskById(Long id){
         return convertEntityToDto(subTaskRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("SubTask by id " + id + " was not found.")));
+    }
+
+    public List<SubTaskDTO> getSubTasksByMainTaskIds(long[] mainTaskIds) {
+        Long[] convertedMainTaskIds = Arrays.stream(mainTaskIds).boxed().toArray( Long[]::new );
+        return subTaskRepository.getSubTasksByMainTaskIds
+                        (convertedMainTaskIds)
+                .stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
     public SubTaskDTO addSubTask(SubTaskDTO subTask){

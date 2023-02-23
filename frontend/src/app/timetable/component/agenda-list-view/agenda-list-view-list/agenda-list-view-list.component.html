@@ -28,26 +28,43 @@
                             <div><mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox></div>
                             <div class="ml-10 content-font">{{ mainTask.name }}</div>
                         </mat-expansion-panel-header>
-                        <p>Alfeladatok helye</p>
+                        <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
+                            <div class="sub-task-main">
+                                <div><mat-checkbox></mat-checkbox></div>
+                                <div class="ml-10 content-font">{{ subTask.name }}</div>
+                            </div>
+                            <div class="sub-task-buttons">
+                                <div style="width: 100%" class="list-action-button">
+                                    <button mat-icon-button (click)="modifyMainTask(mainTask.id)">
+                                        <mat-icon> edit </mat-icon>
+                                    </button>
+                                </div>
+                                <div style="width: 100%" class="list-delete-button">
+                                    <button mat-icon-button (click)="openDeleteDialog(mainTask.id)">
+                                        <mat-icon> delete </mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <mat-divider></mat-divider>
                         <div class="list-row-buttons">
                             <div class="list-action-button">
-                                <button mat-icon-button>
+                                <button mat-icon-button (click)="addSubTask(mainTask.id!)">
                                     <mat-icon> add </mat-icon>
                                 </button>
                             </div>
                             <div class="list-action-button">
-                                <button mat-icon-button>
+                                <button mat-icon-button (click)="selectMainTask(mainTask.id)">
                                     <mat-icon> description </mat-icon>
                                 </button>
                             </div>
                             <div class="list-action-button">
-                                <button mat-icon-button>
+                                <button mat-icon-button (click)="modifyMainTask(mainTask.id)">
                                     <mat-icon> edit </mat-icon>
                                 </button>
                             </div>
                             <div class="list-delete-button">
-                                <button mat-icon-button>
+                                <button mat-icon-button (click)="openDeleteDialog(mainTask.id)">
                                     <mat-icon> delete </mat-icon>
                                 </button>
                             </div>
