@@ -33,7 +33,7 @@ public class MainTaskController {
     }
 
     @PostMapping("/findByLessonIds")
-    public ResponseEntity<List<MainTaskDTO>> getMainTasksByLessonIds(@RequestBody int[] lessonIds) {
+    public ResponseEntity<List<MainTaskDTO>> getMainTasksByLessonIds(@RequestBody long[] lessonIds) {
         List<MainTaskDTO> mainTasks = mainTaskService.getMainTasksByLessonIds(lessonIds);
         return new ResponseEntity<>(mainTasks, HttpStatus.OK);
     }

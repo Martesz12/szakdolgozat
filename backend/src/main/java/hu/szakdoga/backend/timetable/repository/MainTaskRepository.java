@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface MainTaskRepository extends JpaRepository<MainTaskEntity, Long> {
-    @Query("SELECT mainTask FROM MainTaskEntity mainTask WHERE mainTask.id IN ?1")
-    List<MainTaskEntity> getMainTasksByLessonIds(Integer[] lessonIds);
+    @Query("SELECT mainTask FROM MainTaskEntity mainTask WHERE mainTask.lesson.id IN ?1")
+    List<MainTaskEntity> getMainTasksByLessonIds(Long[] lessonIds);
 }

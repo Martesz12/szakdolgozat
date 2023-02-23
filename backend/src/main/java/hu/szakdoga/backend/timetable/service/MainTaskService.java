@@ -29,9 +29,10 @@ public class MainTaskService {
         return mainTaskRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
-    public List<MainTaskDTO> getMainTasksByLessonIds(int[] lessonIds) {
+    public List<MainTaskDTO> getMainTasksByLessonIds(long[] lessonIds) {
+        Long[] convertedLessonIds = Arrays.stream(lessonIds).boxed().toArray( Long[]::new );
         return mainTaskRepository.getMainTasksByLessonIds
-                        (Arrays.stream( lessonIds ).boxed().toArray( Integer[]::new ))
+                        (convertedLessonIds)
                 .stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
