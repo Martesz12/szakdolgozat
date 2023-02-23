@@ -2,20 +2,58 @@
     <div *ngIf="selectedTimetableId">
         <div class="main-title-font card-main-title">Feladatok</div>
         <div>
-            <div class="list-input-and-add">
-                <div class="list-add-element-input">
-                    <mat-form-field class="list-filter-input" appearance="outline">
-                        <mat-label>Feladat keresése...</mat-label>
-                        <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
-                        <mat-hint hidden></mat-hint>
-                    </mat-form-field>
-                </div>
-                <div class="list-add-element-button">
+            <div class="task-filter-and-add mb-15 mt-20">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header class="filter-header">
+                            <mat-icon>tune</mat-icon>
+                            <div class="content-font ml-10">Szűrés</div>
+                        </mat-expansion-panel-header>
+                        <div>Szűrés és műveletek</div>
+                        <div>Szűrés és műveletek</div>
+                        <div>Szűrés és műveletek</div>
+                        <div>Szűrés és műveletek</div>
+                        <div>Szűrés és műveletek</div>
+                        <div>Szűrés és műveletek</div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="list-add-element-button mt-5">
                     <mat-icon class="list-add-element-button-icon rotate" (click)="addMainTask()">add</mat-icon>
                 </div>
             </div>
             <div>
-                haluuuu
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let mainTask of allMainTask">
+                        <mat-expansion-panel-header>
+                            <div><mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox></div>
+                            <div class="ml-10 content-font">{{ mainTask.name }}</div>
+                        </mat-expansion-panel-header>
+                        <p>Alfeladatok helye</p>
+                        <mat-divider></mat-divider>
+                        <div class="list-row-buttons">
+                            <div class="list-action-button">
+                                <button mat-icon-button>
+                                    <mat-icon> add </mat-icon>
+                                </button>
+                            </div>
+                            <div class="list-action-button">
+                                <button mat-icon-button>
+                                    <mat-icon> description </mat-icon>
+                                </button>
+                            </div>
+                            <div class="list-action-button">
+                                <button mat-icon-button>
+                                    <mat-icon> edit </mat-icon>
+                                </button>
+                            </div>
+                            <div class="list-delete-button">
+                                <button mat-icon-button>
+                                    <mat-icon> delete </mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
         </div>
     </div>

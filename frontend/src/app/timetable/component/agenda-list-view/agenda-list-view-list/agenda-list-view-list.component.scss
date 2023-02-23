@@ -9,10 +9,14 @@
     justify-content: center;
 }
 
-.list-input-and-add {
+.task-filter-and-add {
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.mat-accordion {
+    width: 80%;
 }
 
 .list-add-element-button {
@@ -40,6 +44,9 @@
 .list-delete-button {
     transition: 0.3s;
     height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
 }
 
 .list-action-button:hover,
