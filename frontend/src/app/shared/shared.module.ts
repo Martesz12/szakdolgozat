@@ -22,6 +22,8 @@ import { DialogComponent } from './component/dialog/dialog.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
     declarations: [DialogComponent],
@@ -49,6 +51,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSliderModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     exports: [
         CommonModule,
@@ -73,6 +77,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSliderModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
 })
 export class SharedModule {}

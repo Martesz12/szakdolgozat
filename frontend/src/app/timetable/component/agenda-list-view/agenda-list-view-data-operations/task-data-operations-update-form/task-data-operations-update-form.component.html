@@ -19,9 +19,11 @@
             <input matInput type="text" [formControl]="updatedName" />
             <mat-error *ngIf="updatedName.invalid">Név megadása kötelező!</mat-error>
         </mat-form-field>
-        <mat-form-field class="form-field-full-width" appearance="outline">
+        <mat-form-field class="form-field-full-width form-field-datepicker" appearance="outline" (click)="picker.open()">
             <mat-label>Határidő</mat-label>
-            <input matInput type="date" [formControl]="updatedDeadline" />
+            <input matInput [formControl]="updatedDeadline" [matDatepicker]="picker"/>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="updatedDeadline.invalid">Határidő megadása kötelező!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Típus</mat-label>
