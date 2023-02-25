@@ -2,19 +2,48 @@
     <div *ngIf="selectedTimetableId">
         <div class="main-title-font card-main-title">Feladatok</div>
         <div>
-            <div class="task-filter-and-add mb-15 mt-20">
+            <div class="accordion-and-button mb-15 mt-20">
                 <mat-accordion>
                     <mat-expansion-panel>
                         <mat-expansion-panel-header class="filter-header">
                             <mat-icon>tune</mat-icon>
                             <div class="content-font ml-10">Szűrés</div>
                         </mat-expansion-panel-header>
-                        <div>Szűrés és műveletek</div>
-                        <div>Szűrés és műveletek</div>
-                        <div>Szűrés és műveletek</div>
-                        <div>Szűrés és műveletek</div>
-                        <div>Szűrés és műveletek</div>
-                        <div>Szűrés és műveletek</div>
+                        <div class="filter-type-checkboxes">
+                            <div style="margin: 5px 15px 5px 5px">
+                                <mat-checkbox (change)="checkTypeFilter('Feladat')" [checked]="true"
+                                    >Feladat</mat-checkbox
+                                >
+                            </div>
+                            <div style="margin: 5px 15px 5px 5px">
+                                <mat-checkbox (change)="checkTypeFilter('Vizsga')" [checked]="true"
+                                    >Vizsga</mat-checkbox
+                                >
+                            </div>
+                            <div style="margin: 5px 15px 5px 5px">
+                                <mat-checkbox (change)="checkTypeFilter('Zárthelyi')" [checked]="true"
+                                    >Zárthelyi</mat-checkbox
+                                >
+                            </div>
+                            <div style="margin: 5px 15px 5px 5px">
+                                <mat-checkbox (change)="checkTypeFilter('Beadandó')" [checked]="true"
+                                    >Beadandó</mat-checkbox
+                                >
+                            </div>
+                            <div style="margin: 5px 15px 5px 5px">
+                                <mat-checkbox (change)="checkTypeFilter('Teszt')" [checked]="true">Teszt</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="set-button-right-side">
+                            <button
+                                class="navigation-main-font"
+                                mat-raised-button
+                                color="primary"
+                                (click)="saveFilter()"
+                            >
+                                Mentés
+                            </button>
+                        </div>
                     </mat-expansion-panel>
                 </mat-accordion>
                 <div class="list-add-element-button mt-5">
@@ -23,17 +52,26 @@
             </div>
             <div>
                 <mat-accordion>
-                    <mat-expansion-panel *ngFor="let mainTask of allMainTask" class="type-{{getTypeForClass(mainTask.type)}}">
+                    <mat-expansion-panel
+                        *ngFor="let mainTask of filteredMainTasks"
+                        class="type-{{ getTypeForClass(mainTask.type) }}"
+                    >
                         <mat-expansion-panel-header>
-                            <div><mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox></div>
+                            <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
                             <div class="ml-10 content-font">{{ mainTask.name }}</div>
                         </mat-expansion-panel-header>
                         <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
                             <div class="sub-task-main">
-                                <div><mat-checkbox></mat-checkbox></div>
+                                <div>
+                                    <mat-checkbox
+                                        (change)="checkSubTask(subTask)"
+                                        [checked]="subTask.fulfilled"
+                                    ></mat-checkbox>
+                                </div>
                                 <div
                                     *ngIf="!editedSubTasks.has(subTask.id!)"
                                     class="content-font ml-10"
+                                    [class.completed-task]="subTask.fulfilled"
                                     style="width: 100%"
                                 >
                                     {{ subTask.name }}
@@ -110,6 +148,47 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
+            <div class="mt-20 mb-20">
+                <mat-divider></mat-divider>
+            </div>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-icon>done</mat-icon>
+                        <div class="content-font ml-10">Befejezett feladatok</div>
+                    </mat-expansion-panel-header>
+                    <div class="mb-15 set-button-right-side">
+                        <button
+                            class="navigation-main-font"
+                            mat-raised-button
+                            color="warn"
+                            (click)="openDeleteAllFulfilledTaskDialog()"
+                        >
+                            Összes törlése
+                        </button>
+                    </div>
+                    <div
+                        *ngFor="let fulfilledMainTask of fulfilledMainTasks; let i = index"
+                        class="fulfilled-task-list-row"
+                        [class.fulfilled-task-list-first-row]="i === 0"
+                    >
+                        <div class="fulfilled-task-row-main">
+                            <div>
+                                <mat-checkbox
+                                    [checked]="true"
+                                    (click)="checkMainTask($event, fulfilledMainTask)"
+                                ></mat-checkbox>
+                            </div>
+                            <div class="ml-10 content-font completed-task">{{ fulfilledMainTask.name }}</div>
+                        </div>
+                        <div class="list-delete-button" (click)="deleteMainTask(fulfilledMainTask.id!)">
+                            <button mat-icon-button>
+                                <mat-icon> delete </mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
     </div>
     <div *ngIf="!selectedTimetableId" class="no-selected-element">

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
@@ -16,15 +16,16 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     styleUrls: ['./agenda-list-view-list.component.scss'],
 })
 export class AgendaListViewListComponent {
-    allMainTask: MainTaskDto[] = [];
+    mainTasks: MainTaskDto[] = [];
+    filteredMainTasks: MainTaskDto[] = [];
+    fulfilledMainTasks: MainTaskDto[] = [];
     allSubTask: SubTaskDto[] = [];
     selectedMainTask: MainTaskDto = {} as MainTaskDto;
 
     selectedTimetableId: number = 0;
     editedSubTasks: Map<number, string> = new Map<number, string>();
+    filteredTypes: string[] = ['Feladat', 'Vizsga', 'Zárthelyi', 'Beadandó', 'Teszt'];
 
-    //TODO a típusok szerinti színezést megcsinálni
-    //TODO szűrést megcsinálni
     //TODO valami szín hogy melyik tantárgyhoz tartozik a feladat
     constructor(
         private mainTaskService: MainTaskService,
@@ -41,7 +42,9 @@ export class AgendaListViewListComponent {
 
     getAllMainTask(): void {
         this.mainTaskService.getAllMainTaskSubject().subscribe(mainTasks => {
-            this.allMainTask = mainTasks;
+            this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
+            this.filteredMainTasks = this.mainTasks.filter(mainTask => this.filteredTypes.includes(mainTask.type));
+            this.fulfilledMainTasks = mainTasks.filter(mainTask => mainTask.fulfilled);
         });
     }
 
@@ -220,5 +223,79 @@ export class AgendaListViewListComponent {
             default:
                 return '';
         }
+    }
+    checkSubTask(subTask: SubTaskDto): void {
+        let updatedSubtask: SubTaskDto = new SubTaskDto(
+            subTask.name,
+            !subTask.fulfilled,
+            subTask.mainTaskId,
+            subTask.id
+        );
+        this.subTaskService.updateSubTask(updatedSubtask).subscribe({
+            next: _ => {
+                this.allSubTask[this.allSubTask.findIndex(task => task.id === subTask.id)] = { ...updatedSubtask };
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        });
+    }
+
+    checkTypeFilter(checkedType: string): void {
+        if (this.filteredTypes.includes(checkedType))
+            this.filteredTypes = this.filteredTypes.filter(type => type !== checkedType);
+        else this.filteredTypes.push(checkedType);
+    }
+
+    saveFilter(): void {
+        this.filteredMainTasks = this.mainTasks.filter(mainTask => this.filteredTypes.includes(mainTask.type));
+    }
+
+    openDeleteAllFulfilledTaskDialog(): void {
+        const dialogInterface: DialogData = {
+            dialogHeader: 'Teljesített alfeladatok törlése',
+            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.',
+            cancelButtonLabel: 'Vissza',
+            confirmButtonLabel: 'Törlés',
+            callbackMethod: () => {
+                this.deleteAllFulfilledMainTask();
+            },
+        };
+        this.dialog.open(DialogComponent, {
+            data: dialogInterface,
+        });
+    }
+
+    deleteAllFulfilledMainTask(): void {
+        this.fulfilledMainTasks.forEach(mainTask => {
+            this.deleteMainTask(mainTask.id);
+        })
+    }
+
+    checkMainTask(event$: any, mainTask: MainTaskDto): void {
+        event$.stopPropagation();
+        let updatedMainTask: MainTaskDto = new MainTaskDto(
+            mainTask.name,
+            !mainTask.fulfilled,
+            mainTask.deadline,
+            mainTask.note,
+            mainTask.type,
+            mainTask.lessonId,
+            mainTask.id
+        );
+        this.mainTaskService.updateMainTask(updatedMainTask).subscribe({
+            next: _ => {
+                this.mainTaskService.getMainTasksByLessonIds();
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        })
     }
 }
