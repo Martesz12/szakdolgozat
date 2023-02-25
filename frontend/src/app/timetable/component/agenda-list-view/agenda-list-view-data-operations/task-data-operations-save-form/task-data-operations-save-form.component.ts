@@ -84,13 +84,15 @@ export class TaskDataOperationsSaveFormComponent {
         let name: string = '';
         let note: string = '';
         let deadline: Date = new Date();
-        let type: string = '';
+        let type: string = 'Feladat';
 
         if (this.newLesson.value !== null) lessonId = this.newLesson.value;
         if (this.newName.value !== null) name = this.newName.value;
         if (this.newNote.value !== null) note = this.newNote.value;
         if (this.newDeadline.value !== null) deadline = this.newDeadline.value;
-        if (this.newType.value !== null) type = this.newType.value;
+        if (this.newType.value !== null && this.newType.value !== '') type = this.newType.value;
+        console.log(this.newType.value);
+        
         return new MainTaskDto(name, false, deadline, note, type, lessonId);
     }
 

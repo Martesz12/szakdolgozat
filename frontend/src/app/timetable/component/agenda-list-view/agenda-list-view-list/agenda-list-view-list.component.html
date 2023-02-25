@@ -53,7 +53,7 @@
             <div>
                 <mat-accordion>
                     <mat-expansion-panel
-                        *ngFor="let mainTask of filteredMainTasks"
+                        *ngFor="let mainTask of sortByDate(filteredMainTasks)"
                         class="type-{{ getTypeForClass(mainTask.type) }}"
                     >
                         <mat-expansion-panel-header>

@@ -298,4 +298,8 @@ export class AgendaListViewListComponent {
                 }),
         })
     }
+
+    sortByDate(mainTasks: MainTaskDto[]): MainTaskDto[] {
+        return mainTasks.sort((a,b) => (a.deadline > b.deadline) ? 1 : ((b.deadline > a.deadline) ? -1 : 0));
+    }
 }
