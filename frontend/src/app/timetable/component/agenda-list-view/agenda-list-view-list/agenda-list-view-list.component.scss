@@ -141,3 +141,28 @@
     padding: 0px 4px;
     margin: 0px 4px;
 }
+
+.type-exam {
+    background-color: var(--exam);
+    font-weight: 500;
+}
+
+.type-assigment {
+    background-color: var(--assigment);
+    font-weight: 500;
+}
+
+.type-test {
+    background-color: var(--test);
+    font-weight: 500;
+}
+
+.type-zh {
+    background-color: var(--zh);
+    font-weight: 500;
+}
+
+.type-task {
+    background-color: var(--task);
+    font-weight: 500;
+}

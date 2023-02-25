@@ -23,9 +23,7 @@ export class AgendaListViewListComponent {
     selectedTimetableId: number = 0;
     editedSubTasks: Map<number, string> = new Map<number, string>();
 
-
     //TODO a típusok szerinti színezést megcsinálni
-    //TODO description-t megcsinálni
     //TODO szűrést megcsinálni
     //TODO valami szín hogy melyik tantárgyhoz tartozik a feladat
     constructor(
@@ -98,7 +96,6 @@ export class AgendaListViewListComponent {
         });
     }
 
-    //TODO backend-en nem jó a törlés a subtask-ok miatt
     deleteMainTask(mainTaskId: number | null): void {
         if (mainTaskId !== null)
             this.mainTaskService.deleteMainTask(mainTaskId).subscribe({
@@ -124,26 +121,26 @@ export class AgendaListViewListComponent {
 
     addSubTask(mainTaskId: number): void {
         let newSubTask: SubTaskDto = new SubTaskDto('Új Alfeladat', false, mainTaskId);
-            this.subTaskService.addSubTask(newSubTask).subscribe({
-                next: subTask => {
-                    this.subTaskService.getSubTasksByLessonIds();
-                    this.subTaskService.setSubTaskDataOperationPageState(DataOperationPageState.Description);
-                    this.modifySubTask(subTask);
-                    if (subTask.id !== null) this.subTaskService.selectSubTask(subTask.id);
-                    this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
-                },
-                error: error =>
-                    this.snackBar.open('Hiba alfeladat hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
-            });
+        this.subTaskService.addSubTask(newSubTask).subscribe({
+            next: subTask => {
+                this.subTaskService.getSubTasksByLessonIds();
+                this.subTaskService.setSubTaskDataOperationPageState(DataOperationPageState.Description);
+                this.modifySubTask(subTask);
+                if (subTask.id !== null) this.subTaskService.selectSubTask(subTask.id);
+                this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
+                    duration: 2000,
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['info-snackbar'],
+                });
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat hozzáadása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        });
     }
 
     filterSubTasksByMainTaskId(mainTaskId: number): SubTaskDto[] {
@@ -206,5 +203,22 @@ export class AgendaListViewListComponent {
                     panelClass: ['error-snackbar'],
                 }),
         });
+    }
+
+    getTypeForClass(type: string): string {
+        switch (type) {
+            case 'Feladat':
+                return 'task';
+            case 'Vizsga':
+                return 'exam';
+            case 'Zárthelyi':
+                return 'zh';
+            case 'Beadandó':
+                return 'assigment';
+            case 'Teszt':
+                return 'test';
+            default:
+                return '';
+        }
     }
 }

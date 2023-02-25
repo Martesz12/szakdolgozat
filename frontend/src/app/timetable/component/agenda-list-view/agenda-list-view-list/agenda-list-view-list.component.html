@@ -23,7 +23,7 @@
             </div>
             <div>
                 <mat-accordion>
-                    <mat-expansion-panel *ngFor="let mainTask of allMainTask">
+                    <mat-expansion-panel *ngFor="let mainTask of allMainTask" class="type-{{getTypeForClass(mainTask.type)}}">
                         <mat-expansion-panel-header>
                             <div><mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox></div>
                             <div class="ml-10 content-font">{{ mainTask.name }}</div>
