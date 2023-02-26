@@ -9,28 +9,6 @@
     justify-content: center;
 }
 
-.no-selected-element {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-    align-items: center;
-    line-height: normal;
-}
-
-.no-selected-element-icon {
-    font-size: 60px;
-    font-weight: 600;
-    width: 60px;
-    height: 60px;
-}
-
-// button.date-class .mat-calendar-body-cell-content {
-//     background-color: var(--primary100);
-//     border-radius: 100%;
-// }
-
 //******************************************************************************************
 
 .calendar {
@@ -80,24 +58,26 @@
     height: 80%;
     display: flex;
     flex-wrap: wrap;
-    padding: 10px
+    padding: 10px;
 }
 
-.days div {
+.days .full-day {
     height: 50px;
     width: calc(100% / 7);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
     cursor: pointer;
 }
 
-.prev-date, .next-date {
+.prev-date,
+.next-date {
     opacity: 0.5;
 }
 
-.days div:hover:not(.today) {
+.days .full-day:hover:not(.today) {
     background-color: var(--neutral);
     border: 1px solid black;
 }
@@ -107,4 +87,22 @@
     border: 1px solid black;
 }
 
+.bullet-full {
+    height: 5px;
+    width: 5px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
 
+.bullet-empty {
+    height: 5px;
+    width: 5px;
+    // background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.full-day {
+    display: flex;
+}

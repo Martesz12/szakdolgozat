@@ -13,15 +13,16 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     mainTaskDates: number[] = [];
     currentDate: Date = new Date();
 
-    constructor(private mainTaskService: MainTaskService, private elementRef: ElementRef) {
+    constructor(private mainTaskService: MainTaskService) {
         this.mainTaskService.getAllMainTaskSubject().subscribe(mainTasks => {
             this.mainTasks = mainTasks;
-            mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getDate()));
+            mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
+            this.renderCalendar();
         });
     }
 
     ngAfterViewInit(): void {
-        this.renderCalendar();
+        // this.renderCalendar();
     }
 
     navigateBack(): void {
@@ -43,9 +44,9 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
 
         const prevLastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 0).getDate();
 
-        const firstDayIndex = this.currentDate.getDay();
+        const firstDayIndex = this.currentDate.getDay()-1;
 
-        const lastDayIndex = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDay();
+        const lastDayIndex = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDay()-1;
 
         const nextDays = 7 - lastDayIndex - 1;
 
@@ -71,19 +72,27 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
         let days = '';
 
         for (let x = firstDayIndex; x > 0; x--) {
-            days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
+            days += `<div class="full-day"><div class="prev-date">${prevLastDay - x + 1}</div><div class="bullet-empty"></div></div>`;
         }
 
+        
         for (let i = 1; i <= lastDay; i++) {
-            if (i === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth()) {
-                days += `<div class="today">${i}</div>`;
+            days += '<div class="full-day '
+            if (i === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear()) {
+                days += `today"/><div>${i}</div>`;
             } else {
-                days += `<div>${i}</div>`;
+                days += `"/><div>${i}</div>`;
             }
+            if(this.mainTaskDates.includes(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()+i-1).getTime())){
+                days += '<div class="bullet-full"></div>'
+            } else {
+                days += '<div class="bullet-empty"></div>'
+            }
+            days += '</div>'
         }
 
         for (let j = 1; j <= nextDays; j++) {
-            days += `<div class="next-date">${j}</div>`;
+            days += `<div class="full-day"><div class="next-date">${j}</div><div class="bullet-empty"></div></div>`;
             monthDays!.innerHTML = days;
         }
     }
