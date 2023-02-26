@@ -28,7 +28,7 @@ export class NavigationComponent implements OnInit {
     }
 
     isInMobileView(): boolean {
-        return this.getScreenWidth() <= 599;
+        return this.getScreenWidth() <= 1000;
     }
     scrollEvent = (e: Event) => {
         if (this.isInMobileView()) {

@@ -1,1 +1,26 @@
-<p>agenda-monthly-view-calendar works!</p>
+<mat-card class="mat-elevation-z4 agenda-monthly-view-card">
+    <div class="monthly-view">
+        <div class="container">
+            <div class="calendar">
+                <div class="month">
+                    <mat-icon class="pre" (click)="navigateBack()">navigate_before</mat-icon>
+                    <div class="date">
+                        <div class="secondary-title-font mb-5 month-name"></div>
+                        <div class="content-font date-name"></div>
+                    </div>
+                    <mat-icon class="pre" (click)="navigateForeward()">navigate_next</mat-icon>
+                </div>
+                <div class="weekdays">
+                    <div class="content-font">H</div>
+                    <div class="content-font">K</div>
+                    <div class="content-font">Sz</div>
+                    <div class="content-font">Cs</div>
+                    <div class="content-font">P</div>
+                    <div class="content-font">Sz</div>
+                    <div class="content-font">V</div>
+                </div>
+                <div class="days"></div>
+            </div>
+        </div>
+    </div>
+</mat-card>
