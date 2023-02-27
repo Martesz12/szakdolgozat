@@ -1,9 +1,25 @@
 <div fxLayout="column" fxFlexFill="min-height">
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
-        <button *ngIf="!drawer.opened" mat-button fxFlex="initial" (click)="drawer.toggle()">
+        <button
+            matTooltip="Oldalsó menü megnyitása"
+            [matTooltipPosition]="'below'"
+            [matTooltipShowDelay]="500"
+            *ngIf="!drawer.opened"
+            mat-button
+            fxFlex="initial"
+            (click)="drawer.toggle()"
+        >
             <mat-icon>menu</mat-icon>
         </button>
-        <button *ngIf="drawer.opened" mat-button fxFlex="initial" (click)="drawer.toggle()">
+        <button
+            matTooltip="Oldalsó menü bezárása"
+            [matTooltipPosition]="'below'"
+            [matTooltipShowDelay]="500"
+            *ngIf="drawer.opened"
+            mat-button
+            fxFlex="initial"
+            (click)="drawer.toggle()"
+        >
             <mat-icon>close</mat-icon>
         </button>
 

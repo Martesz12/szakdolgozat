@@ -1,5 +1,11 @@
 <div class="timetable-form">
-    <mat-form-field class="timetable-form-field" appearance="outline">
+    <mat-form-field
+        matTooltip="Válassz egy órerendet!"
+        [matTooltipPosition]="'right'"
+        [matTooltipShowDelay]="500"
+        class="timetable-form-field"
+        appearance="outline"
+    >
         <mat-label>Órarend</mat-label>
         <mat-select
             #timetableSelect
@@ -13,9 +19,7 @@
         </mat-select>
     </mat-form-field>
     <div class="timetable-select-button">
-        <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">
-            Órarendek szerkesztése
-        </button>
+        <button mat-raised-button color="primary" (click)="onEditTimetableClicked()">Órarendek szerkesztése</button>
     </div>
 </div>
 
