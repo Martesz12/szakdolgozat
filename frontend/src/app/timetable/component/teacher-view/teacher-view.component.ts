@@ -14,7 +14,7 @@ export class TeacherViewComponent {
     }
 
     showBothCard(): boolean {
-        return this.getScreenWidth() > 599;
+        return this.getScreenWidth() > 1000;
     }
 
     isStateTheCurrentPageState(state: string): boolean {

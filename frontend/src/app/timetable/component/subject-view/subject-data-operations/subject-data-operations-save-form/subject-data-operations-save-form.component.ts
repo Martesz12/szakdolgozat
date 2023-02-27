@@ -72,7 +72,7 @@ export class SubjectDataOperationsSaveFormComponent {
     }
 
     isInMobileView(): boolean {
-        return this.getScreenWidth() <= 599;
+        return this.getScreenWidth() <= 1000;
     }
 
     colorSliderChange(value: number) {

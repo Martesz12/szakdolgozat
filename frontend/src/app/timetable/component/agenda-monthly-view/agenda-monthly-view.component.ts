@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
@@ -8,13 +8,15 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     styleUrls: ['./agenda-monthly-view.component.scss'],
 })
 export class AgendaMonthlyViewComponent {
+    selectedTimetableId: number = 0;
+
     constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
-        this.resetIfTimetableChanged();
+        this.getTimetableId();
     }
 
-    resetIfTimetableChanged(){
-        this.timetableService.getSelectedTimetableId().subscribe(_ => {
-            
+    getTimetableId(){
+        this.timetableService.getSelectedTimetableId().subscribe(timetableId => {
+            this.selectedTimetableId = timetableId;
         });
     }
 
@@ -23,7 +25,7 @@ export class AgendaMonthlyViewComponent {
     }
 
     showBothCard(): boolean {
-        return this.getScreenWidth() > 599;
+        return this.getScreenWidth() > 1000;
     }
 
     isStateTheCurrentPageState(state: string): boolean {

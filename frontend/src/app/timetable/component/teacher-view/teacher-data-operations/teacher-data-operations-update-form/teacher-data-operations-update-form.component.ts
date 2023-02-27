@@ -124,6 +124,6 @@ export class TeacherDataOperationsUpdateFormComponent {
     }
 
     isInMobileView(): boolean {
-        return this.getScreenWidth() <= 599;
+        return this.getScreenWidth() <= 1000;
     }
 }

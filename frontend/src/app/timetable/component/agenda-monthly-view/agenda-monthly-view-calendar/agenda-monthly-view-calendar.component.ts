@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { filter, switchMap } from 'rxjs';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
     selector: 'app-agenda-monthly-view-calendar',
@@ -8,21 +10,30 @@ import { MainTaskService } from 'src/app/shared/service/timetable/main-task.serv
     styleUrls: ['./agenda-monthly-view-calendar.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
+export class AgendaMonthlyViewCalendarComponent {
     mainTasks: MainTaskDto[] = [];
     mainTaskDates: number[] = [];
     currentDate: Date = new Date();
+    selectedTimetableId: number = 0;
 
-    constructor(private mainTaskService: MainTaskService) {
-        this.mainTaskService.getAllMainTaskSubject().subscribe(mainTasks => {
+    constructor(private mainTaskService: MainTaskService, private timetableService: TimetableService) {
+        this.getMainTasksWhenTimetableSelected();
+    }
+
+    private getMainTasksWhenTimetableSelected(): void{
+        this.timetableService.getSelectedTimetableId()
+        .pipe(
+            filter(timetableId => timetableId !== 0),
+            switchMap(timetableId => {
+                this.selectedTimetableId = timetableId;
+                return this.mainTaskService.getAllMainTaskSubject()
+            }),
+        )
+        .subscribe(mainTasks => {
             this.mainTasks = mainTasks;
             mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
             this.renderCalendar();
         });
-    }
-
-    ngAfterViewInit(): void {
-        // this.renderCalendar();
     }
 
     navigateBack(): void {

@@ -154,6 +154,6 @@ export class TaskDataOperationsUpdateFormComponent {
     }
 
     isInMobileView(): boolean {
-        return this.getScreenWidth() <= 599;
+        return this.getScreenWidth() <= 1000;
     }
 }
