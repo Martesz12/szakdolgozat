@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { filter, switchMap } from 'rxjs';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
@@ -10,14 +10,33 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     styleUrls: ['./agenda-monthly-view-calendar.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class AgendaMonthlyViewCalendarComponent {
+export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
+    readonly months = [
+        'Január',
+        'Február',
+        'Március',
+        'Április',
+        'Május',
+        'Június',
+        'Július',
+        'Augusztus',
+        'Szeptember',
+        'Október',
+        'November',
+        'December',
+    ];
     mainTasks: MainTaskDto[] = [];
     mainTaskDates: number[] = [];
     currentDate: Date = new Date();
     selectedTimetableId: number = 0;
+    calendarMonth: string = '';
+    calendarDate: Date = new Date();
 
     constructor(private mainTaskService: MainTaskService, private timetableService: TimetableService) {
         this.getMainTasksWhenTimetableSelected();
+    }
+    ngAfterViewInit(): void {
+        if(this.selectedTimetableId) this.renderCalendar();
     }
 
     private getMainTasksWhenTimetableSelected(): void{
@@ -61,24 +80,9 @@ export class AgendaMonthlyViewCalendarComponent {
 
         const nextDays = 7 - lastDayIndex - 1;
 
-        const months = [
-            'Január',
-            'Február',
-            'Március',
-            'Április',
-            'Május',
-            'Június',
-            'Július',
-            'Augusztus',
-            'Szeptember',
-            'Október',
-            'November',
-            'December',
-        ];
+        this.calendarMonth = this.months[this.currentDate.getMonth()];
 
-        document.querySelector('.date .month-name')!.innerHTML = months[this.currentDate.getMonth()];
-
-        document.querySelector('.date .date-name')!.innerHTML = new Date().toDateString();
+        this.calendarDate = new Date();
 
         let days = '';
 
