@@ -46,7 +46,12 @@
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
-                <div class="list-add-element-button mt-5">
+                <div
+                    matTooltip="Feladat hozzáadása"
+                    [matTooltipPosition]="'right'"
+                    [matTooltipShowDelay]="500"
+                    class="list-add-element-button mt-5"
+                >
                     <mat-icon class="list-add-element-button-icon rotate" (click)="addMainTask()">add</mat-icon>
                 </div>
             </div>
@@ -124,22 +129,46 @@
                         </div>
                         <mat-divider></mat-divider>
                         <div class="list-row-buttons">
-                            <div class="list-action-button" (click)="addSubTask(mainTask.id!)">
+                            <div
+                                matTooltip="Alfeladat hozzáadása"
+                                [matTooltipPosition]="'below'"
+                                [matTooltipShowDelay]="500"
+                                class="list-action-button"
+                                (click)="addSubTask(mainTask.id!)"
+                            >
                                 <button mat-icon-button>
                                     <mat-icon> add </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-action-button" (click)="selectMainTask(mainTask.id)">
+                            <div
+                                matTooltip="Feladat leírása"
+                                [matTooltipPosition]="'below'"
+                                [matTooltipShowDelay]="500"
+                                class="list-action-button"
+                                (click)="selectMainTask(mainTask.id)"
+                            >
                                 <button mat-icon-button>
                                     <mat-icon> description </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-action-button" (click)="modifyMainTask(mainTask.id)">
+                            <div
+                                matTooltip="Feladat szerkesztése"
+                                [matTooltipPosition]="'below'"
+                                [matTooltipShowDelay]="500"
+                                class="list-action-button"
+                                (click)="modifyMainTask(mainTask.id)"
+                            >
                                 <button mat-icon-button>
                                     <mat-icon> edit </mat-icon>
                                 </button>
                             </div>
-                            <div class="list-delete-button" (click)="openDeleteDialog(mainTask.id)">
+                            <div
+                                matTooltip="Feladat törlése"
+                                [matTooltipPosition]="'below'"
+                                [matTooltipShowDelay]="500"
+                                class="list-delete-button"
+                                (click)="openDeleteDialog(mainTask.id)"
+                            >
                                 <button mat-icon-button>
                                     <mat-icon> delete </mat-icon>
                                 </button>
@@ -181,7 +210,13 @@
                             </div>
                             <div class="ml-10 content-font completed-task">{{ fulfilledMainTask.name }}</div>
                         </div>
-                        <div class="list-delete-button" (click)="deleteMainTask(fulfilledMainTask.id!)">
+                        <div
+                            matTooltip="Alfeladat törlése"
+                            [matTooltipPosition]="'below'"
+                            [matTooltipShowDelay]="500"
+                            class="list-delete-button"
+                            (click)="deleteMainTask(fulfilledMainTask.id!)"
+                        >
                             <button mat-icon-button>
                                 <mat-icon> delete </mat-icon>
                             </button>
