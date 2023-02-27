@@ -78,11 +78,12 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
 
         const lastDayIndex = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDay()-1;
 
-        const nextDays = 7 - lastDayIndex - 1;
+        let nextDays = 7 - lastDayIndex - 1;
 
         this.calendarMonth = this.months[this.currentDate.getMonth()];
 
-        this.calendarDate = new Date();
+        this.calendarDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0)
+        
 
         let days = '';
 
@@ -106,6 +107,8 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
             days += '</div>'
         }
 
+        if(firstDayIndex === -1) nextDays -= 1;
+        
         for (let j = 1; j <= nextDays; j++) {
             days += `<div class="full-day"><div class="next-date">${j}</div><div class="bullet-empty"></div></div>`;
             monthDays!.innerHTML = days;

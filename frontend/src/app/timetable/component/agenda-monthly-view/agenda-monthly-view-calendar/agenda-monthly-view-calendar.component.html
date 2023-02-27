@@ -3,8 +3,8 @@
         <div class="month">
             <mat-icon (click)="navigateBack()">navigate_before</mat-icon>
             <div class="date">
-                <div class="main-title-font mb-5 month-name">{{calendarMonth}}</div>
-                <div class="content-font date-name">{{calendarDate | date:'yyyy. MM. dd.'}}</div>
+                <div class="main-title-font mb-15 month-name">{{calendarDate | date:'yyyy.'}}</div>
+                <div class="secondary-title-font date-name">{{calendarMonth}}</div>
             </div>
             <mat-icon (click)="navigateForeward()">navigate_next</mat-icon>
         </div>
