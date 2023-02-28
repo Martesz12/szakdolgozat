@@ -31,28 +31,34 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     selectedTimetableId: number = 0;
     calendarMonth: string = '';
     calendarDate: Date = new Date();
+    previousDays: number[] = [];
+    currentDays: Map<number, number> = new Map<number, number>();
+    nextDays: number[] = [];
+    today: number = 0;
+    eventDays: number[] = [];
 
     constructor(private mainTaskService: MainTaskService, private timetableService: TimetableService) {
         this.getMainTasksWhenTimetableSelected();
     }
     ngAfterViewInit(): void {
-        if(this.selectedTimetableId) this.renderCalendar();
+        if (this.selectedTimetableId) this.renderCalendar();
     }
 
-    private getMainTasksWhenTimetableSelected(): void{
-        this.timetableService.getSelectedTimetableId()
-        .pipe(
-            filter(timetableId => timetableId !== 0),
-            switchMap(timetableId => {
-                this.selectedTimetableId = timetableId;
-                return this.mainTaskService.getAllMainTaskSubject()
-            }),
-        )
-        .subscribe(mainTasks => {
-            this.mainTasks = mainTasks;
-            mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
-            this.renderCalendar();
-        });
+    private getMainTasksWhenTimetableSelected(): void {
+        this.timetableService
+            .getSelectedTimetableId()
+            .pipe(
+                filter(timetableId => timetableId !== 0),
+                switchMap(timetableId => {
+                    this.selectedTimetableId = timetableId;
+                    return this.mainTaskService.getAllMainTaskSubject();
+                })
+            )
+            .subscribe(mainTasks => {
+                this.mainTasks = mainTasks;
+                mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
+                this.renderCalendar();
+            });
     }
 
     navigateBack(): void {
@@ -71,52 +77,49 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     }
 
     renderCalendar(): void {
+        this.previousDays = [];
+        this.currentDays = new Map<number, number>();;
+        this.nextDays = [];
+        this.today = 0;
+        this.eventDays = [];
+
         this.currentDate.setDate(1);
-
-        const monthDays = document.querySelector('.days');
-
         const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDate();
-
         const prevLastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 0).getDate();
-
-        const firstDayIndex = this.currentDate.getDay()-1;
-
-        const lastDayIndex = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDay()-1;
-
+        const firstDayIndex = this.currentDate.getDay() - 1;
+        const lastDayIndex = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDay() - 1;
         let nextDays = 7 - lastDayIndex - 1;
 
         this.calendarMonth = this.months[this.currentDate.getMonth()];
+        this.calendarDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
 
-        this.calendarDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0)
-        
+        for (let x = firstDayIndex; x > 0; x--) this.previousDays.push(prevLastDay - x + 1);
 
-        let days = '';
-
-        for (let x = firstDayIndex; x > 0; x--) {
-            days += `<div class="full-day"><div class="prev-date">${prevLastDay - x + 1}</div><div class="bullet-empty"></div></div>`;
-        }
-
-        
         for (let i = 1; i <= lastDay; i++) {
-            days += '<div class="full-day '
-            if (i === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear()) {
-                days += `today"/><div>${i}</div>`;
-            } else {
-                days += `"/><div>${i}</div>`;
-            }
-            if(this.mainTaskDates.includes(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()+i-1).getTime())){
-                days += '<div class="bullet-full"></div>'
-            } else {
-                days += '<div class="bullet-empty"></div>'
-            }
-            days += '</div>'
+            if (
+                i === new Date().getDate() &&
+                this.currentDate.getMonth() === new Date().getMonth() &&
+                this.currentDate.getFullYear() === new Date().getFullYear()
+            )
+                this.today = i;
+
+            let currentDate = new Date(
+                this.currentDate.getFullYear(),
+                this.currentDate.getMonth(),
+                this.currentDate.getDate() + i - 1
+            ).getTime();
+
+            this.currentDays.set(i, currentDate);
+
+            if (this.mainTaskDates.includes(currentDate)) this.eventDays.push(i);
         }
 
-        if(firstDayIndex === -1) nextDays -= 1;
-        
-        for (let j = 1; j <= nextDays; j++) {
-            days += `<div class="full-day"><div class="next-date">${j}</div><div class="bullet-empty"></div></div>`;
-            monthDays!.innerHTML = days;
-        }
+        if (firstDayIndex === -1) nextDays -= 1;
+
+        for (let j = 1; j <= nextDays; j++) this.nextDays.push(j);
+    }
+
+    selectDay(currentDate: number): void {
+        console.log(currentDate);
     }
 }

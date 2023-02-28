@@ -39,7 +39,20 @@
             <div class="content-font">Sz</div>
             <div class="content-font">V</div>
         </div>
-        <div class="days"></div>
+        <div class="days">
+            <div class="full-day" *ngFor="let day of previousDays">
+                <div class="prev-date" >{{day}}</div>
+                <div class="bullet-empty"></div>
+            </div>
+            <div (click)="selectDay(day.value)" [class.today]="today === day.key" class="full-day" *ngFor="let day of currentDays | keyvalue">
+                <div>{{day.key}}</div>
+                <div [ngClass]="eventDays.includes(day.key) ? 'bullet-full' : 'bullet-empty'"></div>
+            </div>
+            <div class="full-day" *ngFor="let day of nextDays">
+                <div class="next-date">{{day}}</div>
+                <div class="bullet-empty"></div>
+            </div>
+        </div>
     </div>
 
     <div *ngIf="!this.selectedTimetableId" class="no-selected-element">
