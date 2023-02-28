@@ -25,3 +25,53 @@
     width: 60px;
     height: 60px;
 }
+
+.type-exam {
+    background-color: var(--exam);
+    font-weight: 500;
+}
+
+.type-assigment {
+    background-color: var(--assigment);
+    font-weight: 500;
+}
+
+.type-test {
+    background-color: var(--test);
+    font-weight: 500;
+}
+
+.type-zh {
+    background-color: var(--zh);
+    font-weight: 500;
+}
+
+.type-task {
+    background-color: var(--task);
+    font-weight: 500;
+}
+
+.expansion-panel-header {
+    display: flex;
+    align-items: center;
+}
+
+.color-picker-sample {
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    display: inline-block;
+    border: 2px solid black;
+}
+
+.sub-task-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0px 15px 20px;
+}
+
+.sub-task-main {
+    display: flex;
+    align-items: center;
+}
