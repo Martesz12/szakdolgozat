@@ -23,9 +23,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CustomDateAdapter } from './adapter/custom-date-adapter';
 
 @NgModule({
     declarations: [DialogComponent],
@@ -85,6 +86,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatNativeDateModule,
         MatExpansionModule,
         MatTooltipModule,
+    ],
+    providers: [
+        {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+        {provide: DateAdapter, useClass: CustomDateAdapter },
     ],
 })
 export class SharedModule {}
