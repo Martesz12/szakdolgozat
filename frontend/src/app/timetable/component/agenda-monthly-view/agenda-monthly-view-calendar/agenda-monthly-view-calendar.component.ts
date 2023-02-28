@@ -44,7 +44,8 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     eventDays: number[] = [];
     @Output() selectDayEvent = new EventEmitter<number>();
 
-    //TODO click event oldalt felsorolni az eseményeket
+    //TODO valószínűleg a s/ms bezavar a dátum összehasonlításban
+    //TODO csak év hónap nap alapján ellenőrizni a dolgokat
     constructor(
         private mainTaskService: MainTaskService,
         private timetableService: TimetableService,
