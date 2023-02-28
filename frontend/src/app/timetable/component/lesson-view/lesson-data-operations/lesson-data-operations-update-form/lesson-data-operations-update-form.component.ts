@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
@@ -45,7 +45,7 @@ export class LessonDataOperationsUpdateFormComponent {
         this.getAllTeacher();
         this.updatedDay?.addValidators(Validators.required);
         this.updatedStartTime?.addValidators(Validators.required);
-        this.updatedEndTime?.addValidators(Validators.required);
+        this.updatedEndTime?.addValidators([Validators.required, this.startTimeLowerThanEndTimeValidator()]);
         this.updatedType?.addValidators(Validators.required);
         this.updatedSubjectId?.addValidators(Validators.required);
         this.updatedTeacherId?.addValidators(Validators.required);
@@ -155,6 +155,20 @@ export class LessonDataOperationsUpdateFormComponent {
                         panelClass: ['error-snackbar'],
                     }),
             });
+    }
+
+    startTimeLowerThanEndTimeValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            let startTime = this.updatedStartTime.value?.split(':');
+            let endTime = this.updatedEndTime.value?.split(':');
+
+            if (startTime?.length && endTime?.length) {
+                return +startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1])
+                    ? null
+                    : { forbiddenTime: { value: control.value } };
+            }
+            return { forbiddenTime: { value: control.value } };
+        };
     }
 
     private createLesson(): LessonDto {

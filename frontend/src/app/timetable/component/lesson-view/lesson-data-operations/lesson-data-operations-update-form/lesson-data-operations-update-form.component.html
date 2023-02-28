@@ -41,7 +41,8 @@
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Végzés ideje</mat-label>
             <input type="time" matInput [formControl]="updatedEndTime" />
-            <mat-error *ngIf="updatedEndTime.invalid">Végzés idejének megadása kötelező!</mat-error>
+            <mat-error *ngIf="updatedEndTime.hasError('required')">Végzés idejének megadása kötelező!</mat-error>
+            <mat-error *ngIf="updatedEndTime.hasError('forbiddenTime')">Végzés ideje nem lehet hamarabb mit a kezdés ideje!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Típus</mat-label>

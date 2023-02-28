@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
@@ -43,7 +43,7 @@ export class LessonDataOperationsSaveFormComponent {
         this.getAllTeacher();
         this.newDay?.addValidators(Validators.required);
         this.newStartTime?.addValidators(Validators.required);
-        this.newEndTime?.addValidators(Validators.required);
+        this.newEndTime?.addValidators([Validators.required, this.startTimeLowerThanEndTimeValidator()]);
         this.newType?.addValidators(Validators.required);
         this.newSubjectId?.addValidators(Validators.required);
         this.newTeacherId?.addValidators(Validators.required);
@@ -93,7 +93,7 @@ export class LessonDataOperationsSaveFormComponent {
                     });
                 },
                 error: error => {
-                    if(this.selectedTimetableId === 0) error = "Nincs kiválasztott órarend!"
+                    if (this.selectedTimetableId === 0) error = 'Nincs kiválasztott órarend!';
                     this.snackBar.open('Hiba tanóra hozzáadása során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
@@ -109,6 +109,34 @@ export class LessonDataOperationsSaveFormComponent {
             if (this.newSubjectId.invalid) this.newSubjectId.markAsTouched();
             if (this.newTeacherId.invalid) this.newTeacherId.markAsTouched();
         }
+    }
+
+    startTimeLowerThanEndTimeValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            let startTime = this.newStartTime.value?.split(':');
+            let endTime = this.newEndTime.value?.split(':');
+
+            if (startTime?.length && endTime?.length) {
+                return +startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1])
+                    ? null
+                    : { forbiddenTime: { value: control.value } };
+            }
+            return { forbiddenTime: { value: control.value } };
+        };
+    }
+
+    startTimeLowerThanEndTime(): boolean {
+        let startTime = this.newStartTime.value?.split(':');
+        let endTime = this.newEndTime.value?.split(':');
+
+        if (startTime?.length && endTime?.length) {
+            console.log(+startTime[0]);
+            console.log(+endTime[0]);
+
+            console.log(+startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1]));
+            return +startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1]);
+        }
+        return true;
     }
 
     private createLesson(): LessonDto {
