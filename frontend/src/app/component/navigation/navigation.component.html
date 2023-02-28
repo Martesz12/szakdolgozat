@@ -2,7 +2,7 @@
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
         <button
             matTooltip="Oldalsó menü megnyitása"
-            [matTooltipPosition]="'below'"
+            [matTooltipPosition]="'right'"
             [matTooltipShowDelay]="500"
             *ngIf="!drawer.opened"
             mat-button
@@ -13,7 +13,7 @@
         </button>
         <button
             matTooltip="Oldalsó menü bezárása"
-            [matTooltipPosition]="'below'"
+            [matTooltipPosition]="'right'"
             [matTooltipShowDelay]="500"
             *ngIf="drawer.opened"
             mat-button
