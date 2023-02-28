@@ -41,15 +41,23 @@
         </div>
         <div class="days">
             <div class="full-day" *ngFor="let day of previousDays">
-                <div class="prev-date" >{{day}}</div>
+                <div class="prev-date">{{ day }}</div>
                 <div class="bullet-empty"></div>
             </div>
-            <div (click)="selectDay(day.value)" [class.today]="today === day.key" class="full-day" *ngFor="let day of currentDays | keyvalue">
-                <div>{{day.key}}</div>
+            <div
+                (click)="selectDay(day.value)"
+                [class.today]="today === day.key"
+                class="full-day"
+                [matTooltip]="getTooltipForEventDay(day.value)"
+                [matTooltipPosition]="'above'"
+                [matTooltipShowDelay]="500"
+                *ngFor="let day of currentDays | keyvalue"
+            >
+                <div>{{ day.key }}</div>
                 <div [ngClass]="eventDays.includes(day.key) ? 'bullet-full' : 'bullet-empty'"></div>
             </div>
             <div class="full-day" *ngFor="let day of nextDays">
-                <div class="next-date">{{day}}</div>
+                <div class="next-date">{{ day }}</div>
                 <div class="bullet-empty"></div>
             </div>
         </div>

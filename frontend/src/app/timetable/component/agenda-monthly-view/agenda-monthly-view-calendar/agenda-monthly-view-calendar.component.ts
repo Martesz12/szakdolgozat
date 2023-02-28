@@ -1,7 +1,11 @@
 import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 import { filter, switchMap } from 'rxjs';
+import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
+import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
+import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
@@ -26,6 +30,8 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
         'December',
     ];
     mainTasks: MainTaskDto[] = [];
+    allLesson: LessonDto[] = [];
+    allSubject: SubjectDto[] = [];
     mainTaskDates: number[] = [];
     currentDate: Date = new Date();
     selectedTimetableId: number = 0;
@@ -37,7 +43,13 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     today: number = 0;
     eventDays: number[] = [];
 
-    constructor(private mainTaskService: MainTaskService, private timetableService: TimetableService) {
+    //TODO click event oldalt felsorolni az eseményeket
+    constructor(
+        private mainTaskService: MainTaskService,
+        private timetableService: TimetableService,
+        private lessonService: LessonService,
+        private subjectService: SubjectService
+    ) {
         this.getMainTasksWhenTimetableSelected();
     }
     ngAfterViewInit(): void {
@@ -52,13 +64,19 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
                 switchMap(timetableId => {
                     this.selectedTimetableId = timetableId;
                     return this.mainTaskService.getAllMainTaskSubject();
+                }),
+                switchMap(mainTasks => {
+                    this.mainTasks = mainTasks;
+                    mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
+                    this.renderCalendar();
+                    return this.lessonService.getAllLessonSubject();
+                }),
+                switchMap(lessons => {
+                    this.allLesson = lessons;
+                    return this.subjectService.getAllSubjectSubject();
                 })
             )
-            .subscribe(mainTasks => {
-                this.mainTasks = mainTasks;
-                mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
-                this.renderCalendar();
-            });
+            .subscribe(subject => (this.allSubject = subject));
     }
 
     navigateBack(): void {
@@ -78,7 +96,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
 
     renderCalendar(): void {
         this.previousDays = [];
-        this.currentDays = new Map<number, number>();;
+        this.currentDays = new Map<number, number>();
         this.nextDays = [];
         this.today = 0;
         this.eventDays = [];
@@ -121,5 +139,18 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
 
     selectDay(currentDate: number): void {
         console.log(currentDate);
+    }
+
+    getTooltipForEventDay(currentDate: number): string {
+        let tooltip: string = '';
+        this.mainTasks.forEach(mainTask => {
+            if (new Date(mainTask.deadline).getTime() === currentDate) {
+                let currentLesson = this.allLesson.find(lesson => lesson.id === mainTask.lessonId)!;
+                let currentSubject = this.allSubject.find(subject => subject.id === currentLesson?.subjectId)!;
+                tooltip += currentSubject.name + ' (' + currentLesson.type + ') - ' + mainTask.name + '\n';
+            }
+        });
+
+        return tooltip;
     }
 }
