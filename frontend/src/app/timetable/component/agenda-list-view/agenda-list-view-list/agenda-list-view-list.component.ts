@@ -33,7 +33,8 @@ export class AgendaListViewListComponent {
     editedSubTasks: Map<number, string> = new Map<number, string>();
     filteredTypes: string[] = ['Feladat', 'Vizsga', 'Zárthelyi', 'Beadandó', 'Teszt'];
 
-    //TODO valami szín hogy melyik tantárgyhoz tartozik a feladat
+    //TODO tooltip-be az eseményeket leírni
+    //TODO click event oldalt felsorolni az eseményeket
     constructor(
         private mainTaskService: MainTaskService,
         private dialog: MatDialog,
