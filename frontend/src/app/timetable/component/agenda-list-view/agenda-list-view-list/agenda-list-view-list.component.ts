@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter, switchMap } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
+import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
 import { SubTaskDto } from 'src/app/shared/model/timetable/dto/sub-task.dto';
+import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
+import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
+import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
@@ -21,6 +26,8 @@ export class AgendaListViewListComponent {
     fulfilledMainTasks: MainTaskDto[] = [];
     allSubTask: SubTaskDto[] = [];
     selectedMainTask: MainTaskDto = {} as MainTaskDto;
+    allLesson: LessonDto[] = [];
+    allSubject: SubjectDto[] = [];
 
     selectedTimetableId: number = 0;
     editedSubTasks: Map<number, string> = new Map<number, string>();
@@ -32,7 +39,9 @@ export class AgendaListViewListComponent {
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
         private timetableService: TimetableService,
-        private subTaskService: SubTaskService
+        private subTaskService: SubTaskService,
+        private lessonService: LessonService,
+        private subjectService: SubjectService,
     ) {
         this.getAllMainTask();
         this.getAllSubTask();
@@ -41,11 +50,19 @@ export class AgendaListViewListComponent {
     }
 
     getAllMainTask(): void {
-        this.mainTaskService.getAllMainTaskSubject().subscribe(mainTasks => {
-            this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
-            this.filteredMainTasks = this.mainTasks.filter(mainTask => this.filteredTypes.includes(mainTask.type));
-            this.fulfilledMainTasks = mainTasks.filter(mainTask => mainTask.fulfilled);
-        });
+        this.mainTaskService.getAllMainTaskSubject().pipe(
+            switchMap(mainTasks => {
+                this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
+                this.filteredMainTasks = this.mainTasks.filter(mainTask => this.filteredTypes.includes(mainTask.type));
+                this.fulfilledMainTasks = mainTasks.filter(mainTask => mainTask.fulfilled);
+                return this.lessonService.getAllLessonSubject();
+            }),
+            switchMap(lessons => {
+                this.allLesson = lessons;
+                return this.subjectService.getAllSubjectSubject();
+            }),
+        )
+        .subscribe(subject => (this.allSubject = subject))
     }
 
     getAllSubTask(): void {
@@ -301,5 +318,11 @@ export class AgendaListViewListComponent {
 
     sortByDate(mainTasks: MainTaskDto[]): MainTaskDto[] {
         return mainTasks.sort((a,b) => (a.deadline > b.deadline) ? 1 : ((b.deadline > a.deadline) ? -1 : 0));
+    }
+
+    getSubjectColor(lessonId: number): string {
+        let tempLesson = this.allLesson.find(lesson => lesson.id === lessonId);
+        let tempSubject = this.allSubject.find(subject => subject.id === tempLesson?.subjectId);
+        return tempSubject?.color!;
     }
 }

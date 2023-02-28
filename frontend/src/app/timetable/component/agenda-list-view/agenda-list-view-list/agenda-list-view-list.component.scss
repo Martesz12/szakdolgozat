@@ -208,3 +208,16 @@
 .fulfilled-task-list-first-row {
     border-top: 1px solid var(--neutral);
 }
+
+.color-picker-sample {
+    height: 30px;
+    width: 50px;
+    border-radius: 5px;
+    display: inline-block;
+    border: 2px solid black;
+}
+
+.expansion-panel-header {
+    display: flex;
+    align-items: center;
+}

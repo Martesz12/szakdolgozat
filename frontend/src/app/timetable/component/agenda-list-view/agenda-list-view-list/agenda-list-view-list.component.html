@@ -62,8 +62,14 @@
                         class="type-{{ getTypeForClass(mainTask.type) }}"
                     >
                         <mat-expansion-panel-header>
-                            <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
-                            <div class="ml-10 content-font">{{ mainTask.name }}</div>
+                            <div class="expansion-panel-header">
+                                <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
+                                <div
+                                    class="color-picker-sample ml-10"
+                                    [ngStyle]="{ 'background-color': getSubjectColor(mainTask.lessonId) }"
+                                ></div>
+                                <div class="ml-10 content-font">{{ mainTask.name }}</div>
+                            </div>
                         </mat-expansion-panel-header>
                         <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
                             <div class="sub-task-main">
