@@ -126,11 +126,18 @@
 .bullet-empty {
     height: 5px;
     width: 5px;
-    // background-color: black;
     border-radius: 50%;
     display: inline-block;
 }
 
 .full-day {
     display: flex;
+}
+
+.date-name {
+    cursor: pointer;
+}
+
+.date-name:hover {
+    color: white;
 }

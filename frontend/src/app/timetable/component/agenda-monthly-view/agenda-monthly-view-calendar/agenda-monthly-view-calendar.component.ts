@@ -65,6 +65,11 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
         this.renderCalendar();
     }
 
+    backToCurrentDate(): void {
+        this.currentDate = new Date();
+        this.renderCalendar();
+    }
+
     renderCalendar(): void {
         this.currentDate.setDate(1);
 
