@@ -9,6 +9,7 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 })
 export class AgendaMonthlyViewComponent {
     selectedTimetableId: number = 0;
+    selectedDayDate: number = 0;
 
     constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
         this.getTimetableId();
@@ -38,5 +39,9 @@ export class AgendaMonthlyViewComponent {
 
     showMainTaskDataOperationCard(): boolean {
         return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
+    }
+
+    selectDayFromCalendar(currentDate: number): void {
+        this.selectedDayDate = currentDate;
     }
 }

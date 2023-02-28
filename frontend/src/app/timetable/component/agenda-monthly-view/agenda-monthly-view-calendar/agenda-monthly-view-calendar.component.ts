@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 import { filter, switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
@@ -42,6 +42,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     nextDays: number[] = [];
     today: number = 0;
     eventDays: number[] = [];
+    @Output() selectDayEvent = new EventEmitter<number>();
 
     //TODO click event oldalt felsorolni az eseményeket
     constructor(
@@ -138,7 +139,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     }
 
     selectDay(currentDate: number): void {
-        console.log(currentDate);
+        this.selectDayEvent.emit(currentDate);
     }
 
     getTooltipForEventDay(currentDate: number): string {
