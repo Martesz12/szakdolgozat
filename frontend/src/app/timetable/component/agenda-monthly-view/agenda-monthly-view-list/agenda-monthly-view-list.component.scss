@@ -75,3 +75,8 @@
     display: flex;
     align-items: center;
 }
+
+.completed-task {
+    color: var(--grey);
+    text-decoration: line-through;
+}

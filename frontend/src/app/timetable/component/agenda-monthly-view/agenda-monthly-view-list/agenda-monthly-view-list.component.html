@@ -8,6 +8,7 @@
             >
                 <mat-expansion-panel-header>
                     <div class="expansion-panel-header">
+                        <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
                         <div
                             class="color-picker-sample ml-10"
                             [ngStyle]="{ 'background-color': getSubjectColor(mainTask.lessonId) }"
@@ -17,6 +18,12 @@
                 </mat-expansion-panel-header>
                 <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
                     <div class="sub-task-main">
+                        <div>
+                            <mat-checkbox
+                                (change)="checkSubTask(subTask)"
+                                [checked]="subTask.fulfilled"
+                            ></mat-checkbox>
+                        </div>
                         <div
                             class="content-font ml-10"
                             [class.completed-task]="subTask.fulfilled"

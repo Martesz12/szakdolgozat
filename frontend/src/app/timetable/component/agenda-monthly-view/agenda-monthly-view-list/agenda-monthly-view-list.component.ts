@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
@@ -28,12 +29,18 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
         private mainTaskService: MainTaskService,
         private subTaskService: SubTaskService,
         private lessonService: LessonService,
-        private subjectService: SubjectService
+        private subjectService: SubjectService,
+        private snackBar: MatSnackBar,
     ) {
         this.getAllMainTask();
+        this.getAllSubTask();
     }
 
     ngOnChanges(): void {
+        this.reloadTaskList();
+    }
+
+    reloadTaskList(): void {
         if (this.selectedDayDate !== 0) {
             this.currentDate = new Date(this.selectedDayDate);
             this.filteredMainTasks = this.allMainTask.filter(mainTask => {
@@ -49,6 +56,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
             .pipe(
                 switchMap(mainTasks => {
                     this.allMainTask = mainTasks.filter(mainTask => !mainTask.fulfilled);
+                    this.reloadTaskList();
                     return this.lessonService.getAllLessonSubject();
                 }),
                 switchMap(lessons => {
@@ -94,5 +102,49 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
 
     filterSubTasksByMainTaskId(mainTaskId: number): SubTaskDto[] {
         return this.allSubTask.filter(subTask => subTask.mainTaskId === mainTaskId);
+    }
+
+    checkMainTask(event$: any, mainTask: MainTaskDto): void {
+        event$.stopPropagation();
+        let updatedMainTask: MainTaskDto = new MainTaskDto(
+            mainTask.name,
+            !mainTask.fulfilled,
+            mainTask.deadline,
+            mainTask.note,
+            mainTask.type,
+            mainTask.lessonId,
+            mainTask.id
+        );
+        this.mainTaskService.updateMainTask(updatedMainTask).subscribe({
+            next: _ => {
+                this.mainTaskService.getMainTasksByLessonIds();
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        })
+    }
+
+    checkSubTask(subTask: SubTaskDto): void {
+        let updatedSubtask: SubTaskDto = new SubTaskDto(
+            subTask.name,
+            !subTask.fulfilled,
+            subTask.mainTaskId,
+            subTask.id
+        );
+        this.subTaskService.updateSubTask(updatedSubtask).subscribe({
+            next: _ => {
+                this.allSubTask[this.allSubTask.findIndex(task => task.id === subTask.id)] = { ...updatedSubtask };
+            },
+            error: error =>
+                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                }),
+        });
     }
 }

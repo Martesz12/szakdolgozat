@@ -44,8 +44,6 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     eventDays: number[] = [];
     @Output() selectDayEvent = new EventEmitter<number>();
 
-    //TODO valószínűleg a s/ms bezavar a dátum összehasonlításban
-    //TODO csak év hónap nap alapján ellenőrizni a dolgokat
     constructor(
         private mainTaskService: MainTaskService,
         private timetableService: TimetableService,
@@ -69,12 +67,12 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
                 }),
                 switchMap(mainTasks => {
                     this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
+                    this.mainTaskDates = [];
                     mainTasks
                         .filter(mainTask => !mainTask.fulfilled)
                         .forEach(filteredMainTask => {
                             let mainTaskDate = new Date(filteredMainTask.deadline);
-                            console.log(mainTaskDate);
-
+                            console.log(mainTaskDate);                            
                             this.mainTaskDates.push(
                                 new Date(
                                     mainTaskDate.getFullYear(),
@@ -143,7 +141,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
             ).getTime();
 
             this.currentDays.set(i, currentDate);
-
+            
             if (this.mainTaskDates.includes(currentDate)) this.eventDays.push(i);
         }
 
