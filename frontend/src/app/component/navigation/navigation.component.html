@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFlexFill="min-height">
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
         <button
-            matTooltip="Oldalsó menü megnyitása"
+            matTooltip="Menü megnyitása"
             [matTooltipPosition]="'right'"
             [matTooltipShowDelay]="500"
             *ngIf="!drawer.opened"
@@ -12,7 +12,7 @@
             <mat-icon>menu</mat-icon>
         </button>
         <button
-            matTooltip="Oldalsó menü bezárása"
+            matTooltip="Menü bezárása"
             [matTooltipPosition]="'right'"
             [matTooltipShowDelay]="500"
             *ngIf="drawer.opened"

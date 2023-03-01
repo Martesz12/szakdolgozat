@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
@@ -18,6 +18,7 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
 export class AgendaMonthlyViewListComponent implements OnChanges {
     @Input() selectedDayDate: number = 0;
     currentDate: Date = new Date();
+    @Output() backToCalendarViewEvent = new EventEmitter<number>();
 
     allMainTask: MainTaskDto[] = [];
     filteredMainTasks: MainTaskDto[] = [];
@@ -38,6 +39,10 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
 
     ngOnChanges(): void {
         this.reloadTaskList();
+    }
+
+    backToCalendarView(){
+        this.backToCalendarViewEvent.emit(this.selectedDayDate);
     }
 
     reloadTaskList(): void {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { filter, switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
@@ -43,6 +43,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     today: number = 0;
     eventDays: number[] = [];
     @Output() selectDayEvent = new EventEmitter<number>();
+    @Input() selectedDayDate: number = 0;
 
     constructor(
         private mainTaskService: MainTaskService,

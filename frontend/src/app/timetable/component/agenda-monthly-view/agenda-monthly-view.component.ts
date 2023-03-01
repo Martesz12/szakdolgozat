@@ -10,6 +10,7 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 export class AgendaMonthlyViewComponent {
     selectedTimetableId: number = 0;
     selectedDayDate: number = 0;
+    isCalendarShown: boolean = true;
 
     constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
         this.getTimetableId();
@@ -29,19 +30,21 @@ export class AgendaMonthlyViewComponent {
         return this.getScreenWidth() > 1000;
     }
 
-    isStateTheCurrentPageState(state: string): boolean {
-        return state === this.mainTaskService.getMainTaskDataOperationPageState();
+    showMonthlyViewCalendarCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && this.isCalendarShown);
     }
 
-    showMainTaskListCard(): boolean {
-        return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState('base'));
-    }
-
-    showMainTaskDataOperationCard(): boolean {
-        return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
+    showMonthlyViewListCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && !this.isCalendarShown);
     }
 
     selectDayFromCalendar(currentDate: number): void {
         this.selectedDayDate = currentDate;
+        this.isCalendarShown = false;
+    }
+
+    backFromMonthlyViewList(currentDate: number): void {
+        this.selectedDayDate = currentDate;
+        this.isCalendarShown = true;
     }
 }

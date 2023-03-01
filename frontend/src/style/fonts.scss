@@ -37,3 +37,14 @@
     font-size: var(--fs-40);
     font-weight: var(--fw-500);
 }
+
+.content-on-color-font{
+    font-size: var(--fs-16);
+    font-weight: var(--fw-500);
+}
+
+.content-overflow {
+    overflow: hidden; /* make sure it hides the content that overflows */
+    white-space: nowrap; /* don't break the line */
+    text-overflow: ellipsis; /* give the beautiful '...' effect */
+}

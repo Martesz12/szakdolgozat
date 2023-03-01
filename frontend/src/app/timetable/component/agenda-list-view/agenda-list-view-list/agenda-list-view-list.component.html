@@ -7,7 +7,7 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header class="filter-header">
                             <mat-icon>tune</mat-icon>
-                            <div class="content-font ml-10">Szűrés</div>
+                            <div class="content-on-color-font ml-10">Szűrés</div>
                         </mat-expansion-panel-header>
                         <div class="filter-type-checkboxes">
                             <div style="margin: 5px 15px 5px 5px">
@@ -61,14 +61,19 @@
                         *ngFor="let mainTask of sortByDate(filteredMainTasks)"
                         class="type-{{ getTypeForClass(mainTask.type) }}"
                     >
-                        <mat-expansion-panel-header>
+                        <mat-expansion-panel-header style="height:60px;">
                             <div class="expansion-panel-header">
                                 <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
-                                <div
-                                    class="color-picker-sample ml-10"
-                                    [ngStyle]="{ 'background-color': getSubjectColor(mainTask.lessonId) }"
-                                ></div>
-                                <div class="ml-10 content-font">{{ mainTask.name }}</div>
+                                <div class="expansion-panel-header-main">
+                                    <div class="ml-10 content-on-color-font content-overflow">
+                                        {{ mainTask.name }}
+                                    </div>
+                                    <div
+                                        class="ml-10 mr-10 content-on-color-font main-task-abbreviation content-overflow"
+                                    >
+                                        {{ getSubjectAbbreviation(mainTask.lessonId) }}
+                                    </div>
+                                </div>
                             </div>
                         </mat-expansion-panel-header>
                         <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
@@ -81,7 +86,7 @@
                                 </div>
                                 <div
                                     *ngIf="!editedSubTasks.has(subTask.id!)"
-                                    class="content-font ml-10"
+                                    class="content-on-color-font ml-10"
                                     [class.completed-task]="subTask.fulfilled"
                                     style="width: 100%"
                                 >
@@ -89,7 +94,7 @@
                                 </div>
                                 <div
                                     *ngIf="editedSubTasks.has(subTask.id!)"
-                                    class="content-font edited-sub-task-name"
+                                    class="content-on-color-font edited-sub-task-name"
                                     style="width: 100%"
                                 >
                                     <input
@@ -191,7 +196,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-icon>done</mat-icon>
-                        <div class="content-font ml-10">Befejezett feladatok</div>
+                        <div class="content-on-color-font ml-10">Befejezett feladatok</div>
                     </mat-expansion-panel-header>
                     <div class="mb-15 set-button-right-side">
                         <button
@@ -215,7 +220,7 @@
                                     (click)="checkMainTask($event, fulfilledMainTask)"
                                 ></mat-checkbox>
                             </div>
-                            <div class="ml-10 content-font completed-task">{{ fulfilledMainTask.name }}</div>
+                            <div class="ml-10 content-on-color-font completed-task">{{ fulfilledMainTask.name }}</div>
                         </div>
                         <div
                             matTooltip="Alfeladat törlése"
@@ -235,6 +240,6 @@
     </div>
     <div *ngIf="!selectedTimetableId" class="no-selected-element">
         <mat-icon class="no-selected-element-icon mb-20">info_outline</mat-icon>
-        <div class="no-element-found-font">Válassz órarendet az oldalsó menüben!</div>
+        <div class="no-element-found-font">Válassz órarendet a menüben!</div>
     </div>
 </mat-card>

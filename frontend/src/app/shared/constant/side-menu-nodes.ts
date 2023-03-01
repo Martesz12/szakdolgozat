@@ -36,7 +36,7 @@ export class SideMenuNodes {
         },
         {
             id: 3,
-            name: 'Napirend',
+            name: 'Feladatok',
             children: [
                 {
                     id: 31,
