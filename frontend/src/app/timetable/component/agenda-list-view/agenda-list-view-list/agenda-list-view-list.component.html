@@ -98,6 +98,7 @@
                                         #updatedName
                                         [value]="subTask.name"
                                         (change)="changeUpdatedName(subTask.id!, updatedName.value)"
+                                        (keyup.enter)="saveSubTask(subTask)"
                                     />
                                 </div>
                             </div>

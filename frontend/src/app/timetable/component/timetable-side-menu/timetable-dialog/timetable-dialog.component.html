@@ -25,7 +25,14 @@
                     class="content-font timetable-dialog-input-field"
                     style="width: 100%"
                 >
-                    <input matInput type="text" #updatedName [value]="timetable.name" (change)="changeUpdatedName(timetable.id, updatedName.value)" />
+                    <input
+                        matInput
+                        type="text"
+                        #updatedName
+                        [value]="timetable.name"
+                        (change)="changeUpdatedName(timetable.id, updatedName.value)"
+                        (keyup.enter)="saveTimetable(timetable)"
+                    />
                 </div>
                 <div class="list-row-buttons">
                     <div *ngIf="timetable.id && !editedTimetables.has(timetable.id)" class="list-action-button">
