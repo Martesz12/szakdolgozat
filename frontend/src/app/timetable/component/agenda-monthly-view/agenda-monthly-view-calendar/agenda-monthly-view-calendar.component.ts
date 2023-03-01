@@ -68,8 +68,21 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
                     return this.mainTaskService.getAllMainTaskSubject();
                 }),
                 switchMap(mainTasks => {
-                    this.mainTasks = mainTasks;
-                    mainTasks.forEach(mainTask => this.mainTaskDates.push(new Date(mainTask.deadline).getTime()));
+                    this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
+                    mainTasks
+                        .filter(mainTask => !mainTask.fulfilled)
+                        .forEach(filteredMainTask => {
+                            let mainTaskDate = new Date(filteredMainTask.deadline);
+                            console.log(mainTaskDate);
+
+                            this.mainTaskDates.push(
+                                new Date(
+                                    mainTaskDate.getFullYear(),
+                                    mainTaskDate.getMonth(),
+                                    mainTaskDate.getDate()
+                                ).getTime()
+                            );
+                        });
                     this.renderCalendar();
                     return this.lessonService.getAllLessonSubject();
                 }),
@@ -146,7 +159,11 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     getTooltipForEventDay(currentDate: number): string {
         let tooltip: string = '';
         this.mainTasks.forEach(mainTask => {
-            if (new Date(mainTask.deadline).getTime() === currentDate) {
+            let mainTaskDate = new Date(mainTask.deadline);
+            if (
+                new Date(mainTaskDate.getFullYear(), mainTaskDate.getMonth(), mainTaskDate.getDate()).getTime() ===
+                currentDate
+            ) {
                 let currentLesson = this.allLesson.find(lesson => lesson.id === mainTask.lessonId)!;
                 let currentSubject = this.allSubject.find(subject => subject.id === currentLesson?.subjectId)!;
                 tooltip += currentSubject.name + ' (' + currentLesson.type + ') - ' + mainTask.name + '\n';

@@ -36,9 +36,10 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
     ngOnChanges(): void {
         if (this.selectedDayDate !== 0) {
             this.currentDate = new Date(this.selectedDayDate);
-            this.filteredMainTasks = this.allMainTask.filter(
-                mainTask => this.selectedDayDate === new Date(mainTask.deadline).getTime()
-            );
+            this.filteredMainTasks = this.allMainTask.filter(mainTask => {
+                let mainTaskDate = new Date(mainTask.deadline);
+                return this.selectedDayDate === new Date(mainTaskDate.getFullYear(), mainTaskDate.getMonth(), mainTaskDate.getDate()).getTime();
+            });
         }
     }
 
