@@ -16,6 +16,15 @@
                         <div class="ml-10 content-font">{{ mainTask.name }}</div>
                     </div>
                 </mat-expansion-panel-header>
+                <div class="secondary-title-font card-description-element-title">
+                    <mat-icon class="mr-5">description</mat-icon>
+                    Jegyzet:
+                </div>
+                <div class="content-font mt-10 mb-15 ml-10">{{mainTask.note}}</div>
+                <div class="secondary-title-font card-description-element-title">
+                    <mat-icon class="mr-5">subdirectory_arrow_right</mat-icon>
+                    Alfeladatok:
+                </div>
                 <div *ngFor="let subTask of filterSubTasksByMainTaskId(mainTask.id!)" class="sub-task-row">
                     <div class="sub-task-main">
                         <div>
