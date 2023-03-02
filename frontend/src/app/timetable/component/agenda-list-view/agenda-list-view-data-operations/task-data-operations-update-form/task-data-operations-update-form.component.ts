@@ -38,7 +38,7 @@ export class TaskDataOperationsUpdateFormComponent {
         private dialog: MatDialog
     ) {
         this.updatedLesson?.addValidators(Validators.required);
-        this.updatedName?.addValidators(Validators.required);
+        this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.updatedDeadline?.addValidators(Validators.required);
         this.getAllSubject();
         this.getSelectedMainTask();

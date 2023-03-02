@@ -18,11 +18,14 @@ export class TeacherDataOperationsSaveFormComponent {
     newMoreInformation = new FormControl('');
 
     constructor(private teacherService: TeacherService, private snackBar: MatSnackBar) {
-        this.newName?.addValidators(Validators.required);
+        this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.newEmail?.addValidators(Validators.maxLength(255));
+        this.newWebpage?.addValidators(Validators.maxLength(255));
+        this.newOffice?.addValidators(Validators.maxLength(255));
     }
 
     addTeacher(): void {
-        if (this.newName.valid) {
+        if (this.newName.valid && this.newEmail.valid && this.newWebpage.valid && this.newOffice.valid) {
             let newTeacher: TeacherDto = this.createTeacher();
             this.teacherService.addTeacher(newTeacher).subscribe({
                 next: teacher => {
@@ -45,9 +48,10 @@ export class TeacherDataOperationsSaveFormComponent {
                     }),
             });
         } else {
-            console.log("asd");
-            
             if (this.newName.invalid) this.newName.markAsTouched();
+            if (this.newEmail.invalid) this.newEmail.markAsTouched();
+            if (this.newWebpage.invalid) this.newWebpage.markAsTouched();
+            if (this.newOffice.invalid) this.newOffice.markAsTouched();
         }
     }
 

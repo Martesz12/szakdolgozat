@@ -175,7 +175,7 @@ export class AgendaListViewListComponent {
     }
 
     saveSubTask(subTask: SubTaskDto): void {
-        if (this.editedSubTasks.get(subTask.id!)) {
+        if (this.editedSubTasks.get(subTask.id!) && this.editedSubTasks.get(subTask.id!)?.length! <= 255) {
             let updatedSubTask: SubTaskDto = new SubTaskDto(
                 this.editedSubTasks.get(subTask.id!)!,
                 subTask.fulfilled,
@@ -199,6 +199,12 @@ export class AgendaListViewListComponent {
                         verticalPosition: 'bottom',
                         panelClass: ['error-snackbar'],
                     }),
+            });
+        } else {
+            this.snackBar.open('Hiba alfeladat módosítása során: A név nem lehet hosszabb 255 karakternél!', 'X', {
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
             });
         }
     }

@@ -33,7 +33,7 @@ export class TaskDataOperationsSaveFormComponent {
         private subjectService: SubjectService
     ) {
         this.newLesson?.addValidators(Validators.required);
-        this.newName?.addValidators(Validators.required);
+        this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newDeadline?.addValidators(Validators.required);
         this.getAllSubject();
     }

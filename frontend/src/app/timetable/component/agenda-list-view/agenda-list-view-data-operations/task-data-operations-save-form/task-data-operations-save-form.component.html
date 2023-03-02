@@ -17,7 +17,8 @@
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Név</mat-label>
             <input matInput type="text" [formControl]="newName" />
-            <mat-error *ngIf="newName.invalid">Név megadása kötelező!</mat-error>
+            <mat-error *ngIf="newName.hasError('required')">Név megadása kötelező!</mat-error>
+            <mat-error *ngIf="newName.hasError('maxlength')">Név nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width form-field-datepicker" appearance="outline" (click)="picker.open()">
             <mat-label>Határidő</mat-label>

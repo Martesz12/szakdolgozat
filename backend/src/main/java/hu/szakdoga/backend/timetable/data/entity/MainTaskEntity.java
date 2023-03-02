@@ -28,6 +28,7 @@ public class MainTaskEntity {
     private Date deadline;
 
     @Column()
+    @Lob
     private String note;
 
     @Column(nullable = false)

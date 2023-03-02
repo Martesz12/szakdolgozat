@@ -23,8 +23,8 @@ export class SubjectDataOperationsUpdateFormComponent {
 
     constructor(public subjectService: SubjectService, private snackBar: MatSnackBar, private dialog: MatDialog) {
         this.getSelectedSubject();
-        this.updatedName?.addValidators(Validators.required);
-        this.updatedAbbreviation?.addValidators(Validators.required);
+        this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.updatedAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
     }
 
     private getSelectedSubject(): void {

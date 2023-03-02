@@ -65,7 +65,7 @@ export class TimetableDialogComponent {
 
     saveTimetable(timetable: TimetableDto): void {
         if (timetable.id) {
-            if (this.editedTimetables.get(timetable.id)) {
+            if (this.editedTimetables.get(timetable.id) && this.editedTimetables.get(timetable.id)?.length! <= 255) {
                 let updatedTimetable: TimetableDto = new TimetableDto(
                     this.editedTimetables.get(timetable.id)!,
                     timetable.userId,
@@ -88,6 +88,12 @@ export class TimetableDialogComponent {
                             verticalPosition: 'bottom',
                             panelClass: ['error-snackbar'],
                         }),
+                });
+            } else {
+                this.snackBar.open('Hiba órarend módosítása során: A név nem lehet hosszabb 255 karakternél!', 'X', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
                 });
             }
         }
@@ -114,8 +120,7 @@ export class TimetableDialogComponent {
                 next: _ => {
                     this.timetableService.getAllTimetable();
                     this.editedTimetables.delete(timetableId);
-                    if(this.selectedTimetableId === timetableId)
-                        this.timetableService.setSelectedTimetableId(0);
+                    if (this.selectedTimetableId === timetableId) this.timetableService.setSelectedTimetableId(0);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

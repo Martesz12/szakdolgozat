@@ -9,12 +9,14 @@
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Tantárgy</mat-label>
             <input matInput type="text" [formControl]="newName" />
-            <mat-error *ngIf="newName.invalid">Tantárgy megadása kötelező!</mat-error>
+            <mat-error *ngIf="newName.hasError('required')">Tantárgy megadása kötelező!</mat-error>
+            <mat-error *ngIf="newName.hasError('maxlength')">Tantárgy nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Rövidítés</mat-label>
             <input matInput type="text" [formControl]="newAbbreviation" />
-            <mat-error *ngIf="newAbbreviation.invalid">Rövidítés megadása kötelező!</mat-error>
+            <mat-error *ngIf="newAbbreviation.hasError('required')">Rövidítés megadása kötelező!</mat-error>
+            <mat-error *ngIf="newAbbreviation.hasError('maxlength')">Rövidítés nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <div class="form-field-full-width" [class.color-picker-error]="!colorPickerValid">
             <fieldset class="color-picker-fieldset">

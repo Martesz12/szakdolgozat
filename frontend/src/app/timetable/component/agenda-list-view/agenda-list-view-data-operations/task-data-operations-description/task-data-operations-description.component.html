@@ -32,5 +32,7 @@
         <mat-icon class="mr-5">description</mat-icon>
         Jegyzet:
     </div>
-    <div class="ml-50 mb-20 content-font">{{ selectedMainTask.note }}</div>
+    <div *ngFor="let element of selectedMainTask.note.split('\n')" class="ml-50 mb-20 content-font">
+        {{ element }}
+    </div>
 </div>

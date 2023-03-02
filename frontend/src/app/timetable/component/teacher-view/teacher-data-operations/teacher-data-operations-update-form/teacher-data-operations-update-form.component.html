@@ -9,19 +9,23 @@
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Név</mat-label>
             <input matInput type="text" [formControl]="updatedName" />
-            <mat-error *ngIf="updatedName.invalid">Név megadása kötelező!</mat-error>
+            <mat-error *ngIf="updatedName.hasError('required')">Név megadása kötelező!</mat-error>
+            <mat-error *ngIf="updatedName.hasError('maxlength')">Név nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Email cím</mat-label>
             <input matInput type="text" [formControl]="updatedEmail" />
+            <mat-error *ngIf="updatedEmail.hasError('maxlength')">Email nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Weboldal</mat-label>
             <input matInput type="text" [formControl]="updatedWebpage" />
+            <mat-error *ngIf="updatedWebpage.hasError('maxlength')">Weboldal nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Iroda</mat-label>
             <input matInput type="text" [formControl]="updatedOffice" />
+            <mat-error *ngIf="updatedOffice.hasError('maxlength')">Iroda nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>További információk</mat-label>

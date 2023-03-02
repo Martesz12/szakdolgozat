@@ -21,8 +21,8 @@ export class SubjectDataOperationsSaveFormComponent {
     newRequirement = new FormControl('');
 
     constructor(public subjectService: SubjectService, private snackBar: MatSnackBar) {
-        this.newName?.addValidators(Validators.required);
-        this.newAbbreviation?.addValidators(Validators.required);
+        this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.newAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
     }
 
     addSubject(): void {

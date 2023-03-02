@@ -26,6 +26,7 @@ public class SubjectEntity {
     private String color;
 
     @Column()
+    @Lob
     private String requirement;
 
     //***Constraints***

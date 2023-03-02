@@ -29,6 +29,7 @@ public class TeacherEntity {
     private String office;
 
     @Column()
+    @Lob
     private String moreInformation;
 
     //***Constraints***

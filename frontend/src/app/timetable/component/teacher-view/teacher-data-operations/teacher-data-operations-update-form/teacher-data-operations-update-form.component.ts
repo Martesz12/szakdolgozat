@@ -24,7 +24,10 @@ export class TeacherDataOperationsUpdateFormComponent {
 
     constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private dialog: MatDialog) {
         this.getSelectedTeacher();
-        this.updatedName?.addValidators(Validators.required);
+        this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.updatedEmail?.addValidators(Validators.maxLength(255));
+        this.updatedWebpage?.addValidators(Validators.maxLength(255));
+        this.updatedOffice?.addValidators(Validators.maxLength(255));
     }
 
     private getSelectedTeacher(): void {
@@ -39,7 +42,7 @@ export class TeacherDataOperationsUpdateFormComponent {
     }
 
     updateTeacher(): void {
-        if (this.updatedName.valid) {
+        if (this.updatedName.valid && this.updatedEmail.valid && this.updatedWebpage.valid && this.updatedOffice.valid) {
             let updatedTeacher: TeacherDto = this.createTeacher();
             this.teacherService.updateTeacher(updatedTeacher).subscribe({
                 next: teacher => {
@@ -63,6 +66,9 @@ export class TeacherDataOperationsUpdateFormComponent {
             });
         } else {
             if (this.updatedName.invalid) this.updatedName.markAsTouched();
+            if (this.updatedEmail.invalid) this.updatedEmail.markAsTouched();
+            if (this.updatedWebpage.invalid) this.updatedWebpage.markAsTouched();
+            if (this.updatedOffice.invalid) this.updatedOffice.markAsTouched();
         }
     }
 

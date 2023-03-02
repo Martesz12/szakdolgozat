@@ -26,7 +26,9 @@
                     <mat-icon class="mr-5">description</mat-icon>
                     Jegyzet:
                 </div>
-                <div class="content-font mt-10 mb-15 ml-10">{{mainTask.note}}</div>
+                <div *ngFor="let element of mainTask.note.split('\n')" class="mt-10 mb-15 ml-10 content-font">
+                    {{ element }}
+                </div>
                 <div class="secondary-title-font card-description-element-title">
                     <mat-icon class="mr-5">subdirectory_arrow_right</mat-icon>
                     Alfeladatok:
