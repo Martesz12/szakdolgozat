@@ -42,11 +42,7 @@ export class TaskDataOperationsSaveFormComponent {
         this.subjectService.getAllSubjectSubject().subscribe(subjects => (this.allSubject = subjects));
     }
 
-    //TODO ha kitörlünk egy subjec-et akkor mi lesz a lesson subjectId-ával
-    //TODO hosszú stringet nem tudunk tárolni a db-ben
-    //TODO jobb oldali szövegek csak akkor jelenjenek meg, ha bal oldalt van már valami
-    //TODO text overflow-s cucc minden szöveghez
-    //TODO agenda monthly view váltás telefonos nézetben befejezni
+
     getSubjectName(subjectId: number): string {
         return this.allSubject.find(subject => subject.id === subjectId)!.name;
     }

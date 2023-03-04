@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lesson")
@@ -48,6 +50,9 @@ public class LessonEntity implements Serializable {
     @JoinColumn(name = "teacherId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private TeacherEntity teacher;
+
+    @OneToMany(mappedBy = "lesson", cascade = {CascadeType.REMOVE})
+    private List<MainTaskEntity> mainTasks = new ArrayList<>();
 
     public LessonEntity(Long id, String day, LocalTime startTime, LocalTime endTime, String location, String type, SubjectEntity subject, TimetableEntity timetable, TeacherEntity teacher) {
         this.id = id;

@@ -5,87 +5,93 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SubjectWebService } from '../api/timetable/subject-web.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class SubjectService {
-  allSubjectSubject: BehaviorSubject<SubjectDto[]> = new BehaviorSubject<SubjectDto[]>([]);
-  selectedSubjectSubject: BehaviorSubject<SubjectDto> = new BehaviorSubject<SubjectDto>({} as SubjectDto);
-  subjectDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
-  colorPickerIndex: number = 0;
-  readonly SUBJECT_COLORS: string[] = [
-    '',
-    '#1abc9c',
-    '#16a085',
-    '#2ecc71',
-    '#27ae60',
-    '#3498db',
-    '#2980b9',
-    '#9b59b6',
-    '#8e44ad',
-    '#34495e',
-    '#2c3e50',
-    '#f1c40f',
-    '#f39c12',
-    '#e67e22',
-    '#d35400',
-    '#e74c3c',
-    '#95a5a6',
-    '#666b5e',
-    '#a98467',
-    '#4e3524',
-    '#411900',
-];
+    allSubjectSubject: BehaviorSubject<SubjectDto[]> = new BehaviorSubject<SubjectDto[]>([]);
+    selectedSubjectSubject: BehaviorSubject<SubjectDto> = new BehaviorSubject<SubjectDto>({} as SubjectDto);
+    subjectDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
+    colorPickerIndex: number = 0;
+    readonly SUBJECT_COLORS: string[] = [
+        '',
+        '#1abc9c',
+        '#16a085',
+        '#2ecc71',
+        '#27ae60',
+        '#3498db',
+        '#2980b9',
+        '#9b59b6',
+        '#8e44ad',
+        '#34495e',
+        '#2c3e50',
+        '#f1c40f',
+        '#f39c12',
+        '#e67e22',
+        '#d35400',
+        '#e74c3c',
+        '#95a5a6',
+        '#666b5e',
+        '#a98467',
+        '#4e3524',
+        '#411900',
+    ];
 
-  constructor(private subjectWebService: SubjectWebService) {
-      this.getAllSubject();
-  }
+    constructor(private subjectWebService: SubjectWebService) {
+        this.getAllSubject();
+    }
 
-  getAllSubject() {
-      this.subjectWebService.getAllSubject().subscribe(subjects => {
-          this.allSubjectSubject.next(subjects);
-      });
-  }
+    getAllSubject() {
+        this.subjectWebService.getAllSubject().subscribe(subjects => {
+            this.allSubjectSubject.next(subjects);
+        });
+    }
 
-  getAllSubjectSubject(): Observable<SubjectDto[]> {
-      return this.allSubjectSubject.asObservable();
-  }
+    getAllSubjectSubject(): Observable<SubjectDto[]> {
+        return this.allSubjectSubject.asObservable();
+    }
 
-  getSelectedSubjectSubject(): Observable<SubjectDto> {
-      return this.selectedSubjectSubject.asObservable();
-  }
+    getSelectedSubjectSubject(): Observable<SubjectDto> {
+        return this.selectedSubjectSubject.asObservable();
+    }
 
-  selectSubject(subjectId: number) {
-      this.subjectWebService
-          .getSubjectById(subjectId)
-          .subscribe(subject => this.selectedSubjectSubject.next(subject));
-  }
+    selectSubject(subjectId: number) {
+        this.subjectWebService
+            .getSubjectById(subjectId)
+            .subscribe(subject => this.selectedSubjectSubject.next(subject));
+    }
 
-  removeSelectedSubject() {
-      this.selectedSubjectSubject.next({} as SubjectDto);
-  }
+    removeSelectedSubject() {
+        this.selectedSubjectSubject.next({} as SubjectDto);
+    }
 
-  addSubject(subject: SubjectDto): Observable<SubjectDto> {
-      return this.subjectWebService.addSubject(subject);
-  }
+    addSubject(subject: SubjectDto): Observable<SubjectDto> {
+        return this.subjectWebService.addSubject(subject);
+    }
 
-  deleteSubject(subjectId: number) {
-      return this.subjectWebService.deleteSubject(subjectId);
-  }
+    deleteSubject(subjectId: number) {
+        return this.subjectWebService.deleteSubject(subjectId);
+    }
 
-  updateSubject(subject: SubjectDto): Observable<SubjectDto> {
-      return this.subjectWebService.updateSubject(subject);
-  }
+    updateSubject(subject: SubjectDto): Observable<SubjectDto> {
+        return this.subjectWebService.updateSubject(subject);
+    }
 
-  getSubjectById(id: number): Observable<SubjectDto> {
-    return this.subjectWebService.getSubjectById(id);
-  }
+    getSubjectById(id: number): Observable<SubjectDto> {
+        return this.subjectWebService.getSubjectById(id);
+    }
 
-  getSubjectDataOperationPageState() {
-      return this.subjectDataOperationPageState;
-  }
+    getSubjectDataOperationPageState() {
+        return this.subjectDataOperationPageState;
+    }
 
-  setSubjectDataOperationPageState(state: DataOperationPageState) {
-    if(state === DataOperationPageState.Add) this.colorPickerIndex = 0;
-      this.subjectDataOperationPageState = state;
-  }
+    setSubjectDataOperationPageState(state: DataOperationPageState) {
+        if (state === DataOperationPageState.Add) this.colorPickerIndex = 0;
+        this.subjectDataOperationPageState = state;
+    }
+
+    resetSubjectState(afterDelete: boolean = false): void {
+        this.removeSelectedSubject();
+        this.setSubjectDataOperationPageState(DataOperationPageState.Base);
+        if (afterDelete) this.getAllSubject();
+    }
 }

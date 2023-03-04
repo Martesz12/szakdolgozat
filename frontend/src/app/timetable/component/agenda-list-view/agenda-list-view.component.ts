@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
@@ -7,9 +7,13 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     templateUrl: './agenda-list-view.component.html',
     styleUrls: ['./agenda-list-view.component.scss'],
 })
-export class AgendaListViewComponent {
+export class AgendaListViewComponent implements OnDestroy {
     constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
         this.resetIfTimetableChanged();
+    }
+
+    ngOnDestroy(): void {
+        this.mainTaskService.resetMainTaskState();
     }
 
     resetIfTimetableChanged(){

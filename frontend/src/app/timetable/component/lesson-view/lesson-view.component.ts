@@ -14,7 +14,7 @@ export class LessonViewComponent implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.lessonService.removeSelectedLesson();
+        this.lessonService.resetLessonState();
     }
 
     resetIfTimetableChanged(){

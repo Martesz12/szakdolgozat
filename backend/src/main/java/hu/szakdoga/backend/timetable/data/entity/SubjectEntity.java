@@ -6,6 +6,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "subject")
@@ -34,6 +36,9 @@ public class SubjectEntity {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "subject", cascade = {CascadeType.REMOVE})
+    private List<LessonEntity> lessons = new ArrayList<>();
 
     public SubjectEntity(Long id, String name, String abbreviation, String color, String requirement, UserEntity user) {
         this.id = id;

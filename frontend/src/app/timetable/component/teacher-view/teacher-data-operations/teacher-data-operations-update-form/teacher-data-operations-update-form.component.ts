@@ -6,6 +6,9 @@ import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
+import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 
 @Component({
@@ -22,7 +25,14 @@ export class TeacherDataOperationsUpdateFormComponent {
     updatedOffice = new FormControl('');
     updatedMoreInformation = new FormControl('');
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private dialog: MatDialog) {
+    constructor(
+        private teacherService: TeacherService,
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog,
+        private lessonService: LessonService,
+        private mainTaskService: MainTaskService,
+        private subTaskService: SubTaskService
+    ) {
         this.getSelectedTeacher();
         this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.updatedEmail?.addValidators(Validators.maxLength(255));
@@ -42,7 +52,12 @@ export class TeacherDataOperationsUpdateFormComponent {
     }
 
     updateTeacher(): void {
-        if (this.updatedName.valid && this.updatedEmail.valid && this.updatedWebpage.valid && this.updatedOffice.valid) {
+        if (
+            this.updatedName.valid &&
+            this.updatedEmail.valid &&
+            this.updatedWebpage.valid &&
+            this.updatedOffice.valid
+        ) {
             let updatedTeacher: TeacherDto = this.createTeacher();
             this.teacherService.updateTeacher(updatedTeacher).subscribe({
                 next: teacher => {
@@ -91,9 +106,10 @@ export class TeacherDataOperationsUpdateFormComponent {
         if (teacherId !== null)
             this.teacherService.deleteTeacher(teacherId).subscribe({
                 next: _ => {
-                    this.teacherService.getAllTeacher();
-                    this.teacherService.removeSelectedTeacher();
-                    this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Base);
+                    this.teacherService.resetTeacherState(true);
+                    this.lessonService.resetLessonState(true);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Tanár törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

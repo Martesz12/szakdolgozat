@@ -64,4 +64,10 @@ export class TeacherService {
     setTeacherDataOperationPageState(state: DataOperationPageState) {
         this.teacherDataOperationPageState = state;
     }
+
+    resetTeacherState(afterDelete: boolean = false): void {
+        this.removeSelectedTeacher();
+        this.setTeacherDataOperationPageState(DataOperationPageState.Base);
+        if (afterDelete) this.getAllTeacher();
+    }
 }

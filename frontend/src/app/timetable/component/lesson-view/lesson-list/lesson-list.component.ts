@@ -8,6 +8,8 @@ import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageSta
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
@@ -32,7 +34,9 @@ export class LessonListComponent {
         private snackBar: MatSnackBar,
         private dialog: MatDialog,
         private subjectService: SubjectService,
-        private timetableService: TimetableService
+        private timetableService: TimetableService,
+        private mainTaskService: MainTaskService,
+        private subTaskService: SubTaskService
     ) {
         this.getAllLesson();
         this.getSelectedLesson();
@@ -122,9 +126,9 @@ export class LessonListComponent {
         if (lessonId !== null)
             this.lessonService.deleteLesson(lessonId).subscribe({
                 next: _ => {
-                    this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
-                    this.lessonService.removeSelectedLesson();
-                    this.lessonService.getLessonsByTimetableId();
+                    this.lessonService.resetLessonState(true);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Tanóra törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

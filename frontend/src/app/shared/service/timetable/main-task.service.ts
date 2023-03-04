@@ -76,4 +76,10 @@ export class MainTaskService {
     setMainTaskDataOperationPageState(state: DataOperationPageState) {
         this.mainTaskDataOperationPageState = state;
     }
+
+    resetMainTaskState(afterDelete: boolean = false): void {
+        this.removeSelectedMainTask();
+        this.setMainTaskDataOperationPageState(DataOperationPageState.Base);
+        if(afterDelete) this.getMainTasksByLessonIds();
+    }
 }

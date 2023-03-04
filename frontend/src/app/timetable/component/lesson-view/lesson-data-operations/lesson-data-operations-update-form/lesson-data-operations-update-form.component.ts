@@ -11,6 +11,8 @@ import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageSta
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 
 @Component({
     selector: 'app-lesson-data-operations-update-form',
@@ -38,7 +40,9 @@ export class LessonDataOperationsUpdateFormComponent {
         private snackBar: MatSnackBar,
         private subjectService: SubjectService,
         private teacherService: TeacherService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private mainTaskService: MainTaskService,
+        private subTaskService: SubTaskService
     ) {
         this.getSelectedLesson();
         this.getAllSubject();
@@ -138,9 +142,9 @@ export class LessonDataOperationsUpdateFormComponent {
         if (lessonId !== null)
             this.lessonService.deleteLesson(lessonId).subscribe({
                 next: _ => {
-                    this.lessonService.getLessonsByTimetableId();
-                    this.lessonService.removeSelectedLesson();
-                    this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
+                    this.lessonService.resetLessonState(true);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Tanóra törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

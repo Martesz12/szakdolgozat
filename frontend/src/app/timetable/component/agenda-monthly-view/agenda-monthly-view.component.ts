@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
@@ -7,13 +7,17 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
     templateUrl: './agenda-monthly-view.component.html',
     styleUrls: ['./agenda-monthly-view.component.scss'],
 })
-export class AgendaMonthlyViewComponent {
+export class AgendaMonthlyViewComponent implements OnDestroy {
     selectedTimetableId: number = 0;
     selectedDayDate: number = 0;
     isCalendarShown: boolean = true;
 
     constructor(private timetableService: TimetableService, private mainTaskService: MainTaskService) {
         this.getTimetableId();
+    }
+
+    ngOnDestroy(): void {
+        this.mainTaskService.resetMainTaskState();
     }
 
     getTimetableId(){

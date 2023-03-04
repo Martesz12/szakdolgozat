@@ -68,4 +68,10 @@ export class LessonService {
     setLessonDataOperationPageState(state: DataOperationPageState) {
         this.lessonDataOperationPageState = state;
     }
+
+    resetLessonState(afterDelete: boolean = false): void {
+        this.removeSelectedLesson();
+        this.setLessonDataOperationPageState(DataOperationPageState.Base);
+        if(afterDelete) this.getLessonsByTimetableId();
+    }
 }

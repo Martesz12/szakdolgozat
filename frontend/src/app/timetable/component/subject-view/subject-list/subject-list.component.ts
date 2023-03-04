@@ -5,6 +5,9 @@ import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
+import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 
 @Component({
@@ -22,7 +25,10 @@ export class SubjectListComponent {
         private subjectService: SubjectService,
         private changeDetection: ChangeDetectorRef,
         private snackBar: MatSnackBar,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private lessonService: LessonService,
+        private mainTaskService: MainTaskService,
+        private subTaskService: SubTaskService
     ) {
         this.getAllSubject();
         this.getSelectedSubject();
@@ -79,9 +85,10 @@ export class SubjectListComponent {
         if (subjectId !== null)
             this.subjectService.deleteSubject(subjectId).subscribe({
                 next: _ => {
-                    this.subjectService.getAllSubject();
-                    this.subjectService.removeSelectedSubject();
-                    this.subjectService.setSubjectDataOperationPageState(DataOperationPageState.Base);
+                    this.subjectService.resetSubjectState(true);
+                    this.lessonService.resetLessonState(true);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Tantárgy törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

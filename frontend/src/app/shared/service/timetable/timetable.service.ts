@@ -47,4 +47,8 @@ export class TimetableService {
     getSelectedTimetableId(): Observable<number> {
         return this.selectedTimetableId.asObservable();
     }
+
+    resetTimetableState(afterDelete: boolean = false): void {
+        if (afterDelete) this.getAllTimetable();
+    }
 }

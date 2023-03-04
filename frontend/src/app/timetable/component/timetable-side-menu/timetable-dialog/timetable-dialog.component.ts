@@ -6,6 +6,11 @@ import { Observable } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { TimetableDto } from 'src/app/shared/model/timetable/dto/timetable.dto';
+import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
+import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
+import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 
 @Component({
@@ -23,7 +28,12 @@ export class TimetableDialogComponent {
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
         public timetableService: TimetableService,
         public dialog: MatDialog,
-        public snackBar: MatSnackBar
+        public snackBar: MatSnackBar,
+        private lessonService: LessonService,
+        private mainTaskService: MainTaskService,
+        private subTaskService: SubTaskService,
+        private subjectService: SubjectService,
+        private teacherService: TeacherService
     ) {
         this.timetableService.getAllTimetableSubject().subscribe(timetables => {
             if (timetables.length === 0) this.addTimetable();
@@ -118,7 +128,12 @@ export class TimetableDialogComponent {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({
                 next: _ => {
-                    this.timetableService.getAllTimetable();
+                    this.timetableService.resetTimetableState(true);
+                    this.teacherService.resetTeacherState(true);
+                    this.subjectService.resetSubjectState(true);
+                    this.lessonService.resetLessonState(true);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.editedTimetables.delete(timetableId);
                     if (this.selectedTimetableId === timetableId) this.timetableService.setSelectedTimetableId(0);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {

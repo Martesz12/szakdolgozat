@@ -119,9 +119,8 @@ export class AgendaListViewListComponent {
         if (mainTaskId !== null)
             this.mainTaskService.deleteMainTask(mainTaskId).subscribe({
                 next: _ => {
-                    this.mainTaskService.getMainTasksByLessonIds();
-                    this.mainTaskService.removeSelectedMainTask();
-                    this.mainTaskService.setMainTaskDataOperationPageState(DataOperationPageState.Base);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Feladat törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
@@ -142,10 +141,8 @@ export class AgendaListViewListComponent {
         let newSubTask: SubTaskDto = new SubTaskDto('Új Alfeladat', false, mainTaskId);
         this.subTaskService.addSubTask(newSubTask).subscribe({
             next: subTask => {
-                this.subTaskService.getSubTasksByLessonIds();
-                this.subTaskService.setSubTaskDataOperationPageState(DataOperationPageState.Description);
+                this.subTaskService.getSubTasksByMainTaskIds();
                 this.modifySubTask(subTask);
-                if (subTask.id !== null) this.subTaskService.selectSubTask(subTask.id);
                 this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
                     duration: 2000,
                     horizontalPosition: 'right',
@@ -184,7 +181,7 @@ export class AgendaListViewListComponent {
             );
             this.subTaskService.updateSubTask(updatedSubTask).subscribe({
                 next: _ => {
-                    this.subTaskService.getSubTasksByLessonIds();
+                    this.subTaskService.getSubTasksByMainTaskIds();
                     this.editedSubTasks.delete(subTask.id!);
                     this.snackBar.open('Alfeladat módosítása sikeres!', 'X', {
                         duration: 2000,
@@ -212,7 +209,7 @@ export class AgendaListViewListComponent {
     deleteSubTask(subTaskId: number): void {
         this.subTaskService.deleteSubTask(subTaskId).subscribe({
             next: _ => {
-                this.subTaskService.getSubTasksByLessonIds();
+                this.subTaskService.resetSubTaskState(true);
                 this.editedSubTasks.delete(subTaskId);
                 this.snackBar.open('Alfeladat törlése sikeres!', 'X', {
                     duration: 2000,

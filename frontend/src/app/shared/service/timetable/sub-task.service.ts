@@ -10,14 +10,12 @@ import { MainTaskService } from './main-task.service';
 })
 export class SubTaskService {
     allSubTaskSubject: BehaviorSubject<SubTaskDto[]> = new BehaviorSubject<SubTaskDto[]>([]);
-    selectedSubTaskSubject: BehaviorSubject<SubTaskDto> = new BehaviorSubject<SubTaskDto>({} as SubTaskDto);
-    SubTaskDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
     constructor(private subTaskWebService: SubTaskWebService, private mainTaskService: MainTaskService) {
-        this.getSubTasksByLessonIds();
+        this.getSubTasksByMainTaskIds();
     }
 
-    getSubTasksByLessonIds() {
+    getSubTasksByMainTaskIds() {
         this.mainTaskService
             .getAllMainTaskSubject()
             .pipe(
@@ -36,20 +34,6 @@ export class SubTaskService {
         return this.allSubTaskSubject.asObservable();
     }
 
-    getSelectedSubTaskSubject(): Observable<SubTaskDto> {
-        return this.selectedSubTaskSubject.asObservable();
-    }
-
-    selectSubTask(subTaskId: number) {
-        this.subTaskWebService
-            .getSubTaskById(subTaskId)
-            .subscribe(subTask => this.selectedSubTaskSubject.next(subTask));
-    }
-
-    removeSelectedSubTask() {
-        this.selectedSubTaskSubject.next({} as SubTaskDto);
-    }
-
     addSubTask(subTask: SubTaskDto): Observable<SubTaskDto> {
         return this.subTaskWebService.addSubTask(subTask);
     }
@@ -66,11 +50,7 @@ export class SubTaskService {
         return this.subTaskWebService.getSubTaskById(id);
     }
 
-    getSubTaskDataOperationPageState() {
-        return this.SubTaskDataOperationPageState;
-    }
-
-    setSubTaskDataOperationPageState(state: DataOperationPageState) {
-        this.SubTaskDataOperationPageState = state;
+    resetSubTaskState(afterDelete: boolean = false): void {
+        if(afterDelete) this.getSubTasksByMainTaskIds();
     }
 }

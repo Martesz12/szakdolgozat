@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 
 @Component({
@@ -6,8 +6,12 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
     templateUrl: './subject-view.component.html',
     styleUrls: ['./subject-view.component.scss'],
 })
-export class SubjectViewComponent {
+export class SubjectViewComponent implements OnDestroy {
     constructor(private subjectService: SubjectService) {}
+
+    ngOnDestroy(): void {
+        this.subjectService.resetSubjectState();
+    }
 
     getScreenWidth(): number {
         return window.innerWidth;

@@ -11,6 +11,7 @@ import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
+import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 
 @Component({
@@ -35,7 +36,8 @@ export class TaskDataOperationsUpdateFormComponent {
         private snackBar: MatSnackBar,
         private lessonService: LessonService,
         private subjectService: SubjectService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private subTaskService: SubTaskService,
     ) {
         this.updatedLesson?.addValidators(Validators.required);
         this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);
@@ -59,7 +61,6 @@ export class TaskDataOperationsUpdateFormComponent {
         this.subjectService.getAllSubjectSubject().subscribe(subjects => (this.allSubject = subjects));
     }
 
-    //TODO ha kitörlünk egy subject-et akkor mi lesz a lesson subjectId-ával
     getSubjectName(subjectId: number): string {
         return this.allSubject.find(subject => subject.id === subjectId)!.name;
     }
@@ -130,9 +131,8 @@ export class TaskDataOperationsUpdateFormComponent {
         if (mainTaskId !== null)
             this.mainTaskService.deleteMainTask(mainTaskId).subscribe({
                 next: _ => {
-                    this.mainTaskService.getMainTasksByLessonIds();
-                    this.mainTaskService.removeSelectedMainTask();
-                    this.mainTaskService.setMainTaskDataOperationPageState(DataOperationPageState.Base);
+                    this.mainTaskService.resetMainTaskState(true);
+                    this.subTaskService.resetSubTaskState(true);
                     this.snackBar.open('Feladat törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
