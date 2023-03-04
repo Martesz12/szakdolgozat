@@ -44,6 +44,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     eventDays: number[] = [];
     @Output() selectDayEvent = new EventEmitter<number>();
     @Input() selectedDayDate: number = 0;
+    outputDateOnCalendar: Date = new Date()
 
     constructor(
         private mainTaskService: MainTaskService,
@@ -53,6 +54,14 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     ) {
         this.getMainTasksWhenTimetableSelected();
     }
+
+    ngOnChanges(): void {
+        if(this.selectedDayDate !== 0) {
+            this.currentDate = new Date(this.selectedDayDate);
+            this.renderCalendar();
+        }
+    }
+
     ngAfterViewInit(): void {
         if (this.selectedTimetableId) this.renderCalendar();
     }

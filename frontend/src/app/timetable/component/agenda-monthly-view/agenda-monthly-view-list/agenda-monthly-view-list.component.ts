@@ -152,4 +152,12 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
                 }),
         });
     }
+
+    getScreenWidth(): number {
+        return window.innerWidth;
+    }
+
+    isInMobileView(): boolean {
+        return this.getScreenWidth() <= 1000;
+    }
 }

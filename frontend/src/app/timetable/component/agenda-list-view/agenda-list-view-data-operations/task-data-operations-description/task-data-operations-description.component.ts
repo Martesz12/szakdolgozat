@@ -29,12 +29,6 @@ export class TaskDataOperationsDescriptionComponent {
         this.initializeDataForDescription();
     }
 
-    // getAllSubTask(): void {
-    //     this.subTaskService.getAllSubTaskSubject().subscribe(subTasks => {
-    //         this.allSubTask = subTasks;
-    //     });
-    // }
-
     initializeDataForDescription() {
         this.mainTaskService.getSelectedMainTaskSubject().pipe(
             filter(mainTask => mainTask !== undefined && Object.keys(mainTask).length !== 0),

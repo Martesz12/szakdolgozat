@@ -1,7 +1,2 @@
-//TODO objektumok törlése
-    - backend-en elvileg meg van valósítva
-    - törlés után újra le kell hívni a db-ből az érintett és a hozzá tartozó objektumokat
-    - valamint a selected meg a hozzá tartozó plusz változót alapállapotba kell hozni
 //TODO jobb oldali szövegek csak akkor jelenjenek meg, ha bal oldalt van már valami
 //TODO text overflow-s cucc minden szöveghez
-//TODO agenda monthly view váltás telefonos nézetben befejezni
