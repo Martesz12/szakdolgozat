@@ -37,7 +37,7 @@ export class TimetableSideMenuComponent {
         this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
         this.treeControl.expandAll();
         this.getSelectedTimetableId();
-        this.onMenuElementSelected(11);
+        this.onMenuElementSelected(12);
     }
 
     getSelectedTimetableId(): void {

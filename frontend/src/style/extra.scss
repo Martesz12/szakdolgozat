@@ -1,6 +1,8 @@
 ::-webkit-scrollbar {
     width: 4px;
+    height: 4px;
     overflow-y: scroll;
+    overflow-x: scroll;
     background: var(--light);
     box-shadow: inset 0 0 4px var(--neutral);
 }
