@@ -15,9 +15,12 @@
 }
 
 //*********** timetable ***********
+.timetable-container {
+    position: relative;
+}
 
 table {
-    width: 100%;
+    width: 1500px;
     height: 1200px;
     border-spacing:0; /* Removes the cell spacing via CSS */
     border-collapse: collapse;
@@ -29,27 +32,40 @@ table {
 .week-day-cell {
     border: 2px solid black;
     text-align: center;
-    background-color: var(--primary100)
+    background-color: var(--primary100);
+    height: 65px;
 }
 
 .day-time-cell {
     border-right: 2px solid black;
     border-bottom: 2px solid black;
-    width: 5%;
+    width: 100px;
     text-align: center;
+    height: 50px;
 }
 
 .day-cell {
-    width: 10%;
-    
+    width: 200px;
+    height: 25px;
 }
 
 .day-content-cell {
     border: 1px solid var(--grey);
+    border-right: 2px solid black;
 }
 
 .timetable-icon {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.child {
+    width: 198px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    //******************************************
+    left: 102px;
+    height: 100px;
 }
