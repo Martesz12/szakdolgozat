@@ -160,4 +160,10 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
     isInMobileView(): boolean {
         return this.getScreenWidth() <= 1000;
     }
+
+    getSubjectName(lessonId: number): string {
+        let tempLesson = this.allLesson.find(lesson => lesson.id === lessonId);
+        let tempSubject = this.allSubject.find(subject => subject.id === tempLesson?.subjectId);
+        return tempSubject?.name!;
+    }
 }

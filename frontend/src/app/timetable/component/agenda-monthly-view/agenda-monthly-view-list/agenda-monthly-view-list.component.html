@@ -13,11 +13,17 @@
                 <mat-expansion-panel-header>
                     <div class="expansion-panel-header">
                         <div><mat-checkbox (click)="checkMainTask($event, mainTask)"></mat-checkbox></div>
-                        <div
-                            class="color-picker-sample ml-10"
-                            [ngStyle]="{ 'background-color': getSubjectColor(mainTask.lessonId) }"
-                        ></div>
-                        <div class="ml-10 content-font">{{ mainTask.name }}</div>
+                        <div class="expansion-panel-header-main">
+                            <div style="width: 85%" class="ml-10 content-on-color-font content-overflow">
+                                {{ mainTask.name }}
+                            </div>
+                            <div
+                                style="width: 85%"
+                                class="ml-10 mr-10 content-on-color-font main-task-subject-name content-overflow"
+                            >
+                                {{ getSubjectName(mainTask.lessonId) }}
+                            </div>
+                        </div>
                     </div>
                 </mat-expansion-panel-header>
                 <div class="secondary-title-font card-description-element-title">
@@ -36,7 +42,11 @@
                         <div>
                             <mat-checkbox (change)="checkSubTask(subTask)" [checked]="subTask.fulfilled"></mat-checkbox>
                         </div>
-                        <div class="content-font ml-10" [class.completed-task]="subTask.fulfilled" style="width: 100%">
+                        <div
+                            class="content-font ml-10 content-overflow"
+                            [class.completed-task]="subTask.fulfilled"
+                            style="width: 80%"
+                        >
                             {{ subTask.name }}
                         </div>
                     </div>

@@ -22,7 +22,7 @@
             [ngClass]="selectedSubject.id === subject.id ? 'list-row-selected' : ''"
             [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
         >
-            <div class="list-row-name ml-10 content-font" (dblclick)="selectSubject(subject.id)">
+            <div class="list-row-name ml-10 content-font content-overflow" (dblclick)="selectSubject(subject.id)">
                 {{ subject.name }}
             </div>
             <div class="list-row-buttons">

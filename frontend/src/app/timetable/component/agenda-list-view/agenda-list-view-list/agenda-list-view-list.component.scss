@@ -170,6 +170,7 @@
 .completed-task {
     color: var(--grey);
     text-decoration: line-through;
+    width: 80%;
 }
 
 .fulfilled-task-row {
@@ -223,7 +224,7 @@
     width: 100%;
 }
 
-.main-task-abbreviation {
+.main-task-subject-name {
     opacity: 0.7;
 }
 

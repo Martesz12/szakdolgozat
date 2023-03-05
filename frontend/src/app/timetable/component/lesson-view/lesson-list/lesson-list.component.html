@@ -26,7 +26,7 @@
                     [ngClass]="selectedLesson.id === lesson.key ? 'list-row-selected' : ''"
                     [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
                 >
-                    <div class="list-row-name ml-10 content-font" (dblclick)="selectLesson(lesson.key)">
+                    <div class="list-row-name ml-10 content-font content-overflow" (dblclick)="selectLesson(lesson.key)">
                         {{ lesson.value }}
                     </div>
                     <div class="list-row-buttons">

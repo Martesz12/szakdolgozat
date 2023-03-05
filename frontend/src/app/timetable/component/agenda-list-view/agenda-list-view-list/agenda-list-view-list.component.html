@@ -69,9 +69,9 @@
                                         {{ mainTask.name }}
                                     </div>
                                     <div
-                                        class="ml-10 mr-10 content-on-color-font main-task-abbreviation content-overflow"
+                                        class="ml-10 mr-10 content-on-color-font main-task-subject-name content-overflow"
                                     >
-                                        {{ getSubjectAbbreviation(mainTask.lessonId) }}
+                                        {{ getSubjectName(mainTask.lessonId) }}
                                     </div>
                                 </div>
                             </div>
@@ -86,16 +86,16 @@
                                 </div>
                                 <div
                                     *ngIf="!editedSubTasks.has(subTask.id!)"
-                                    class="content-on-color-font ml-10"
+                                    class="content-on-color-font ml-10 content-overflow"
                                     [class.completed-task]="subTask.fulfilled"
-                                    style="width: 100%"
+                                    style="width: 80%"
                                 >
                                     {{ subTask.name }}
                                 </div>
                                 <div
                                     *ngIf="editedSubTasks.has(subTask.id!)"
                                     class="content-on-color-font edited-sub-task-name"
-                                    style="width: 100%"
+                                    style="width: 80%"
                                 >
                                     <input
                                         matInput
@@ -220,7 +220,7 @@
                                     (click)="checkMainTask($event, fulfilledMainTask)"
                                 ></mat-checkbox>
                             </div>
-                            <div class="ml-10 content-on-color-font completed-task">{{ fulfilledMainTask.name }}</div>
+                            <div class="ml-10 content-on-color-font completed-task content-overflow">{{ fulfilledMainTask.name }}</div>
                         </div>
                         <div
                             matTooltip="Alfeladat törlése"

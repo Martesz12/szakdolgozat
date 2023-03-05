@@ -1,2 +1,0 @@
-//TODO jobb oldali szövegek csak akkor jelenjenek meg, ha bal oldalt van már valami
-//TODO text overflow-s cucc minden szöveghez

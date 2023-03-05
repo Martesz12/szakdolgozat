@@ -322,7 +322,7 @@ export class AgendaListViewListComponent {
         return mainTasks.sort((a,b) => (a.deadline > b.deadline) ? 1 : ((b.deadline > a.deadline) ? -1 : 0));
     }
 
-    getSubjectAbbreviation(lessonId: number): string {
+    getSubjectName(lessonId: number): string {
         let tempLesson = this.allLesson.find(lesson => lesson.id === lessonId);
         let tempSubject = this.allSubject.find(subject => subject.id === tempLesson?.subjectId);
         return tempSubject?.name!;
