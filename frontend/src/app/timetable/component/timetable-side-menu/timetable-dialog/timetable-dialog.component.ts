@@ -112,7 +112,9 @@ export class TimetableDialogComponent {
     openDeleteDialog(timetableId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Órarend törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd.' +
+                'Az órarend törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését!',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
