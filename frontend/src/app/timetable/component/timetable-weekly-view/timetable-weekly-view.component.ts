@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
@@ -50,14 +49,11 @@ export class TimetableWeeklyViewComponent {
     selectedTimetableId: number = 0;
     allLesson: LessonDto[] = [];
     subjectIdNameMap: Map<number, SubjectDto> = new Map<number, SubjectDto>();
-    @ViewChild('timetable') timetable!: ElementRef;
 
     constructor(
         private timetableService: TimetableService,
         private lessonService: LessonService,
         private subjectService: SubjectService,
-        private renderer: Renderer2,
-        @Inject(DOCUMENT) private document: Document
     ) {
         this.getAllLesson();
         this.getSelecterTimetableId();
@@ -87,6 +83,24 @@ export class TimetableWeeklyViewComponent {
     getTopStyle(lesson: LessonDto): string {
         let hour: number = +lesson.startTime.split(':')[0];
         let minute: number = +lesson.startTime.split(':')[1];
-        return (65 + hour * 50 + Math.floor(minute/60*50)).toString();
+        return (65 + hour * 50 + Math.floor((minute / 60) * 50)).toString();
+    }
+
+    getLeftStyle(lesson: LessonDto): string {
+        let left: number = 0;
+        this.WEEK_DAYS.forEach((day, index) => {
+            if (day === lesson.day) left = 101.86 + 199.64 * (index - 1);
+        });
+        return left.toString();
+    }
+
+    getHeightStyle(lesson: LessonDto): string {
+        let hour: number = (+lesson.endTime.split(':')[0]) - (+lesson.startTime.split(':')[0]);
+        let minute: number = 0;
+        if(hour === 0) minute = (+lesson.endTime.split(':')[1]) - (+lesson.startTime.split(':')[1]);
+        else if(hour > 0 && (+lesson.endTime.split(':')[1]) - (+lesson.startTime.split(':')[1]) === 0) minute = 0;
+        else minute = (60 - (+lesson.startTime.split(':')[1])) + (+lesson.endTime.split(':')[1]) - 60;
+        
+        return (hour * 50 + Math.floor((minute / 60) * 50)).toString();
     }
 }
