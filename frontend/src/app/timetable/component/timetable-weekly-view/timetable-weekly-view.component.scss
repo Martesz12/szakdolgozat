@@ -18,25 +18,25 @@
 
 table {
     width: 1500px;
-    height: 1200px;
+    height: 965px;
     border-spacing:0; /* Removes the cell spacing via CSS */
     border-collapse: collapse;
-    border: 3px solid black;
+    border: 1px solid black;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
     overflow: auto;
 }
 
 .week-day-cell {
-    border: 2px solid black;
+    border: 1px solid black;
     text-align: center;
     background-color: var(--primary100);
     height: 65px;
 }
 
 .day-time-cell {
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     width: 100px;
     text-align: center;
     height: 50px;
@@ -48,8 +48,8 @@ table {
 }
 
 .day-content-cell {
-    border: 1px solid var(--grey);
-    border-right: 2px solid black;
+    border: 1px solid #aaacae70;
+    border-right: 1px solid black;
 }
 
 .timetable-icon {
@@ -58,9 +58,12 @@ table {
     align-items: center;
 }
 
-.child {
+.lesson {
+    padding: 5px;
     width: 198px;
     border-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     position: absolute;
+    display: flex;
+    align-items: flex-end;
 }

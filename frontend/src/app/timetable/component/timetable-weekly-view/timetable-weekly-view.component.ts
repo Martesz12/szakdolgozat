@@ -14,12 +14,12 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 export class TimetableWeeklyViewComponent {
     readonly WEEK_DAYS: string[] = ['', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
     readonly DAY_TIMES: string[] = [
-        '00:00',
-        '01:00',
-        '02:00',
-        '03:00',
-        '04:00',
-        '05:00',
+        // '00:00',
+        // '01:00',
+        // '02:00',
+        // '03:00',
+        // '04:00',
+        // '05:00',
         '06:00',
         '07:00',
         '08:00',
@@ -39,7 +39,7 @@ export class TimetableWeeklyViewComponent {
         '22:00',
         '23:00',
     ];
-    rowNumber: number[] = Array(48)
+    rowNumber: number[] = Array(36)
         .fill(0)
         .map((x, i) => i);
     colNumber: number[] = Array(8)
@@ -83,7 +83,7 @@ export class TimetableWeeklyViewComponent {
     getTopStyle(lesson: LessonDto): string {
         let hour: number = +lesson.startTime.split(':')[0];
         let minute: number = +lesson.startTime.split(':')[1];
-        return (65 + hour * 50 + Math.floor((minute / 60) * 50)).toString();
+        return (65 + hour * 50 + Math.floor((minute / 60) * 50) - 6*50).toString();
     }
 
     getLeftStyle(lesson: LessonDto): string {
