@@ -2,16 +2,18 @@ package hu.szakdoga.backend.authentication.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -39,6 +41,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
        userEmail = this.jwtService.extractUsername(jwtToken);
        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+           if (jwtService.isTokenValid(jwtToken, userDetails)) {
+               UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                       userDetails,
+                       null,
+                       userDetails.getAuthorities()
+               );
+               authToken.setDetails(
+                       new WebAuthenticationDetailsSource().buildDetails(request)
+               );
+               SecurityContextHolder.getContext().setAuthentication(authToken);
+           }
        }
+       filterChain.doFilter(request, response);
     }
 }

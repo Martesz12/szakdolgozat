@@ -1,6 +1,6 @@
 package hu.szakdoga.backend.timetable.data.dto;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 public class TeacherDTO {
     public final Long id;
