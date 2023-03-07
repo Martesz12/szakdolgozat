@@ -1,0 +1,113 @@
+.register-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-shadow);
+}
+
+.register-card {
+    width: 40%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.card-main-title {
+    color: var(--primary);
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.register-form-container {
+    margin: 40px 0;
+}
+
+.register-main-title {
+    color: var(--primary);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.register-form-field {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.register-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.register-message {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.register-message:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1150px) {
+    .register-card {
+        width: 50%;
+    }
+}
+
+@media (max-width: 900px) {
+    .register-card {
+        width: 60%;
+    }
+}
+
+@media (max-width: 600px) {
+    .register-card {
+        width: 70%;
+    }
+}
+
+@media (max-width: 500px) {
+    .register-card {
+        width: 80%;
+    }
+}
+
+@media (min-height: 800px) {
+    .register-card {
+        height: 60%;
+    }
+}
+
+@media (min-height: 875px) {
+    .register-card {
+        height: 55%;
+    }
+}
+
+@media (min-height: 950px) {
+    .register-card {
+        height: 50%;
+    }
+}
+
+@media (min-height: 1025px) {
+    .register-card {
+        height: 45%;
+    }
+}
+
+@media (min-height: 1100px) {
+    .register-card {
+        height: 42%;
+    }
+}

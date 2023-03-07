@@ -1,0 +1,113 @@
+.login-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-shadow);
+}
+
+.login-card {
+    width: 40%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.card-main-title {
+    color: var(--primary);
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.login-form-container {
+    margin: 40px 0;
+}
+
+.login-main-title {
+    color: var(--primary);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form-field {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.login-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.register-message {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.register-message:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1150px) {
+    .login-card {
+        width: 50%;
+    }
+}
+
+@media (max-width: 900px) {
+    .login-card {
+        width: 60%;
+    }
+}
+
+@media (max-width: 600px) {
+    .login-card {
+        width: 70%;
+    }
+}
+
+@media (max-width: 500px) {
+    .login-card {
+        width: 80%;
+    }
+}
+
+@media (min-height: 800px) {
+    .login-card {
+        height: 60%;
+    }
+}
+
+@media (min-height: 875px) {
+    .login-card {
+        height: 55%;
+    }
+}
+
+@media (min-height: 950px) {
+    .login-card {
+        height: 50%;
+    }
+}
+
+@media (min-height: 1025px) {
+    .login-card {
+        height: 45%;
+    }
+}
+
+@media (min-height: 1100px) {
+    .login-card {
+        height: 42%;
+    }
+}

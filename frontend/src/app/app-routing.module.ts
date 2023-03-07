@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    // {
-    //   path: 'login',
-    //   loadChildren: () =>
-    //     import('./login/login.module').then((m) => m.LoginModule),
-    // },
+    {
+      path: 'authentication',
+      loadChildren: () =>
+        import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
+    },
     {
         path: 'timetable',
         loadChildren: () => import('./timetable/timetable.module').then(m => m.TimetableModule),
@@ -14,7 +14,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'timetable',
+        redirectTo: 'authentication',
         pathMatch: 'full',
     },
 ];
