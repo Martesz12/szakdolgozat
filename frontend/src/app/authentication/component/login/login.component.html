@@ -1,9 +1,9 @@
 <div class="login-main">
     <mat-card class="mat-elevation-z4 login-card">
         <div></div>
-        <div class="card-main-title authentication-font">Szakdolgozat</div>
+        <div class="card-main-title authentication-font">Bejelentkezés</div>
 
-        <div class="main-title-font login-main-title">Bejelentkezés</div>
+        <div><mat-divider style="width: 100%;"></mat-divider></div>
 
         <div class="login-form-container">
             <form class="login-form">
@@ -20,12 +20,15 @@
             </form>
 
             <div class="login-button-container">
-                <button routerLink="/timetable/timetable-daily" class="navigation-main-font" mat-raised-button color="primary" (click)="login()">
+                <button routerLink="/timetable/timetable-daily" class="navigation-main-font login-button" mat-raised-button color="primary" (click)="login()">
                     Bejelentkezés
                 </button>
             </div>
         </div>
 
-        <div routerLink="/authentication/register" class="content-font register-message">Ha még nincs fiókod itt regisztrálhatsz.</div>
+        <div class="content-font register-message">
+            <span>Nincs még fiókod?&nbsp;</span>
+            <span routerLink="/authentication/register" class="register-navigate">Itt regisztrálhatsz.</span>
+        </div>
     </mat-card>
 </div>

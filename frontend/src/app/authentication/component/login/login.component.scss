@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--light-shadow);
+    background: linear-gradient(142deg, rgba(0,70,102,1) 0%, rgba(3,125,166,1) 100%);
 }
 
 .login-card {
@@ -16,7 +16,7 @@
 }
 
 .card-main-title {
-    color: var(--primary);
+    color: black;
     display: flex;
     justify-content: center;
     margin-top: 30px;
@@ -25,10 +25,6 @@
 
 .login-form-container {
     margin: 40px 0;
-}
-
-.login-main-title {
-    color: var(--primary);
 }
 
 .login-form {
@@ -45,17 +41,27 @@
 
 .login-button-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.register-message {
-    color: var(--primary);
-    cursor: pointer;
+.login-button {
+    width: 80%;
 }
 
-.register-message:hover {
+.register-message {
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+.register-navigate {
     text-decoration: underline;
+}
+
+.register-navigate:hover {
+    cursor: pointer;
+    color: var(--primary);
 }
 
 @media (max-width: 1150px) {

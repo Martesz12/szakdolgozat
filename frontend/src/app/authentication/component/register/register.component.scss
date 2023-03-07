@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--light-shadow);
+    background: linear-gradient(142deg, rgba(0,70,102,1) 0%, rgba(3,125,166,1) 100%);
 }
 
 .register-card {
@@ -16,7 +16,7 @@
 }
 
 .card-main-title {
-    color: var(--primary);
+    color: black;
     display: flex;
     justify-content: center;
     margin-top: 30px;
@@ -25,10 +25,6 @@
 
 .register-form-container {
     margin: 40px 0;
-}
-
-.register-main-title {
-    color: var(--primary);
 }
 
 .register-form {
@@ -45,17 +41,27 @@
 
 .register-button-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.register-message {
-    color: var(--primary);
-    cursor: pointer;
+.register-button {
+    width: 80%;
 }
 
-.register-message:hover {
+.login-message {
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+.login-navigate {
     text-decoration: underline;
+}
+
+.login-navigate:hover {
+    cursor: pointer;
+    color: var(--primary);
 }
 
 @media (max-width: 1150px) {

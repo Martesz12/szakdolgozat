@@ -1,9 +1,9 @@
 <div class="register-main">
     <mat-card class="mat-elevation-z4 register-card">
         <div></div>
-        <div class="card-main-title authentication-font">Szakdolgozat</div>
+        <div class="card-main-title authentication-font">Regisztráció</div>
 
-        <div class="main-title-font register-main-title">Regisztráció</div>
+        <div><mat-divider style="width: 100%;"></mat-divider></div>
 
         <div class="register-form-container">
             <form class="register-form">
@@ -40,12 +40,15 @@
             </form>
 
             <div class="register-button-container">
-                <button class="navigation-main-font" mat-raised-button color="primary" (click)="register()">
+                <button class="navigation-main-font register-button" mat-raised-button color="primary" (click)="register()">
                     Regisztráció
                 </button>
             </div>
         </div>
 
-        <div routerLink="/authentication/login" class="content-font register-message">Ha már van fiókod itt tudsz bejelentkezni.</div>
+        <div class="content-font login-message">
+            <span>Van már fiókod?&nbsp;</span>
+            <span routerLink="/authentication/login" class="login-navigate">Itt tudsz bejelentkezni.</span>
+        </div>
     </mat-card>
 </div>
