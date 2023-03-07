@@ -39,6 +39,9 @@ import { TaskDataOperationsUpdateFormComponent } from './component/agenda-list-v
 import { TaskDataOperationsNavigationComponent } from './component/agenda-list-view/agenda-list-view-data-operations/task-data-operations-navigation/task-data-operations-navigation.component';
 import { AgendaMonthlyViewCalendarComponent } from './component/agenda-monthly-view/agenda-monthly-view-calendar/agenda-monthly-view-calendar.component';
 import { AgendaMonthlyViewListComponent } from './component/agenda-monthly-view/agenda-monthly-view-list/agenda-monthly-view-list.component';
+import { TimetableComponent } from './timetable.component';
+import { NavigationComponent } from './component/navigation/navigation.component';
+import { TimetableSideMenuComponent } from './component/timetable-side-menu/timetable-side-menu.component';
 
 @NgModule({
     declarations: [
@@ -78,6 +81,9 @@ import { AgendaMonthlyViewListComponent } from './component/agenda-monthly-view/
         TaskDataOperationsNavigationComponent,
         AgendaMonthlyViewCalendarComponent,
         AgendaMonthlyViewListComponent,
+        TimetableComponent,
+        NavigationComponent,
+        TimetableSideMenuComponent,
     ],
     imports: [CommonModule, TimetableRoutingModule, SharedModule],
     providers: [],
