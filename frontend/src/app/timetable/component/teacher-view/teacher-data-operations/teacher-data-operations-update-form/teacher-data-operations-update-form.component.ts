@@ -138,7 +138,7 @@ export class TeacherDataOperationsUpdateFormComponent {
         if (this.updatedEmail.value !== null) email = this.updatedEmail.value;
         if (this.updatedOffice.value !== null) office = this.updatedOffice.value;
         if (this.updatedMoreInformation.value !== null) moreInformation = this.updatedMoreInformation.value;
-        return new TeacherDto(name, webpage, email, 1, office, moreInformation, this.selectedTeacher.id);
+        return new TeacherDto(name, webpage, email, this.selectedTeacher.userId, office, moreInformation, this.selectedTeacher.id);
     }
 
     getScreenWidth(): number {

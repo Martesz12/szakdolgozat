@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/subject")
@@ -30,6 +29,12 @@ public class SubjectController {
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") Long id) {
         SubjectDTO subject = subjectService.findSubjectById(id);
         return new ResponseEntity<>(subject, HttpStatus.OK);
+    }
+
+    @GetMapping("/findByUserId/{userId}")
+    public ResponseEntity<List<SubjectDTO>> getLessonsByUserIdAndTimetableId(@PathVariable("userId") Long userId) {
+        List<SubjectDTO> subjects = subjectService.findSubjectsByUserId(userId);
+        return new ResponseEntity<>(subjects, HttpStatus.OK);
     }
 
     @PostMapping("/add")

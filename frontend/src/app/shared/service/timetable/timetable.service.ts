@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TimetableWebService } from '../api/timetable/timetable-web.service';
 import { TimetableDto } from '../../model/timetable/dto/timetable.dto';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { UserService } from '../user.service';
 
 @Injectable({
     providedIn: 'root',
@@ -10,14 +11,20 @@ export class TimetableService {
     private allTimetableSubject: BehaviorSubject<TimetableDto[]> = new BehaviorSubject<TimetableDto[]>([]);
     private selectedTimetableId: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-    constructor(private timetableWebService: TimetableWebService) {
+    constructor(private timetableWebService: TimetableWebService, private userService: UserService) {
         this.getAllTimetable();
     }
 
     getAllTimetable() {
-        this.timetableWebService.getAllTimetable().subscribe(timetables => {
-            this.allTimetableSubject.next(timetables);
-        });
+        this.userService
+            .getUser()
+            .pipe(
+                filter(user => !!user),
+                switchMap(user => this.timetableWebService.getTimetablesByUserId(user.id!))
+            )
+            .subscribe(timetables => {
+                this.allTimetableSubject.next(timetables);
+            });
     }
 
     getAllTimetableSubject(): Observable<TimetableDto[]> {

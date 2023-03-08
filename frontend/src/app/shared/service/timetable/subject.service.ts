@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SubjectDto } from '../../model/timetable/dto/subject.dto';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 import { SubjectWebService } from '../api/timetable/subject-web.service';
+import { UserService } from '../user.service';
 
 @Injectable({
     providedIn: 'root',
@@ -36,14 +37,20 @@ export class SubjectService {
         '#411900',
     ];
 
-    constructor(private subjectWebService: SubjectWebService) {
+    constructor(private subjectWebService: SubjectWebService, private userService: UserService) {
         this.getAllSubject();
     }
 
     getAllSubject() {
-        this.subjectWebService.getAllSubject().subscribe(subjects => {
-            this.allSubjectSubject.next(subjects);
-        });
+        this.userService
+            .getUser()
+            .pipe(
+                filter(user => !!user),
+                switchMap(user => this.subjectWebService.getSubjectsByUserId(user.id!))
+            )
+            .subscribe(subjects => {
+                this.allSubjectSubject.next(subjects);
+            });
     }
 
     getAllSubjectSubject(): Observable<SubjectDto[]> {

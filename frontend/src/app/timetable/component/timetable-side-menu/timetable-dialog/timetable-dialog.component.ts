@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
+import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { TimetableDto } from 'src/app/shared/model/timetable/dto/timetable.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
@@ -12,6 +13,7 @@ import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.servic
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
     selector: 'app-timetable-dialog',
@@ -23,6 +25,7 @@ export class TimetableDialogComponent {
     timetableName = new FormControl('', Validators.required);
     editedTimetables: Map<number, string> = new Map<number, string>();
     selectedTimetableId: number = 0;
+    currentUser: UserDto = {} as UserDto;
 
     constructor(
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
@@ -33,15 +36,28 @@ export class TimetableDialogComponent {
         private mainTaskService: MainTaskService,
         private subTaskService: SubTaskService,
         private subjectService: SubjectService,
-        private teacherService: TeacherService
+        private teacherService: TeacherService,
+        private userService: UserService
     ) {
-        this.timetableService.getAllTimetableSubject().subscribe(timetables => {
-            if (timetables.length === 0) this.addTimetable();
-        });
-        this.getSelecterTimetableId();
+        this.getCurrentUserAndTimetable();
+        this.getSelectedTimetableId();
     }
 
-    getSelecterTimetableId() {
+    getCurrentUserAndTimetable(): void {
+        this.userService
+            .getUser()
+            .pipe(
+                switchMap(user => {
+                    this.currentUser = user;
+                    return this.timetableService.getAllTimetableSubject();
+                })
+            )
+            .subscribe(timetables => {
+                if (timetables.length === 0) this.addTimetable();
+            });
+    }
+
+    getSelectedTimetableId() {
         this.timetableService
             .getSelectedTimetableId()
             .subscribe(timetableId => (this.selectedTimetableId = timetableId));
@@ -52,7 +68,7 @@ export class TimetableDialogComponent {
     }
 
     addTimetable(): void {
-        let timetable: TimetableDto = new TimetableDto('Új órarend', 1);
+        let timetable: TimetableDto = new TimetableDto('Új órarend', this.currentUser.id!);
         this.timetableService.addTimetable(timetable).subscribe({
             next: newTimetable => {
                 this.timetableService.getAllTimetable();

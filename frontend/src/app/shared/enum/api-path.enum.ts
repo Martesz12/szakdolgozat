@@ -8,5 +8,6 @@ export enum ApiPath {
     Update = 'update',
     Delete = 'delete',
     Register = 'register',
-    Authenticate = 'authenticate'
+    Authenticate = 'authenticate',
+    FindByUserId = 'findByUserId'
 }

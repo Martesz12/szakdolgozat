@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
+import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
     selector: 'app-teacher-data-operations-save-form',
@@ -16,12 +18,18 @@ export class TeacherDataOperationsSaveFormComponent {
     newWebpage = new FormControl('');
     newOffice = new FormControl('');
     newMoreInformation = new FormControl('');
+    currentUser: UserDto = {} as UserDto;
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar) {
+    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private userService: UserService) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newEmail?.addValidators(Validators.maxLength(255));
         this.newWebpage?.addValidators(Validators.maxLength(255));
         this.newOffice?.addValidators(Validators.maxLength(255));
+        this.getCurrentUser();
+    }
+
+    getCurrentUser(): void {
+        this.userService.getUser().subscribe(user => this.currentUser = user);
     }
 
     addTeacher(): void {
@@ -67,7 +75,7 @@ export class TeacherDataOperationsSaveFormComponent {
         if (this.newEmail.value !== null) email = this.newEmail.value;
         if (this.newOffice.value !== null) office = this.newOffice.value;
         if (this.newMoreInformation.value !== null) moreInformation = this.newMoreInformation.value;
-        return new TeacherDto(name, webpage, email, 1, office, moreInformation);
+        return new TeacherDto(name, webpage, email, this.currentUser.id!, office, moreInformation);
     }
 
     getScreenWidth(): number {

@@ -28,6 +28,12 @@ export class TimetableWebService {
         return this.http.get<TimetableDto>(fullPath);
     }
 
+    getTimetablesByUserId(userId: number): Observable<TimetableDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByUserId);
+        fullPath += '/' + userId;
+        return this.http.get<TimetableDto[]>(fullPath);
+    }
+
     addTimetable(timetable: TimetableDto): Observable<TimetableDto> {
         const fullPath = this.buildFullPath(ApiPath.Add);
         return this.http.post<TimetableDto>(fullPath, timetable);

@@ -28,6 +28,12 @@ export class SubjectWebService {
         return this.http.get<SubjectDto>(fullPath);
     }
 
+    getSubjectsByUserId(userId: number): Observable<SubjectDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByUserId);
+        fullPath += '/' + userId;
+        return this.http.get<SubjectDto[]>(fullPath);
+    }
+
     addSubject(subject: SubjectDto): Observable<SubjectDto> {
         const fullPath = this.buildFullPath(ApiPath.Add);
         return this.http.post<SubjectDto>(fullPath, subject);

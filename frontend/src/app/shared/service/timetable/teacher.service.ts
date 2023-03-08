@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { TeacherDto } from '../../model/timetable/dto/teacher.dto';
 import { TeacherWebService } from '../api/timetable/teacher-web.service';
+import { UserService } from '../user.service';
 
 @Injectable({
     providedIn: 'root',
@@ -12,15 +13,20 @@ export class TeacherService {
     selectedTeacherSubject: BehaviorSubject<TeacherDto> = new BehaviorSubject<TeacherDto>({} as TeacherDto);
     teacherDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
-    constructor(private teacherWebService: TeacherWebService) {
+    constructor(private teacherWebService: TeacherWebService, private userService: UserService) {
         this.getAllTeacher();
     }
 
     getAllTeacher() {
-        this.teacherWebService.getAllTeacher().subscribe(teachers => {
-            this.allTeacherSubject.next(teachers);
-            console.log(teachers);
-        });
+        this.userService
+            .getUser()
+            .pipe(
+                filter(user => !!user),
+                switchMap(user => this.teacherWebService.getTeachersByUserId(user.id!))
+            )
+            .subscribe(teachers => {
+                this.allTeacherSubject.next(teachers);
+            });
     }
 
     getAllTeacherSubject(): Observable<TeacherDto[]> {
@@ -53,7 +59,7 @@ export class TeacherService {
         return this.teacherWebService.updateTeacher(teacher);
     }
 
-    getTeacherById(id: number): Observable<TeacherDto>{
+    getTeacherById(id: number): Observable<TeacherDto> {
         return this.teacherWebService.getTeacherById(id);
     }
 

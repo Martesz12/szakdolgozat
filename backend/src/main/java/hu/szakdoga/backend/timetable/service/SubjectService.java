@@ -34,6 +34,10 @@ public class SubjectService {
                 .orElseThrow(() -> new EntityNotFoundException("Subject by id " + id + " was not found.")));
     }
 
+    public List<SubjectDTO> findSubjectsByUserId(Long userId) {
+        return subjectRepository.findByUser_Id(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public SubjectDTO addSubject(SubjectDTO subject){
         return convertEntityToDto(subjectRepository.save(convertDtoToEntity(subject)));
     }

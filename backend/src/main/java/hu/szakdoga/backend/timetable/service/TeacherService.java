@@ -32,6 +32,10 @@ public class TeacherService {
         return convertEntityToDto(teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Teacher by id " + id + " was not found.")));
     }
 
+    public List<TeacherDTO> findTeachersByUserId(Long userId) {
+        return teacherRepository.findByUser_Id(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public TeacherDTO addTeacher(TeacherDTO teacher) {
         return convertEntityToDto(teacherRepository.save(convertDtoToEntity(teacher)));
     }

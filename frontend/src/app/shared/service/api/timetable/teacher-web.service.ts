@@ -28,6 +28,12 @@ export class TeacherWebService {
         return this.http.get<TeacherDto>(fullPath);
     }
 
+    getTeachersByUserId(userId: number): Observable<TeacherDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindByUserId);
+        fullPath += '/' + userId;
+        return this.http.get<TeacherDto[]>(fullPath);
+    }
+
     addTeacher(teacher: TeacherDto): Observable<TeacherDto> {
         const fullPath = this.buildFullPath(ApiPath.Add);
         return this.http.post<TeacherDto>(fullPath, teacher);

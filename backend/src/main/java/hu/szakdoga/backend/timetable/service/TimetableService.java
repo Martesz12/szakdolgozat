@@ -33,6 +33,10 @@ public class TimetableService {
                 .orElseThrow(() -> new EntityNotFoundException("Timetable by id " + id + " was not found.")));
     }
 
+    public List<TimetableDTO> findTimetablesByUserId(Long userId) {
+        return timetableRepository.findByUser_Id(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public TimetableDTO addTimetable(TimetableDTO timetable){
         return convertEntityToDto(timetableRepository.save(convertDtoToEntity(timetable)));
     }

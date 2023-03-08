@@ -1,12 +1,11 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
-import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
+import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
     selector: 'app-subject-data-operations-save-form',
@@ -15,14 +14,20 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
 })
 export class SubjectDataOperationsSaveFormComponent {
     colorPickerValid: boolean = true;
+    currentUser: UserDto = {} as UserDto;
 
     newName = new FormControl('');
     newAbbreviation = new FormControl('');
     newRequirement = new FormControl('');
 
-    constructor(public subjectService: SubjectService, private snackBar: MatSnackBar) {
+    constructor(public subjectService: SubjectService, private snackBar: MatSnackBar, private userService: UserService) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.getCurrentUser();
+    }
+
+    getCurrentUser(): void {
+        this.userService.getUser().subscribe(user => this.currentUser = user);
     }
 
     addSubject(): void {
@@ -64,7 +69,7 @@ export class SubjectDataOperationsSaveFormComponent {
         color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
         if (this.newAbbreviation.value !== null) abbreviation = this.newAbbreviation.value;
         if (this.newRequirement.value !== null) requirement = this.newRequirement.value;
-        return new SubjectDto(name, abbreviation, color, requirement, 1);
+        return new SubjectDto(name, abbreviation, color, requirement, this.currentUser.id!);
     }
 
     getScreenWidth(): number {

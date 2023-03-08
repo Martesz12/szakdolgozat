@@ -126,7 +126,7 @@ export class SubjectDataOperationsUpdateFormComponent {
         color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
         if (this.updatedAbbreviation.value !== null) abbreviation = this.updatedAbbreviation.value;
         if (this.updatedRequirement.value !== null) requirement = this.updatedRequirement.value;
-        return new SubjectDto(name, abbreviation, color, requirement, 1, this.selectedSubject.id);
+        return new SubjectDto(name, abbreviation, color, requirement, this.selectedSubject.userId, this.selectedSubject.id);
     }
 
     getScreenWidth(): number {

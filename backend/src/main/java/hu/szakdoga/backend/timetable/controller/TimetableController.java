@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/timetable")
@@ -31,6 +30,12 @@ public class TimetableController {
     public ResponseEntity<TimetableDTO> getTimetableById(@PathVariable("id") Long id) {
         TimetableDTO timetable = timetableService.findTimetableById(id);
         return new ResponseEntity<>(timetable, HttpStatus.OK);
+    }
+
+    @GetMapping("/findByUserId/{userId}")
+    public ResponseEntity<List<TimetableDTO>> getLessonsByUserIdAndTimetableId(@PathVariable("userId") Long userId) {
+        List<TimetableDTO> timetables = timetableService.findTimetablesByUserId(userId);
+        return new ResponseEntity<>(timetables, HttpStatus.OK);
     }
 
     @PostMapping("/add")
