@@ -1,8 +1,8 @@
 package hu.szakdoga.backend.authentication.controller;
 
-import hu.szakdoga.backend.authentication.config.AuthenticationRequest;
-import hu.szakdoga.backend.authentication.config.AuthenticationResponse;
-import hu.szakdoga.backend.authentication.config.RegisterRequest;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationRequest;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationResponse;
+import hu.szakdoga.backend.authentication.data.model.RegisterRequest;
 import hu.szakdoga.backend.authentication.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

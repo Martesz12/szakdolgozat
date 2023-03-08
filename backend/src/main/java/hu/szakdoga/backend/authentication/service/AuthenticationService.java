@@ -1,9 +1,10 @@
 package hu.szakdoga.backend.authentication.service;
 
-import hu.szakdoga.backend.authentication.config.AuthenticationRequest;
-import hu.szakdoga.backend.authentication.config.AuthenticationResponse;
+import hu.szakdoga.backend.authentication.data.dto.UserDTO;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationRequest;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationResponse;
 import hu.szakdoga.backend.authentication.config.JwtService;
-import hu.szakdoga.backend.authentication.config.RegisterRequest;
+import hu.szakdoga.backend.authentication.data.model.RegisterRequest;
 import hu.szakdoga.backend.authentication.data.model.Role;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import hu.szakdoga.backend.authentication.repository.UserRepository;
@@ -34,6 +35,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .userDto(convertUserEntityToDTO(user))
                 .build();
     }
 
@@ -49,6 +51,18 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .userDto(convertUserEntityToDTO(user))
+                .build();
+    }
+
+    UserDTO convertUserEntityToDTO(UserEntity user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .appUsername(user.getAppUsername())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .role(user.getRole())
                 .build();
     }
 }

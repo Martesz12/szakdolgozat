@@ -1,4 +1,4 @@
-package hu.szakdoga.backend.authentication.config;
+package hu.szakdoga.backend.authentication.data.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

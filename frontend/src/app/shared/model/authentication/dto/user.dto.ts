@@ -1,9 +1,19 @@
-export class UserDto {
-    public readonly id: number | null;
-    public readonly primaryTimetableId: number;
+import { Role } from "../role.enum";
 
-    constructor(primaryTimetableId: number, id: number | null = null) {
+export class UserDto {
+    private readonly id: number | null;
+    private readonly firstname: string;
+    private readonly lastname: string;
+    private readonly appUsername: string;
+    private readonly email: string;
+    private readonly role: Role;
+
+    constructor(id: number | null = null, firstname: string, lastname: string, appUsername: string, email: string, role: Role) {
         this.id = id;
-        this.primaryTimetableId = primaryTimetableId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.appUsername = appUsername;
+        this.email = email;
+        this.role = role;
     }
 }
