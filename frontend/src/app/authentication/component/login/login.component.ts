@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
             let authRequest = this.createAuthenticationRequest();
             this.userService.login(authRequest).subscribe({
                 next: response => {
-                    console.log(response);
+                    console.log(response.userDto.role);
                     this.router.navigateByUrl('timetable/timetable-daily');
                 },
                 error: error => {
@@ -40,8 +40,7 @@ export class LoginComponent implements OnInit {
                         panelClass: ['error-snackbar'],
                     });
                 },
-            }
-            )
+            });
         } else {
             if (this.email.invalid) this.email.markAsTouched();
             if (this.password.invalid) this.password.markAsTouched();

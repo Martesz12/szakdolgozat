@@ -1,9 +1,9 @@
 export class RegisterRequest {
-    private readonly firstname: string;
-    private readonly lastname: string;
-    private readonly appUsername: string;
-    private readonly email: string;
-    private readonly password: string;
+    public readonly firstname: string;
+    public readonly lastname: string;
+    public readonly appUsername: string;
+    public readonly email: string;
+    public readonly password: string;
 
     constructor(firstname: string, lastname: string, appUsername: string, email: string, password: string) {
         this.firstname = firstname;
