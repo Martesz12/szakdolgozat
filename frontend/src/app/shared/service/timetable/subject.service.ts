@@ -42,15 +42,9 @@ export class SubjectService {
     }
 
     getAllSubject() {
-        this.userService
-            .getUser()
-            .pipe(
-                filter(user => !!user),
-                switchMap(user => this.subjectWebService.getSubjectsByUserId(user.id!))
-            )
-            .subscribe(subjects => {
-                this.allSubjectSubject.next(subjects);
-            });
+        this.subjectWebService.getSubjectsByUserId(this.userService.getUserId()).subscribe(subjects => {
+            this.allSubjectSubject.next(subjects);
+        });
     }
 
     getAllSubjectSubject(): Observable<SubjectDto[]> {

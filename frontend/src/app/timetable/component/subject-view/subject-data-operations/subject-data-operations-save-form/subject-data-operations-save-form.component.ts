@@ -14,7 +14,7 @@ import { UserService } from 'src/app/shared/service/user.service';
 })
 export class SubjectDataOperationsSaveFormComponent {
     colorPickerValid: boolean = true;
-    currentUser: UserDto = {} as UserDto;
+    currentUserId: number;
 
     newName = new FormControl('');
     newAbbreviation = new FormControl('');
@@ -23,11 +23,7 @@ export class SubjectDataOperationsSaveFormComponent {
     constructor(public subjectService: SubjectService, private snackBar: MatSnackBar, private userService: UserService) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
-        this.getCurrentUser();
-    }
-
-    getCurrentUser(): void {
-        this.userService.getUser().subscribe(user => this.currentUser = user);
+        this.currentUserId = this.userService.getUserId();
     }
 
     addSubject(): void {
@@ -69,7 +65,7 @@ export class SubjectDataOperationsSaveFormComponent {
         color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
         if (this.newAbbreviation.value !== null) abbreviation = this.newAbbreviation.value;
         if (this.newRequirement.value !== null) requirement = this.newRequirement.value;
-        return new SubjectDto(name, abbreviation, color, requirement, this.currentUser.id!);
+        return new SubjectDto(name, abbreviation, color, requirement, this.currentUserId);
     }
 
     getScreenWidth(): number {

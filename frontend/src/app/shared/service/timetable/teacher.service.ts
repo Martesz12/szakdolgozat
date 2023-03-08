@@ -18,15 +18,9 @@ export class TeacherService {
     }
 
     getAllTeacher() {
-        this.userService
-            .getUser()
-            .pipe(
-                filter(user => !!user),
-                switchMap(user => this.teacherWebService.getTeachersByUserId(user.id!))
-            )
-            .subscribe(teachers => {
-                this.allTeacherSubject.next(teachers);
-            });
+        this.teacherWebService.getTeachersByUserId(this.userService.getUserId()).subscribe(teachers => {
+            this.allTeacherSubject.next(teachers);
+        });
     }
 
     getAllTeacherSubject(): Observable<TeacherDto[]> {

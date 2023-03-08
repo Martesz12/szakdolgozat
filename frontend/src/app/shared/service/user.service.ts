@@ -10,8 +10,8 @@ import { UserDto } from '../model/authentication/dto/user.dto';
     providedIn: 'root',
 })
 export class UserService {
-    userSubject: BehaviorSubject<UserDto> = new BehaviorSubject<UserDto>({} as UserDto);
-    tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    private userId: number = 0;
+    private token: string = '';
 
     constructor(private authenticationWebService: AuthenticationWebService) {}
 
@@ -24,18 +24,18 @@ export class UserService {
     }
 
     setToken(token: string): void {
-        this.tokenSubject.next(token);
+        this.token = token;
     }
 
-    getToken(): Observable<string> {
-        return this.tokenSubject.asObservable();
+    getToken(): string {
+        return this.token;
     }
 
-    setUser(user: UserDto): void {
-        this.userSubject.next(user);
+    setUserId(userId: number): void {
+        this.userId = userId;
     }
 
-    getUser(): Observable<UserDto> {
-        return this.userSubject.asObservable();
+    getUserId(): number {
+        return this.userId
     }
 }

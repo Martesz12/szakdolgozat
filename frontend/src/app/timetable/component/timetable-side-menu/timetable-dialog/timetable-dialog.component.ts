@@ -25,7 +25,7 @@ export class TimetableDialogComponent {
     timetableName = new FormControl('', Validators.required);
     editedTimetables: Map<number, string> = new Map<number, string>();
     selectedTimetableId: number = 0;
-    currentUser: UserDto = {} as UserDto;
+    currentUserId: number;
 
     constructor(
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
@@ -39,22 +39,15 @@ export class TimetableDialogComponent {
         private teacherService: TeacherService,
         private userService: UserService
     ) {
-        this.getCurrentUserAndTimetable();
+        this.getTimetables();
         this.getSelectedTimetableId();
+        this.currentUserId = this.userService.getUserId();
     }
 
-    getCurrentUserAndTimetable(): void {
-        this.userService
-            .getUser()
-            .pipe(
-                switchMap(user => {
-                    this.currentUser = user;
-                    return this.timetableService.getAllTimetableSubject();
-                })
-            )
-            .subscribe(timetables => {
-                if (timetables.length === 0) this.addTimetable();
-            });
+    getTimetables(): void {
+        this.timetableService.getAllTimetableSubject().subscribe(timetables => {
+            if (timetables.length === 0) this.addTimetable();
+        });
     }
 
     getSelectedTimetableId() {
@@ -68,7 +61,7 @@ export class TimetableDialogComponent {
     }
 
     addTimetable(): void {
-        let timetable: TimetableDto = new TimetableDto('Új órarend', this.currentUser.id!);
+        let timetable: TimetableDto = new TimetableDto('Új órarend', this.currentUserId);
         this.timetableService.addTimetable(timetable).subscribe({
             next: newTimetable => {
                 this.timetableService.getAllTimetable();

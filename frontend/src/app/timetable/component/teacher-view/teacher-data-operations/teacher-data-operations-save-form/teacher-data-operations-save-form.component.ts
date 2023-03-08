@@ -18,18 +18,14 @@ export class TeacherDataOperationsSaveFormComponent {
     newWebpage = new FormControl('');
     newOffice = new FormControl('');
     newMoreInformation = new FormControl('');
-    currentUser: UserDto = {} as UserDto;
+    currentUserId: number;
 
     constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private userService: UserService) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newEmail?.addValidators(Validators.maxLength(255));
         this.newWebpage?.addValidators(Validators.maxLength(255));
         this.newOffice?.addValidators(Validators.maxLength(255));
-        this.getCurrentUser();
-    }
-
-    getCurrentUser(): void {
-        this.userService.getUser().subscribe(user => this.currentUser = user);
+        this.currentUserId = this.userService.getUserId();
     }
 
     addTeacher(): void {
@@ -75,7 +71,7 @@ export class TeacherDataOperationsSaveFormComponent {
         if (this.newEmail.value !== null) email = this.newEmail.value;
         if (this.newOffice.value !== null) office = this.newOffice.value;
         if (this.newMoreInformation.value !== null) moreInformation = this.newMoreInformation.value;
-        return new TeacherDto(name, webpage, email, this.currentUser.id!, office, moreInformation);
+        return new TeacherDto(name, webpage, email, this.currentUserId, office, moreInformation);
     }
 
     getScreenWidth(): number {

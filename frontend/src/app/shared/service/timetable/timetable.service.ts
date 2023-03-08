@@ -16,15 +16,9 @@ export class TimetableService {
     }
 
     getAllTimetable() {
-        this.userService
-            .getUser()
-            .pipe(
-                filter(user => !!user),
-                switchMap(user => this.timetableWebService.getTimetablesByUserId(user.id!))
-            )
-            .subscribe(timetables => {
-                this.allTimetableSubject.next(timetables);
-            });
+        this.timetableWebService.getTimetablesByUserId(this.userService.getUserId()).subscribe(timetables => {
+            this.allTimetableSubject.next(timetables);
+        });
     }
 
     getAllTimetableSubject(): Observable<TimetableDto[]> {
