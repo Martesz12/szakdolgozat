@@ -11,31 +11,39 @@
                     <mat-label>Vezetéknév</mat-label>
                     <input matInput type="text" [formControl]="lastname" />
                     <mat-error *ngIf="lastname.hasError('required')">Vezetéknév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="lastname.hasError('maxlength')">Vezetéknév nem lehet hosszabb 255 karakternél!</mat-error>
                 </mat-form-field>
                 <mat-form-field class="register-form-field" appearance="outline">
                     <mat-label>Keresztnév</mat-label>
                     <input matInput type="text" [formControl]="firstname" />
                     <mat-error *ngIf="firstname.hasError('required')">Keresztnév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="firstname.hasError('maxlength')">Keresztnév nem lehet hosszabb 255 karakternél!</mat-error>
                 </mat-form-field>
                 <mat-form-field class="register-form-field" appearance="outline">
                     <mat-label>Felhasználónév</mat-label>
                     <input matInput type="text" [formControl]="username" />
                     <mat-error *ngIf="username.hasError('required')">Felhasználónév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="username.hasError('maxlength')">Felhasználónév nem lehet hosszabb 255 karakternél!</mat-error>
                 </mat-form-field>
                 <mat-form-field class="register-form-field" appearance="outline">
                     <mat-label>Email cím</mat-label>
                     <input matInput type="text" [formControl]="email" />
                     <mat-error *ngIf="email.hasError('required')">Email cím megadása kötelező!</mat-error>
+                    <mat-error *ngIf="email.hasError('maxlength')">Email cím nem lehet hosszabb 255 karakternél!</mat-error>
+                    <mat-error *ngIf="email.hasError('email')">Rossz email formátum</mat-error>
                 </mat-form-field>
                 <mat-form-field class="register-form-field" appearance="outline">
                     <mat-label>Jelszó</mat-label>
                     <input matInput type="password" [formControl]="password" />
                     <mat-error *ngIf="password.hasError('required')">Jelszó megadása kötelező!</mat-error>
+                    <mat-error *ngIf="password.hasError('maxlength')">Jelszó nem lehet hosszabb 255 karakternél!</mat-error>
                 </mat-form-field>
                 <mat-form-field class="register-form-field" appearance="outline">
                     <mat-label>Jelszó újra</mat-label>
                     <input matInput type="password" [formControl]="passwordAgain" />
                     <mat-error *ngIf="passwordAgain.hasError('required')">Jelszó megadása kötelező!</mat-error>
+                    <mat-error *ngIf="passwordAgain.hasError('maxlength')">Jelszó nem lehet hosszabb 255 karakternél!</mat-error>
+                    <mat-error *ngIf="passwordAgain.hasError('passwordsAreEqual')">A két jelszó nem egyezik!</mat-error>
                 </mat-form-field>
             </form>
 

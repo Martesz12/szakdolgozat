@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/shared/model/authentication/register-request';
@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
     firstname = new FormControl('');
     lastname = new FormControl('');
     username = new FormControl('');
+    arePasswordsEqual: boolean = true;
 
     constructor(private userService: UserService, private snackBar: MatSnackBar, private router: Router) {}
 
@@ -25,12 +26,12 @@ export class RegisterComponent implements OnInit {
     }
 
     addValidators(): void {
-        this.email?.addValidators(Validators.required);
-        this.password?.addValidators(Validators.required);
-        this.passwordAgain?.addValidators(Validators.required);
-        this.firstname?.addValidators(Validators.required);
-        this.lastname?.addValidators(Validators.required);
-        this.username?.addValidators(Validators.required);
+        this.email?.addValidators([Validators.required, Validators.maxLength(255), Validators.email]);
+        this.password?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.passwordAgain?.addValidators([Validators.required, Validators.maxLength(255), this.passwrodsEqualValidator()]);
+        this.firstname?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.lastname?.addValidators([Validators.required, Validators.maxLength(255)]);
+        this.username?.addValidators([Validators.required, Validators.maxLength(255)]);
     }
 
     register(): void {
@@ -78,5 +79,13 @@ export class RegisterComponent implements OnInit {
             this.email.value!,
             this.password.value!
         );
+    }
+
+    passwrodsEqualValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+                return this.password.value === this.passwordAgain.value
+                    ? null
+                    : { passwordsAreEqual: { value: control.value } };
+        };
     }
 }
