@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthenticationRequest } from 'src/app/shared/model/authentication/authentication-request';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
     selector: 'app-login',
@@ -10,7 +14,7 @@ export class LoginComponent implements OnInit {
     email = new FormControl('');
     password = new FormControl('');
 
-    constructor() {}
+    constructor(private userService: UserService, private snackBar: MatSnackBar, private router: Router) {}
 
     ngOnInit(): void {
         this.addValidators();
@@ -23,14 +27,28 @@ export class LoginComponent implements OnInit {
 
     login(): void {
         if (this.email.valid && this.password.valid) {
-            let user = this.createUser();
+            let authRequest = this.createAuthenticationRequest();
+            this.userService.login(authRequest).subscribe({
+                next: response => {
+                    console.log(response);
+                    this.router.navigateByUrl('timetable/timetable-daily');
+                },
+                error: error => {
+                    this.snackBar.open('Hiba bejelentkezés során: ' + error, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    });
+                },
+            }
+            )
         } else {
             if (this.email.invalid) this.email.markAsTouched();
             if (this.password.invalid) this.password.markAsTouched();
         }
     }
 
-    createUser(): void {
-
+    createAuthenticationRequest(): AuthenticationRequest {
+        return new AuthenticationRequest(this.email.value!, this.password.value!);
     }
 }

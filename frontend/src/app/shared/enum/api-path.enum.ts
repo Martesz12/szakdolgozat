@@ -7,4 +7,6 @@ export enum ApiPath {
     Add = 'add',
     Update = 'update',
     Delete = 'delete',
+    Register = 'register',
+    Authenticate = 'authenticate'
 }

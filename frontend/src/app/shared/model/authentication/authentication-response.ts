@@ -6,6 +6,6 @@ export class AuthenticationResponse {
 
     constructor(token: string, userDto: UserDto) {
         this.token = token;
-        this.userDto = {...userDto};
+        this.userDto = userDto;
     }
 }
