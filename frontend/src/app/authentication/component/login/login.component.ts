@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
             let authRequest = this.createAuthenticationRequest();
             this.userService.login(authRequest).subscribe({
                 next: response => {
-                    console.log(response.userDto.role);
+                    this.userService.setUser(response.userDto);
+                    this.userService.setToken(response.token);
                     this.router.navigateByUrl('timetable/timetable-daily');
                 },
                 error: error => {
