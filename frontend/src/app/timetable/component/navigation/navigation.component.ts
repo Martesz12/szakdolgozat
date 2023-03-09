@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 
 export const drawerModes = ['side', 'over'] as const;
 export type DrawerModes = typeof drawerModes[number];
@@ -12,7 +13,7 @@ export type DrawerModes = typeof drawerModes[number];
 export class NavigationComponent implements OnInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private router: Router) {
         this.renderer.listen('window', 'resize', this.scrollEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
@@ -39,4 +40,10 @@ export class NavigationComponent implements OnInit {
             this.drawerMode = 'side';
         }
     };
+
+    onLogoutClick(): void {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('authentication/login');
+    }
 }

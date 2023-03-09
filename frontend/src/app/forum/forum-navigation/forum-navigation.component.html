@@ -31,7 +31,7 @@
             <div fxLayout fxLayoutGap="20px" class="navigation-items navigation-main-font">
                 <div routerLink="/timetable" class="navigation-item">Órarend</div>
                 <div routerLink="/forum" class="navigation-item">Fórum</div>
-                <div class="navigation-item">Kijelentkezés</div>
+                <div (click)="onLogoutClick()" class="navigation-item">Kijelentkezés</div>
             </div>
         </div>
     </mat-toolbar>
@@ -39,15 +39,15 @@
     <mat-drawer-container fxFlex>
         <mat-drawer #drawer [mode]="drawerMode" [opened]="!isInMobileView()">
             <mat-nav-list fxHide fxShow.xs class="navigation-main-font">
-                <div mat-list-item class="drawer-element">
+                <div routerLink="/timetable" mat-list-item class="drawer-element">
                     <mat-icon class="mr-5">today</mat-icon>
                     <span>Órarend</span>
                 </div>
-                <div mat-list-item class="drawer-element">
+                <div routerLink="/forum" mat-list-item class="drawer-element">
                     <mat-icon class="mr-5">forum</mat-icon>
                     <span>Fórum</span>
                 </div>
-                <div mat-list-item class="drawer-element">
+                <div (click)="onLogoutClick()" mat-list-item class="drawer-element">
                     <mat-icon class="mr-5">logout</mat-icon>
                     <span>Kijelentkezés</span>
                 </div>
