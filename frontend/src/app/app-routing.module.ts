@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavigationComponent } from './timetable/component/navigation/navigation.component';
+import { AuthGuardService as AuthGuard } from './shared/service/auth-guard.service';
 
 const routes: Routes = [
     {
@@ -11,8 +12,8 @@ const routes: Routes = [
     {
         path: 'timetable',
         loadChildren: () => import('./timetable/timetable.module').then(m => m.TimetableModule),
-        component: NavigationComponent
-        // canLoad: [AuthGuard],
+        component: NavigationComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: '',
