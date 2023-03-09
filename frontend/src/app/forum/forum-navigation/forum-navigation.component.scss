@@ -1,0 +1,56 @@
+// *********** Toolbar classes ***********
+.mat-toolbar {
+    z-index: 10;
+    padding: 0px;
+}
+
+.navigation-items {
+    padding: 20px;
+}
+
+.navigation-item:hover,
+.navigation-item:active{
+    color: var(--neutral200);
+    cursor: pointer;
+}
+
+// *********** Drawer classes ***********
+
+.drawer-element {
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.drawer-element:hover,
+.drawer-element:active {
+    color: var(--primary100);
+    background-color: var(--neutral200);
+    cursor: pointer;
+}
+
+// *********** Main page classes ***********
+
+.side-menu-border {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    width: 190px;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+}
+
+.main-page{
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}

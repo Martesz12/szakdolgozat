@@ -6,10 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { TimetableModule } from './timetable/timetable.module';
-import { ToolbarComponent } from './component/toolbar/toolbar.component';
 
 @NgModule({
-    declarations: [AppComponent, ToolbarComponent],
+    declarations: [AppComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, SharedModule, TimetableModule],
     providers: [],
     bootstrap: [AppComponent],
