@@ -1,2 +1,1 @@
-TODO tokent beépíteni a web-service-k be
-TODO Authguard
+TODO logout videó alapján
