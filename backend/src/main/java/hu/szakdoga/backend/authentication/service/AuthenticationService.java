@@ -7,7 +7,10 @@ import hu.szakdoga.backend.authentication.config.JwtService;
 import hu.szakdoga.backend.authentication.data.model.RegisterRequest;
 import hu.szakdoga.backend.authentication.data.model.Role;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
+import hu.szakdoga.backend.authentication.repository.TokenRepository;
 import hu.szakdoga.backend.authentication.repository.UserRepository;
+import hu.szakdoga.backend.authentication.token.Token;
+import hu.szakdoga.backend.authentication.token.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -31,8 +36,9 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        userRepository.save(user);
+        var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .userDto(convertUserEntityToDTO(user))
@@ -49,10 +55,34 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .userDto(convertUserEntityToDTO(user))
                 .build();
+    }
+
+    private void revokeAllUserTokens(UserEntity user) {
+        var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
+        if(validUserTokens.isEmpty()) return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
+
+    }
+
+    private void saveUserToken(UserEntity savedUser, String jwtToken) {
+        var token = Token.builder()
+                .user(savedUser)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .revoked(false)
+                .expired(false)
+                .build();
+        tokenRepository.save(token);
     }
 
     UserDTO convertUserEntityToDTO(UserEntity user) {

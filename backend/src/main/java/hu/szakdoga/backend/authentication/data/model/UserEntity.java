@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.authentication.data.model;
 
+import hu.szakdoga.backend.authentication.token.Token;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +43,9 @@ public class UserEntity implements Serializable, UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
 //    @Column(nullable = false)
 //    private Long primaryTimetableId;

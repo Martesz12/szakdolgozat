@@ -1,5 +1,6 @@
 package hu.szakdoga.backend.authentication.config;
 
+import hu.szakdoga.backend.authentication.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -41,7 +43,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
        userEmail = this.jwtService.extractUsername(jwtToken);
        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-           if (jwtService.isTokenValid(jwtToken, userDetails)) {
+           var isTokenValid = tokenRepository.findByToken(jwtToken)
+                   .map(token -> !token.isExpired() && !token.isRevoked())
+                   .orElse(false);
+           if (jwtService.isTokenValid(jwtToken, userDetails) && isTokenValid) {
                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                        userDetails,
                        null,
