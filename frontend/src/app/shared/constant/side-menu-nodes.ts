@@ -9,12 +9,15 @@ export class SideMenuNodes {
                 {
                     id: 11,
                     name: 'Napi nézet',
+                    url: 'timetable-daily'
                 },
                 {
                     id: 12,
                     name: 'Heti nézet',
+                    url: 'timetable-weekly'
                 },
             ],
+            url: ''
         },
         {
             id: 2,
@@ -23,16 +26,20 @@ export class SideMenuNodes {
                 {
                     id: 21,
                     name: 'Tantárgyak',
+                    url: 'subject'
                 },
                 {
                     id: 22,
                     name: 'Tanárok',
+                    url: 'teacher'
                 },
                 {
                     id: 23,
                     name: 'Tanórák',
+                    url: 'lesson'
                 },
             ],
+            url: ''
         },
         {
             id: 3,
@@ -41,12 +48,15 @@ export class SideMenuNodes {
                 {
                     id: 31,
                     name: 'Lista nézet',
+                    url: 'agenda-list'
                 },
                 {
                     id: 32,
                     name: 'Havi nézet',
+                    url: 'agenda-monthly'
                 },
             ],
+            url: ''
         },
     ];
 }

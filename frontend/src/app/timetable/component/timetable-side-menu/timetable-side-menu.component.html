@@ -27,9 +27,9 @@
     <mat-tree-node
         *matTreeNodeDef="let node"
         matTreeNodeToggle
-        [ngClass]="selectedMenuElement === node.id ? 'selected-leaf-node' : ''"
-        (click)="onMenuElementSelected(node.id)"
+        [ngClass]="router.url.includes(node.url) ? 'selected-leaf-node' : ''"
         class="content-font"
+        [routerLink]="node.url"
     >
         <div>
             {{ node.name }}

@@ -1,1 +1,2 @@
-TODO logout videó alapján
+TODO routing timetab-nél az újratöltés miatt
+TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet

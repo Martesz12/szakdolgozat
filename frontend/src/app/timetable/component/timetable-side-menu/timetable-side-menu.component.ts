@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { SideMenuNodes } from 'src/app/shared/constant/side-menu-nodes';
 import { TimetableDto } from 'src/app/shared/model/timetable/dto/timetable.dto';
 import { TimetableSideMenuNode } from 'src/app/shared/model/timetable/timetable-side-menu-node';
-import { NavigationService } from 'src/app/shared/service/navigation/navigation.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 import { TimetableDialogComponent } from './timetable-dialog/timetable-dialog.component';
 
@@ -27,17 +26,15 @@ export class TimetableSideMenuComponent {
     @ViewChild('timetableSelect') timetableSelect!: MatSelect;
 
     constructor(
-        private router: Router,
-        private navigationService: NavigationService,
+        public router: Router,
         public timetableService: TimetableService,
         private dialog: MatDialog
     ) {
         this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
         this.treeControl.dataNodes = this.dataSource.data;
-        this.navigationService.selectedTimetableMenuElement.subscribe(id => (this.selectedMenuElement = id));
         this.treeControl.expandAll();
         this.getSelectedTimetableId();
-        this.onMenuElementSelected(12);
+        this.router.navigateByUrl(this.router.url);
     }
 
     getSelectedTimetableId(): void {
@@ -47,17 +44,6 @@ export class TimetableSideMenuComponent {
     }
 
     hasChild = (_: number, node: TimetableSideMenuNode) => !!node.children && node.children.length > 0;
-
-    onMenuElementSelected(menuElementId: number): void {
-        this.navigationService.setSelectedTimetableMenuElement(menuElementId);
-        if (menuElementId === 11) this.router.navigateByUrl('timetable/timetable-daily');
-        else if (menuElementId === 12) this.router.navigateByUrl('timetable/timetable-weekly');
-        else if (menuElementId === 21) this.router.navigateByUrl('timetable/subject');
-        else if (menuElementId === 22) this.router.navigateByUrl('timetable/teacher');
-        else if (menuElementId === 23) this.router.navigateByUrl('timetable/lesson');
-        else if (menuElementId === 31) this.router.navigateByUrl('timetable/agenda-list');
-        else if (menuElementId === 32) this.router.navigateByUrl('timetable/agenda-monthly');
-    }
 
     onEditTimetableClicked(): void {
         this.timetableSelect.close()
