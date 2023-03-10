@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatCard } from '@angular/material/card';
 import { switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
@@ -50,10 +51,18 @@ export class TimetableWeeklyViewComponent {
     allLesson: LessonDto[] = [];
     subjectIdNameMap: Map<number, SubjectDto> = new Map<number, SubjectDto>();
 
+    mouseDown: boolean = false;
+
+    startX: number = 0;
+    startY: number = 0;
+
+    scrollLeft: number = 0;
+    scrollTop: number = 0;
+
     constructor(
         private timetableService: TimetableService,
         private lessonService: LessonService,
-        private subjectService: SubjectService,
+        private subjectService: SubjectService
     ) {
         this.getAllLesson();
         this.getSelecterTimetableId();
@@ -83,7 +92,7 @@ export class TimetableWeeklyViewComponent {
     getTopStyle(lesson: LessonDto): string {
         let hour: number = +lesson.startTime.split(':')[0];
         let minute: number = +lesson.startTime.split(':')[1];
-        return (65 + hour * 50 + Math.floor((minute / 60) * 50) - 6*50).toString();
+        return (65 + hour * 50 + Math.floor((minute / 60) * 50) - 6 * 50).toString();
     }
 
     getLeftStyle(lesson: LessonDto): string {
@@ -95,12 +104,39 @@ export class TimetableWeeklyViewComponent {
     }
 
     getHeightStyle(lesson: LessonDto): string {
-        let hour: number = (+lesson.endTime.split(':')[0]) - (+lesson.startTime.split(':')[0]);
+        let hour: number = +lesson.endTime.split(':')[0] - +lesson.startTime.split(':')[0];
         let minute: number = 0;
-        if(hour === 0) minute = (+lesson.endTime.split(':')[1]) - (+lesson.startTime.split(':')[1]);
-        else if(hour > 0 && (+lesson.endTime.split(':')[1]) - (+lesson.startTime.split(':')[1]) === 0) minute = 0;
-        else minute = (60 - (+lesson.startTime.split(':')[1])) + (+lesson.endTime.split(':')[1]) - 60;
-        
+        if (hour === 0) minute = +lesson.endTime.split(':')[1] - +lesson.startTime.split(':')[1];
+        else if (hour > 0 && +lesson.endTime.split(':')[1] - +lesson.startTime.split(':')[1] === 0) minute = 0;
+        else minute = 60 - +lesson.startTime.split(':')[1] + +lesson.endTime.split(':')[1] - 60;
+
         return (hour * 50 + Math.floor((minute / 60) * 50)).toString();
+    }
+
+    startDragging(e: MouseEvent, el: HTMLDivElement) {
+        this.mouseDown = true;
+        this.startX = e.pageX - el.offsetLeft;
+        this.scrollLeft = el.scrollLeft;
+
+        this.startY = e.pageY - el.offsetTop;
+        this.scrollTop = el.scrollTop;
+    }
+
+    stopDragging() {
+        this.mouseDown = false;
+    }
+
+    moveEvent(e: MouseEvent, el: HTMLDivElement) {
+        e.preventDefault();
+        if (!this.mouseDown) {
+            return;
+        }
+        const x = e.pageX - el.offsetLeft;
+        const scrollUp = x - this.startX;
+        el.scrollLeft = this.scrollLeft - scrollUp;
+
+        const y = e.pageY - el.offsetTop;
+        const scrollDown = y - this.startY;
+        el.scrollTop = this.scrollTop - scrollDown;
     }
 }

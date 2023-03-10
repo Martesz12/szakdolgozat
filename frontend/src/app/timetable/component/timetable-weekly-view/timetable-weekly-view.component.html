@@ -1,8 +1,15 @@
 <div class="timetable-weekly-view">
-    <mat-card class="mat-elevation-z4 timetable-weekly-view-card">
+    <div
+        #elemt
+        (mousedown)="startDragging($event, elemt)"
+        (mouseup)="stopDragging()"
+        (mouseleave)="stopDragging()"
+        (mousemove)="moveEvent($event, elemt)"
+        class="mat-elevation-z4 timetable-weekly-view-card"
+    >
         <div class="timetable-container">
             <table>
-                <tr style="position: sticky">
+                <tr>
                     <td *ngFor="let day of WEEK_DAYS; let i = index" class="week-day-cell navigation-secondary-font">
                         <ng-container *ngIf="i === 0" class="day-time-cell timetable-icon"
                             ><mat-icon>date_range</mat-icon></ng-container
@@ -30,5 +37,5 @@
                 <div class="content-font content-overflow">{{ subjectIdNameMap.get(lesson.subjectId)!.name }}</div>
             </div>
         </div>
-    </mat-card>
+    </div>
 </div>
