@@ -139,7 +139,7 @@ export class TimetableDialogComponent {
         if (timetableId)
             this.timetableService.deleteTimetable(timetableId).subscribe({
                 next: _ => {
-                    this.timetableService.resetTimetableState(true);
+                    this.timetableService.getAllTimetable();
                     this.teacherService.resetTeacherState(true);
                     this.subjectService.resetSubjectState(true);
                     this.lessonService.resetLessonState(true);

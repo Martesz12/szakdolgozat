@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
@@ -16,7 +16,7 @@ import { TimetableDialogComponent } from './timetable-dialog/timetable-dialog.co
     templateUrl: './timetable-side-menu.component.html',
     styleUrls: ['./timetable-side-menu.component.scss'],
 })
-export class TimetableSideMenuComponent {
+export class TimetableSideMenuComponent implements OnDestroy{
     treeControl = new NestedTreeControl<TimetableSideMenuNode>(node => node.children);
     dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
     selectedMenuElement: number = 0;
@@ -32,6 +32,10 @@ export class TimetableSideMenuComponent {
         this.getSelectedTimetableId();
         this.router.navigateByUrl(this.router.url);
     }
+
+    ngOnDestroy(): void {
+        this.timetableService.resetTimetableState();
+    } 
 
     getSelectedTimetableId(): void {
         this.timetableService

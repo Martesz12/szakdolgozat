@@ -50,6 +50,7 @@ export class TimetableService {
     }
 
     resetTimetableState(afterDelete: boolean = false): void {
+        this.setSelectedTimetableId(0);
         if (afterDelete) this.getAllTimetable();
     }
 }
