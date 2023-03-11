@@ -146,7 +146,6 @@ export class TimetableDialogComponent {
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
                     this.editedTimetables.delete(timetableId);
-                    if (this.selectedTimetableId === timetableId) this.timetableService.setSelectedTimetableId(0);
                     this.snackBar.open('Órarend törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',

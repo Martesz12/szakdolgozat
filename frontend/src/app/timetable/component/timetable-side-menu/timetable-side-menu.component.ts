@@ -25,11 +25,7 @@ export class TimetableSideMenuComponent {
 
     @ViewChild('timetableSelect') timetableSelect!: MatSelect;
 
-    constructor(
-        public router: Router,
-        public timetableService: TimetableService,
-        private dialog: MatDialog
-    ) {
+    constructor(public router: Router, public timetableService: TimetableService, private dialog: MatDialog) {
         this.dataSource.data = SideMenuNodes.TimetableSideMenuNodes;
         this.treeControl.dataNodes = this.dataSource.data;
         this.treeControl.expandAll();
@@ -46,15 +42,16 @@ export class TimetableSideMenuComponent {
     hasChild = (_: number, node: TimetableSideMenuNode) => !!node.children && node.children.length > 0;
 
     onEditTimetableClicked(): void {
-        this.timetableSelect.close()
+        this.timetableSelect.close();
         this.dialog.open(TimetableDialogComponent, {
             height: '500px',
             width: '400px',
             disableClose: true,
-          });
+        });
     }
 
     onTimetableSelected(selectChangeEvent: MatSelectChange): void {
         this.timetableService.setSelectedTimetableId(selectChangeEvent.value);
+        localStorage.setItem('selectedTimetableId', selectChangeEvent.value);
     }
 }

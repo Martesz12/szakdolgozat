@@ -27,8 +27,7 @@ export class UserService {
     logout(): void {
         this.authenticationWebService.logout().subscribe({
             next: (_) => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                localStorage.clear();
                 this.router.navigateByUrl('authentication/login');
             }
         });;

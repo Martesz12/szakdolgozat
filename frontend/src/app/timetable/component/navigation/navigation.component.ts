@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 import { UserService } from 'src/app/shared/service/user.service';
 
 export const drawerModes = ['side', 'over'] as const;
@@ -13,12 +14,19 @@ export type DrawerModes = typeof drawerModes[number];
 export class NavigationComponent implements OnInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
-    constructor(private renderer: Renderer2, private userService: UserService) {
+    constructor(
+        private renderer: Renderer2,
+        private userService: UserService,
+        private timetableService: TimetableService
+    ) {
         this.renderer.listen('window', 'resize', this.scrollEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        let timetableId = localStorage.getItem('selectedTimetableId');
+        if (timetableId) this.timetableService.setSelectedTimetableId(+timetableId);
+    }
 
     onToggleSidenav(sidenav: MatSidenav) {
         sidenav.toggle();
