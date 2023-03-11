@@ -13,10 +13,7 @@ export class MainTaskService {
     selectedMainTaskSubject: BehaviorSubject<MainTaskDto> = new BehaviorSubject<MainTaskDto>({} as MainTaskDto);
     mainTaskDataOperationPageState: DataOperationPageState = DataOperationPageState.Base;
 
-    constructor(
-        private mainTaskWebService: MainTaskWebService,
-        private lessonService: LessonService
-    ) {
+    constructor(private mainTaskWebService: MainTaskWebService, private lessonService: LessonService) {
         this.getMainTasksByLessonIds();
     }
 
@@ -80,6 +77,6 @@ export class MainTaskService {
     resetMainTaskState(afterDelete: boolean = false): void {
         this.removeSelectedMainTask();
         this.setMainTaskDataOperationPageState(DataOperationPageState.Base);
-        if(afterDelete) this.getMainTasksByLessonIds();
+        if (afterDelete) this.getMainTasksByLessonIds();
     }
 }

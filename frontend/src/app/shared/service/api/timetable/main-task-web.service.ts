@@ -52,7 +52,7 @@ export class MainTaskWebService {
 
     createHeader(): HttpHeaders {
         return new HttpHeaders({
-            'Authorization': `Bearer ${this.userService.getToken()}`,
-          })
+            Authorization: `Bearer ${this.userService.getToken()}`,
+        });
     }
 }

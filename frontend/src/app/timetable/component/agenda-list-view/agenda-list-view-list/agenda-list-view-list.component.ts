@@ -40,7 +40,7 @@ export class AgendaListViewListComponent {
         private timetableService: TimetableService,
         private subTaskService: SubTaskService,
         private lessonService: LessonService,
-        private subjectService: SubjectService,
+        private subjectService: SubjectService
     ) {
         this.getAllMainTask();
         this.getAllSubTask();
@@ -49,19 +49,23 @@ export class AgendaListViewListComponent {
     }
 
     getAllMainTask(): void {
-        this.mainTaskService.getAllMainTaskSubject().pipe(
-            switchMap(mainTasks => {
-                this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
-                this.filteredMainTasks = this.mainTasks.filter(mainTask => this.filteredTypes.includes(mainTask.type));
-                this.fulfilledMainTasks = mainTasks.filter(mainTask => mainTask.fulfilled);
-                return this.lessonService.getAllLessonSubject();
-            }),
-            switchMap(lessons => {
-                this.allLesson = lessons;
-                return this.subjectService.getAllSubjectSubject();
-            }),
-        )
-        .subscribe(subject => (this.allSubject = subject))
+        this.mainTaskService
+            .getAllMainTaskSubject()
+            .pipe(
+                switchMap(mainTasks => {
+                    this.mainTasks = mainTasks.filter(mainTask => !mainTask.fulfilled);
+                    this.filteredMainTasks = this.mainTasks.filter(mainTask =>
+                        this.filteredTypes.includes(mainTask.type)
+                    );
+                    this.fulfilledMainTasks = mainTasks.filter(mainTask => mainTask.fulfilled);
+                    return this.lessonService.getAllLessonSubject();
+                }),
+                switchMap(lessons => {
+                    this.allLesson = lessons;
+                    return this.subjectService.getAllSubjectSubject();
+                })
+            )
+            .subscribe(subject => (this.allSubject = subject));
     }
 
     getAllSubTask(): void {
@@ -291,7 +295,7 @@ export class AgendaListViewListComponent {
     deleteAllFulfilledMainTask(): void {
         this.fulfilledMainTasks.forEach(mainTask => {
             this.deleteMainTask(mainTask.id);
-        })
+        });
     }
 
     checkMainTask(event$: any, mainTask: MainTaskDto): void {
@@ -315,11 +319,11 @@ export class AgendaListViewListComponent {
                     verticalPosition: 'bottom',
                     panelClass: ['error-snackbar'],
                 }),
-        })
+        });
     }
 
     sortByDate(mainTasks: MainTaskDto[]): MainTaskDto[] {
-        return mainTasks.sort((a,b) => (a.deadline > b.deadline) ? 1 : ((b.deadline > a.deadline) ? -1 : 0));
+        return mainTasks.sort((a, b) => (a.deadline > b.deadline ? 1 : b.deadline > a.deadline ? -1 : 0));
     }
 
     getSubjectName(lessonId: number): string {

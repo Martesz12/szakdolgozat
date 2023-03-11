@@ -126,7 +126,8 @@ export class LessonDataOperationsUpdateFormComponent {
     openDeleteDialog(LessonId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tanóra törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanóra törlése magával vonja az összes hozzá tartozó feladat törlését.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanóra törlése magával vonja az összes hozzá tartozó feladat törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
@@ -190,7 +191,17 @@ export class LessonDataOperationsUpdateFormComponent {
         if (this.updatedLocation.value !== null) location = this.updatedLocation.value;
         if (this.updatedSubjectId.value !== null) subjectId = +this.updatedSubjectId.value;
         if (this.updatedTeacherId.value !== null) teacherId = +this.updatedTeacherId.value;
-        return new LessonDto(day, startTime, endTime, location, type, subjectId, this.selectedLesson.timetableId, teacherId, this.selectedLesson.id);
+        return new LessonDto(
+            day,
+            startTime,
+            endTime,
+            location,
+            type,
+            subjectId,
+            this.selectedLesson.timetableId,
+            teacherId,
+            this.selectedLesson.id
+        );
     }
 
     getScreenWidth(): number {

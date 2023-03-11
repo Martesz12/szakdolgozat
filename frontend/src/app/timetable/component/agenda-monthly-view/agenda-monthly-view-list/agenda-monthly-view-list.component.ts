@@ -31,7 +31,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
         private subTaskService: SubTaskService,
         private lessonService: LessonService,
         private subjectService: SubjectService,
-        private snackBar: MatSnackBar,
+        private snackBar: MatSnackBar
     ) {
         this.getAllMainTask();
         this.getAllSubTask();
@@ -41,7 +41,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
         this.reloadTaskList();
     }
 
-    backToCalendarView(){
+    backToCalendarView() {
         this.backToCalendarViewEvent.emit(this.selectedDayDate);
     }
 
@@ -50,7 +50,10 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
             this.currentDate = new Date(this.selectedDayDate);
             this.filteredMainTasks = this.allMainTask.filter(mainTask => {
                 let mainTaskDate = new Date(mainTask.deadline);
-                return this.selectedDayDate === new Date(mainTaskDate.getFullYear(), mainTaskDate.getMonth(), mainTaskDate.getDate()).getTime();
+                return (
+                    this.selectedDayDate ===
+                    new Date(mainTaskDate.getFullYear(), mainTaskDate.getMonth(), mainTaskDate.getDate()).getTime()
+                );
             });
         }
     }
@@ -130,7 +133,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
                     verticalPosition: 'bottom',
                     panelClass: ['error-snackbar'],
                 }),
-        })
+        });
     }
 
     checkSubTask(subTask: SubTaskDto): void {

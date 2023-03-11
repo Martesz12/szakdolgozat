@@ -10,7 +10,7 @@
             <mat-label>Tanóra</mat-label>
             <mat-select [formControl]="newLesson" disableOptionCentering>
                 <mat-option *ngFor="let lesson of allLesson$ | async" [value]="lesson.id">
-                    {{ getSubjectName(lesson.subjectId) + " - " + lesson.type }}
+                    {{ getSubjectName(lesson.subjectId) + ' - ' + lesson.type }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -20,9 +20,13 @@
             <mat-error *ngIf="newName.hasError('required')">Név megadása kötelező!</mat-error>
             <mat-error *ngIf="newName.hasError('maxlength')">Név nem lehet hosszabb 255 karakternél!</mat-error>
         </mat-form-field>
-        <mat-form-field class="form-field-full-width form-field-datepicker" appearance="outline" (click)="picker.open()">
+        <mat-form-field
+            class="form-field-full-width form-field-datepicker"
+            appearance="outline"
+            (click)="picker.open()"
+        >
             <mat-label>Határidő</mat-label>
-            <input matInput [formControl]="newDeadline" [matDatepicker]="picker"/>
+            <input matInput [formControl]="newDeadline" [matDatepicker]="picker" />
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="newDeadline.invalid">Határidő megadása kötelező!</mat-error>
         </mat-form-field>
@@ -42,5 +46,7 @@
 </div>
 
 <div class="form-action-buttons">
-    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="addMainTask()">Mentés</button>
+    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="addMainTask()">
+        Mentés
+    </button>
 </div>

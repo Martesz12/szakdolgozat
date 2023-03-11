@@ -17,7 +17,7 @@ export class LessonViewComponent implements OnDestroy {
         this.lessonService.resetLessonState();
     }
 
-    resetIfTimetableChanged(){
+    resetIfTimetableChanged() {
         this.timetableService.getSelectedTimetableId().subscribe(_ => {
             this.lessonService.setLessonDataOperationPageState(DataOperationPageState.Base);
             this.lessonService.removeSelectedLesson();

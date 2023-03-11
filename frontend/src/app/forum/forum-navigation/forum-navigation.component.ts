@@ -3,12 +3,12 @@ import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 import { UserService } from 'src/app/shared/service/user.service';
 
 export const drawerModes = ['side', 'over'] as const;
-export type DrawerModes = typeof drawerModes[number];
+export type DrawerModes = (typeof drawerModes)[number];
 
 @Component({
-  selector: 'app-forum-navigation',
-  templateUrl: './forum-navigation.component.html',
-  styleUrls: ['./forum-navigation.component.scss']
+    selector: 'app-forum-navigation',
+    templateUrl: './forum-navigation.component.html',
+    styleUrls: ['./forum-navigation.component.scss'],
 })
 export class ForumNavigationComponent implements OnInit {
     @ViewChild('drawer') drawer!: MatDrawer;
@@ -44,5 +44,4 @@ export class ForumNavigationComponent implements OnInit {
     onLogoutClick(): void {
         this.userService.logout();
     }
-
 }

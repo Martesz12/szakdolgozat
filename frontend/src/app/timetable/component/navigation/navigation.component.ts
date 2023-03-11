@@ -4,7 +4,7 @@ import { TimetableService } from 'src/app/shared/service/timetable/timetable.ser
 import { UserService } from 'src/app/shared/service/user.service';
 
 export const drawerModes = ['side', 'over'] as const;
-export type DrawerModes = typeof drawerModes[number];
+export type DrawerModes = (typeof drawerModes)[number];
 
 @Component({
     selector: 'app-navigation',

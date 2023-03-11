@@ -20,7 +20,9 @@
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Weboldal</mat-label>
             <input matInput type="text" [formControl]="updatedWebpage" />
-            <mat-error *ngIf="updatedWebpage.hasError('maxlength')">Weboldal nem lehet hosszabb 255 karakternél!</mat-error>
+            <mat-error *ngIf="updatedWebpage.hasError('maxlength')"
+                >Weboldal nem lehet hosszabb 255 karakternél!</mat-error
+            >
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Iroda</mat-label>
@@ -34,9 +36,23 @@
     </form>
 </div>
 
-<div class="form-action-buttons ">
-    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="primary" (click)="updateTeacher()">Mentés</button>
-    <button style="margin: 15px" class="navigation-main-font" mat-raised-button color="warn" (click)="openDeleteDialog(selectedTeacher.id)">
+<div class="form-action-buttons">
+    <button
+        style="margin: 15px"
+        class="navigation-main-font"
+        mat-raised-button
+        color="primary"
+        (click)="updateTeacher()"
+    >
+        Mentés
+    </button>
+    <button
+        style="margin: 15px"
+        class="navigation-main-font"
+        mat-raised-button
+        color="warn"
+        (click)="openDeleteDialog(selectedTeacher.id)"
+    >
         Törlés
     </button>
 </div>

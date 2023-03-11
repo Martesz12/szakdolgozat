@@ -16,7 +16,7 @@ import { TimetableDialogComponent } from './timetable-dialog/timetable-dialog.co
     templateUrl: './timetable-side-menu.component.html',
     styleUrls: ['./timetable-side-menu.component.scss'],
 })
-export class TimetableSideMenuComponent implements OnDestroy{
+export class TimetableSideMenuComponent implements OnDestroy {
     treeControl = new NestedTreeControl<TimetableSideMenuNode>(node => node.children);
     dataSource = new MatTreeNestedDataSource<TimetableSideMenuNode>();
     selectedMenuElement: number = 0;
@@ -35,7 +35,7 @@ export class TimetableSideMenuComponent implements OnDestroy{
 
     ngOnDestroy(): void {
         this.timetableService.resetTimetableState();
-    } 
+    }
 
     getSelectedTimetableId(): void {
         this.timetableService

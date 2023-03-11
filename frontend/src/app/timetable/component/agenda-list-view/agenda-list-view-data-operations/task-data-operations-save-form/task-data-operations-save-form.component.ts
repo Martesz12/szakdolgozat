@@ -18,7 +18,7 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
 export class TaskDataOperationsSaveFormComponent {
     readonly TYPES: string[] = ['Feladat', 'Vizsga', 'Zárthelyi', 'Beadandó', 'Teszt'];
     allLesson$: Observable<LessonDto[]> = this.lessonService.getAllLessonSubject();
-    allSubject: SubjectDto[]= [];
+    allSubject: SubjectDto[] = [];
 
     newLesson = new FormControl(0);
     newName = new FormControl('');
@@ -41,7 +41,6 @@ export class TaskDataOperationsSaveFormComponent {
     getAllSubject(): void {
         this.subjectService.getAllSubjectSubject().subscribe(subjects => (this.allSubject = subjects));
     }
-
 
     getSubjectName(subjectId: number): string {
         return this.allSubject.find(subject => subject.id === subjectId)!.name;
@@ -92,7 +91,7 @@ export class TaskDataOperationsSaveFormComponent {
         if (this.newDeadline.value !== null) deadline = this.newDeadline.value;
         if (this.newType.value !== null && this.newType.value !== '') type = this.newType.value;
         console.log(this.newType.value);
-        
+
         return new MainTaskDto(name, false, deadline, note, type, lessonId);
     }
 

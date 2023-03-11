@@ -1,4 +1,4 @@
-import { Role } from "../role.enum";
+import { Role } from '../role.enum';
 
 export class UserDto {
     public readonly id: number | null;
@@ -8,7 +8,14 @@ export class UserDto {
     public readonly email: string;
     public readonly role: Role;
 
-    constructor(id: number | null = null, firstname: string, lastname: string, appUsername: string, email: string, role: Role) {
+    constructor(
+        id: number | null = null,
+        firstname: string,
+        lastname: string,
+        appUsername: string,
+        email: string,
+        role: Role
+    ) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;

@@ -5,16 +5,14 @@
     flex-direction: row;
 }
 
-.subject-card{
+.subject-card {
     width: 50%;
     padding: 10px;
 }
 
 @media (max-width: 1000px) {
-    .subject-card{
+    .subject-card {
         width: 100%;
         padding: 10px;
     }
-  }
-
-
+}

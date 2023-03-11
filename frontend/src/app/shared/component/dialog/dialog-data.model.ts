@@ -4,4 +4,4 @@ export interface DialogData {
     dialogHeader: string;
     dialogContent: string;
     callbackMethod: () => void;
-  }
+}

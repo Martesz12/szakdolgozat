@@ -88,8 +88,8 @@ import { CustomDateAdapter } from './adapter/custom-date-adapter';
         MatTooltipModule,
     ],
     providers: [
-        {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
-        {provide: DateAdapter, useClass: CustomDateAdapter },
+        { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' },
+        { provide: DateAdapter, useClass: CustomDateAdapter },
     ],
 })
 export class SharedModule {}

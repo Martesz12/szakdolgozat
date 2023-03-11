@@ -20,7 +20,11 @@ export class TeacherDataOperationsSaveFormComponent {
     newMoreInformation = new FormControl('');
     currentUserId: number;
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private userService: UserService) {
+    constructor(
+        private teacherService: TeacherService,
+        private snackBar: MatSnackBar,
+        private userService: UserService
+    ) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newEmail?.addValidators(Validators.maxLength(255));
         this.newWebpage?.addValidators(Validators.maxLength(255));

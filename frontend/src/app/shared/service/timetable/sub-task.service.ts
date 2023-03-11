@@ -46,11 +46,11 @@ export class SubTaskService {
         return this.subTaskWebService.updateSubTask(subTask);
     }
 
-    getSubTaskById(id: number): Observable<SubTaskDto>{
+    getSubTaskById(id: number): Observable<SubTaskDto> {
         return this.subTaskWebService.getSubTaskById(id);
     }
 
     resetSubTaskState(afterDelete: boolean = false): void {
-        if(afterDelete) this.getSubTasksByMainTaskIds();
+        if (afterDelete) this.getSubTasksByMainTaskIds();
     }
 }

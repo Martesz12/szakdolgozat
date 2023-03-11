@@ -69,7 +69,8 @@ export class SubjectListComponent {
     openDeleteDialog(subjectId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tantárgy törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tantárgy törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tantárgy törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {

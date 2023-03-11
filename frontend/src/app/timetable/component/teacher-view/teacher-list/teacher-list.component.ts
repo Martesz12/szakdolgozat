@@ -68,16 +68,17 @@ export class TeacherListComponent {
     openDeleteDialog(teacherId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tanár törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanár törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanár törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
-              this.deleteTeacher(teacherId);
+                this.deleteTeacher(teacherId);
             },
-          };
-          this.dialog.open(DialogComponent, {
+        };
+        this.dialog.open(DialogComponent, {
             data: dialogInterface,
-          });
+        });
     }
 
     deleteTeacher(teacherId: number | null): void {
@@ -92,14 +93,14 @@ export class TeacherListComponent {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar']
+                        panelClass: ['info-snackbar'],
                     });
                 },
                 error: error =>
                     this.snackBar.open('Hiba tanár törlése során: ' + error, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar']
+                        panelClass: ['error-snackbar'],
                     }),
             });
     }

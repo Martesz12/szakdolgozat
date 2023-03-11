@@ -8,37 +8,38 @@
     --fs-40: 40px;
 }
 
-.navigation-main-font{
+.navigation-main-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-500);
 }
 
-.navigation-secondary-font{
+.navigation-secondary-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-400);
 }
 
-.main-title-font{
+.main-title-font {
     font-size: var(--fs-25);
     font-weight: var(--fw-500);
 }
 
-.secondary-title-font{
+.secondary-title-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-500);
 }
 
-.content-font{
+.content-font {
     font-size: var(--fs-16);
     font-weight: var(--fw-400);
 }
 
-.no-element-found-font, .authentication-font {
+.no-element-found-font,
+.authentication-font {
     font-size: var(--fs-40);
     font-weight: var(--fw-500);
 }
 
-.content-on-color-font{
+.content-on-color-font {
     font-size: var(--fs-16);
     font-weight: var(--fw-500);
 }

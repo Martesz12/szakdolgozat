@@ -22,7 +22,7 @@ export class TeacherDataOperationsDescriptionComponent {
             duration: 2000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-            panelClass: ['info-snackbar']
+            panelClass: ['info-snackbar'],
         });
     }
 
@@ -32,11 +32,11 @@ export class TeacherDataOperationsDescriptionComponent {
         });
     }
 
-    getScreenWidth(): number{
+    getScreenWidth(): number {
         return window.innerWidth;
     }
 
-    isInMobileView(): boolean{
+    isInMobileView(): boolean {
         return this.getScreenWidth() <= 1000;
     }
 }

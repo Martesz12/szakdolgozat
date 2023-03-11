@@ -16,10 +16,8 @@ export class AgendaListViewComponent implements OnDestroy {
         this.mainTaskService.resetMainTaskState();
     }
 
-    resetIfTimetableChanged(){
-        this.timetableService.getSelectedTimetableId().subscribe(_ => {
-            
-        });
+    resetIfTimetableChanged() {
+        this.timetableService.getSelectedTimetableId().subscribe(_ => {});
     }
 
     getScreenWidth(): number {

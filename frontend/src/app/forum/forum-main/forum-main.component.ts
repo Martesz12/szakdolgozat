@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-forum-main',
-  templateUrl: './forum-main.component.html',
-  styleUrls: ['./forum-main.component.scss']
+    selector: 'app-forum-main',
+    templateUrl: './forum-main.component.html',
+    styleUrls: ['./forum-main.component.scss'],
 })
 export class ForumMainComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void {}
 }

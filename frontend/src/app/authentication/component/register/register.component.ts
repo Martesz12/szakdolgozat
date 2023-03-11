@@ -28,7 +28,11 @@ export class RegisterComponent implements OnInit {
     addValidators(): void {
         this.email?.addValidators([Validators.required, Validators.maxLength(255), Validators.email]);
         this.password?.addValidators([Validators.required, Validators.maxLength(255)]);
-        this.passwordAgain?.addValidators([Validators.required, Validators.maxLength(255), this.passwrodsEqualValidator()]);
+        this.passwordAgain?.addValidators([
+            Validators.required,
+            Validators.maxLength(255),
+            this.passwrodsEqualValidator(),
+        ]);
         this.firstname?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.lastname?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.username?.addValidators([Validators.required, Validators.maxLength(255)]);
@@ -83,9 +87,9 @@ export class RegisterComponent implements OnInit {
 
     passwrodsEqualValidator(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-                return this.password.value === this.passwordAgain.value
-                    ? null
-                    : { passwordsAreEqual: { value: control.value } };
+            return this.password.value === this.passwordAgain.value
+                ? null
+                : { passwordsAreEqual: { value: control.value } };
         };
     }
 }

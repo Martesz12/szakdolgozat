@@ -18,15 +18,18 @@ export class LessonService {
     }
 
     getLessonsByTimetableId() {
-        this.timetableService.getSelectedTimetableId().pipe(
-            switchMap(timetableId => {
-                if(timetableId !== 0) return this.lessonWebService.getLessonsByTimetableId(timetableId);
-                else return of([]);
-            }),
-        ).subscribe(lessons => {
-            this.allLessonSubject.next(lessons);
-            console.log(lessons);
-        });
+        this.timetableService
+            .getSelectedTimetableId()
+            .pipe(
+                switchMap(timetableId => {
+                    if (timetableId !== 0) return this.lessonWebService.getLessonsByTimetableId(timetableId);
+                    else return of([]);
+                })
+            )
+            .subscribe(lessons => {
+                this.allLessonSubject.next(lessons);
+                console.log(lessons);
+            });
     }
 
     getAllLessonSubject(): Observable<LessonDto[]> {
@@ -72,6 +75,6 @@ export class LessonService {
     resetLessonState(afterDelete: boolean = false): void {
         this.removeSelectedLesson();
         this.setLessonDataOperationPageState(DataOperationPageState.Base);
-        if(afterDelete) this.getLessonsByTimetableId();
+        if (afterDelete) this.getLessonsByTimetableId();
     }
 }

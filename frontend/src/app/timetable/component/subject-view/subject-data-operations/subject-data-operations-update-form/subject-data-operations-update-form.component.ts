@@ -81,7 +81,8 @@ export class SubjectDataOperationsUpdateFormComponent {
     openDeleteDialog(subjectId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tantárgy törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tantárgy törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tantárgy törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
@@ -126,7 +127,14 @@ export class SubjectDataOperationsUpdateFormComponent {
         color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
         if (this.updatedAbbreviation.value !== null) abbreviation = this.updatedAbbreviation.value;
         if (this.updatedRequirement.value !== null) requirement = this.updatedRequirement.value;
-        return new SubjectDto(name, abbreviation, color, requirement, this.selectedSubject.userId, this.selectedSubject.id);
+        return new SubjectDto(
+            name,
+            abbreviation,
+            color,
+            requirement,
+            this.selectedSubject.userId,
+            this.selectedSubject.id
+        );
     }
 
     getScreenWidth(): number {

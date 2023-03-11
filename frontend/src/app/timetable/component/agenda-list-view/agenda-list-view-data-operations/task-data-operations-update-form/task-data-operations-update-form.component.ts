@@ -37,7 +37,7 @@ export class TaskDataOperationsUpdateFormComponent {
         private lessonService: LessonService,
         private subjectService: SubjectService,
         private dialog: MatDialog,
-        private subTaskService: SubTaskService,
+        private subTaskService: SubTaskService
     ) {
         this.updatedLesson?.addValidators(Validators.required);
         this.updatedName?.addValidators([Validators.required, Validators.maxLength(255)]);

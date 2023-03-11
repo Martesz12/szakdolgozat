@@ -7,17 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ForumNavigationComponent } from './forum-navigation/forum-navigation.component';
 import { ForumMainComponent } from './forum-main/forum-main.component';
 
-
 @NgModule({
-  declarations: [
-    ForumComponent,
-    ForumNavigationComponent,
-    ForumMainComponent
-  ],
-  imports: [
-    CommonModule,
-    ForumRoutingModule,
-    SharedModule
-  ]
+    declarations: [ForumComponent, ForumNavigationComponent, ForumMainComponent],
+    imports: [CommonModule, ForumRoutingModule, SharedModule],
 })
-export class ForumModule { }
+export class ForumModule {}

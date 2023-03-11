@@ -90,7 +90,8 @@ export class TeacherDataOperationsUpdateFormComponent {
     openDeleteDialog(teacherId: number | null): void {
         const dialogInterface: DialogData = {
             dialogHeader: 'Tanár törlése',
-            dialogContent: 'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanár törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A tanár törlése magával vonja az összes hozzá tartozó tanóra és feladat törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
@@ -138,7 +139,15 @@ export class TeacherDataOperationsUpdateFormComponent {
         if (this.updatedEmail.value !== null) email = this.updatedEmail.value;
         if (this.updatedOffice.value !== null) office = this.updatedOffice.value;
         if (this.updatedMoreInformation.value !== null) moreInformation = this.updatedMoreInformation.value;
-        return new TeacherDto(name, webpage, email, this.selectedTeacher.userId, office, moreInformation, this.selectedTeacher.id);
+        return new TeacherDto(
+            name,
+            webpage,
+            email,
+            this.selectedTeacher.userId,
+            office,
+            moreInformation,
+            this.selectedTeacher.id
+        );
     }
 
     getScreenWidth(): number {

@@ -6,21 +6,20 @@ import { ForumNavigationComponent } from './forum/forum-navigation/forum-navigat
 
 const routes: Routes = [
     {
-      path: 'authentication',
-      loadChildren: () =>
-        import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
+        path: 'authentication',
+        loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule),
     },
     {
         path: 'timetable',
         loadChildren: () => import('./timetable/timetable.module').then(m => m.TimetableModule),
         component: NavigationComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: 'forum',
         loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule),
         component: ForumNavigationComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
     },
     {
         path: '',

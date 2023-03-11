@@ -35,7 +35,7 @@
     border: 2px solid black;
 }
 
-.color-picker-fieldset{
+.color-picker-fieldset {
     border-radius: 7px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     padding: 10px;
@@ -48,20 +48,21 @@
 }
 
 .legend-font {
-    color: rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, 0.6);
     font-size: 11px;
 }
 
-.color-picker-error .color-picker-fieldset{
+.color-picker-error .color-picker-fieldset {
     border: 2px solid var(--material-error);
 }
 
-.color-picker-error .color-picker-fieldset .legend-font, .color-picker-error .legend-font {
-    color: var(--material-error)
+.color-picker-error .color-picker-fieldset .legend-font,
+.color-picker-error .legend-font {
+    color: var(--material-error);
 }
 
 .color-picker-error {
     text-align: left;
     margin-top: 5px;
-    margin-left: 10px
+    margin-left: 10px;
 }

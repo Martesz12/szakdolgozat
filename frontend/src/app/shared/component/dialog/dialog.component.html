@@ -4,10 +4,23 @@
         <p>{{ dialogData.dialogContent }}</p>
     </div>
     <div mat-dialog-actions>
-        <button class="navigation-main-font" mat-button cdkFocusInitial (click)="closeDialog()" mat-raised-button color="primary">
+        <button
+            class="navigation-main-font"
+            mat-button
+            cdkFocusInitial
+            (click)="closeDialog()"
+            mat-raised-button
+            color="primary"
+        >
             {{ dialogData.cancelButtonLabel }}
         </button>
-        <button class="navigation-main-font confirm-button" mat-button (click)="confirmDialog()" mat-raised-button color="primary">
+        <button
+            class="navigation-main-font confirm-button"
+            mat-button
+            (click)="confirmDialog()"
+            mat-raised-button
+            color="primary"
+        >
             {{ dialogData.confirmButtonLabel }}
         </button>
     </div>

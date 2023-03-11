@@ -5,16 +5,14 @@
     flex-direction: row;
 }
 
-.teacher-card{
+.teacher-card {
     width: 50%;
     padding: 10px;
 }
 
 @media (max-width: 1000px) {
-    .teacher-card{
+    .teacher-card {
         width: 100%;
         padding: 10px;
     }
-  }
-
-
+}

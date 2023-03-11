@@ -12,7 +12,7 @@
         <mat-icon class="mr-5">school</mat-icon>
         Tantárgy:
     </div>
-    <div class="ml-50 mb-20 content-font">{{ selectedLessonSubject.name + " - " + selectedLesson.type }}</div>
+    <div class="ml-50 mb-20 content-font">{{ selectedLessonSubject.name + ' - ' + selectedLesson.type }}</div>
 
     <div class="secondary-title-font card-description-element-title">
         <mat-icon class="mr-5">edit</mat-icon>
@@ -25,7 +25,7 @@
         Határidő:
     </div>
     <div class="ml-50 mb-20 content-font">
-        {{ selectedMainTask.deadline | date:'yyyy - MM - dd' }}
+        {{ selectedMainTask.deadline | date : 'yyyy - MM - dd' }}
     </div>
 
     <div class="secondary-title-font card-description-element-title">

@@ -9,9 +9,12 @@
                     <mat-hint hidden></mat-hint>
                 </mat-form-field>
             </div>
-            <div matTooltip="Tanár hozzáadása"
-            [matTooltipPosition]="'right'"
-            [matTooltipShowDelay]="500" class="list-add-element-button">
+            <div
+                matTooltip="Tanár hozzáadása"
+                [matTooltipPosition]="'right'"
+                [matTooltipShowDelay]="500"
+                class="list-add-element-button"
+            >
                 <mat-icon class="list-add-element-button-icon rotate" (click)="addTeacher()">add</mat-icon>
             </div>
         </div>
@@ -26,23 +29,32 @@
                 {{ teacher.name }}
             </div>
             <div class="list-row-buttons">
-                <div matTooltip="Tanár leírása"
-                [matTooltipPosition]="'left'"
-                [matTooltipShowDelay]="500" class="list-action-button">
+                <div
+                    matTooltip="Tanár leírása"
+                    [matTooltipPosition]="'left'"
+                    [matTooltipShowDelay]="500"
+                    class="list-action-button"
+                >
                     <button mat-icon-button (click)="selectTeacher(teacher.id)">
                         <mat-icon> description </mat-icon>
                     </button>
                 </div>
-                <div matTooltip="Tanár szerkesztése"
-                [matTooltipPosition]="'above'"
-                [matTooltipShowDelay]="500" class="list-action-button">
+                <div
+                    matTooltip="Tanár szerkesztése"
+                    [matTooltipPosition]="'above'"
+                    [matTooltipShowDelay]="500"
+                    class="list-action-button"
+                >
                     <button mat-icon-button (click)="modifyTeacher(teacher.id)">
                         <mat-icon> edit </mat-icon>
                     </button>
                 </div>
-                <div matTooltip="Tanár törlése"
-                [matTooltipPosition]="'right'"
-                [matTooltipShowDelay]="500" class="list-delete-button">
+                <div
+                    matTooltip="Tanár törlése"
+                    [matTooltipPosition]="'right'"
+                    [matTooltipShowDelay]="500"
+                    class="list-delete-button"
+                >
                     <button mat-icon-button (click)="openDeleteDialog(teacher.id)">
                         <mat-icon> delete </mat-icon>
                     </button>

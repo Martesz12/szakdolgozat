@@ -20,7 +20,11 @@ export class SubjectDataOperationsSaveFormComponent {
     newAbbreviation = new FormControl('');
     newRequirement = new FormControl('');
 
-    constructor(public subjectService: SubjectService, private snackBar: MatSnackBar, private userService: UserService) {
+    constructor(
+        public subjectService: SubjectService,
+        private snackBar: MatSnackBar,
+        private userService: UserService
+    ) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.currentUserId = this.userService.getUserId();

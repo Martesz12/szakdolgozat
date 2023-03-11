@@ -20,7 +20,7 @@ export class AgendaMonthlyViewComponent implements OnDestroy {
         this.mainTaskService.resetMainTaskState();
     }
 
-    getTimetableId(){
+    getTimetableId() {
         this.timetableService.getSelectedTimetableId().subscribe(timetableId => {
             this.selectedTimetableId = timetableId;
         });

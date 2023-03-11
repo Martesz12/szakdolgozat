@@ -1,8 +1,14 @@
 <div class="agenda-monthly-view-cards">
     <div *ngIf="showMonthlyViewCalendarCard()" class="agenda-monthly-view-card">
-        <app-agenda-monthly-view-calendar [selectedDayDate]="selectedDayDate" (selectDayEvent)="selectDayFromCalendar($event)"></app-agenda-monthly-view-calendar>
+        <app-agenda-monthly-view-calendar
+            [selectedDayDate]="selectedDayDate"
+            (selectDayEvent)="selectDayFromCalendar($event)"
+        ></app-agenda-monthly-view-calendar>
     </div>
     <div *ngIf="showMonthlyViewListCard()" class="agenda-monthly-view-card">
-        <app-agenda-monthly-view-list [selectedDayDate]="selectedDayDate" (backToCalendarViewEvent)="backFromMonthlyViewList($event)"></app-agenda-monthly-view-list>
+        <app-agenda-monthly-view-list
+            [selectedDayDate]="selectedDayDate"
+            (backToCalendarViewEvent)="backFromMonthlyViewList($event)"
+        ></app-agenda-monthly-view-list>
     </div>
 </div>

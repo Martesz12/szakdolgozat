@@ -44,7 +44,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     eventDays: number[] = [];
     @Output() selectDayEvent = new EventEmitter<number>();
     @Input() selectedDayDate: number = 0;
-    outputDateOnCalendar: Date = new Date()
+    outputDateOnCalendar: Date = new Date();
 
     constructor(
         private mainTaskService: MainTaskService,
@@ -56,7 +56,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
     }
 
     ngOnChanges(): void {
-        if(this.selectedDayDate !== 0) {
+        if (this.selectedDayDate !== 0) {
             this.currentDate = new Date(this.selectedDayDate);
             this.renderCalendar();
         }
@@ -82,7 +82,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
                         .filter(mainTask => !mainTask.fulfilled)
                         .forEach(filteredMainTask => {
                             let mainTaskDate = new Date(filteredMainTask.deadline);
-                            console.log(mainTaskDate);                            
+                            console.log(mainTaskDate);
                             this.mainTaskDates.push(
                                 new Date(
                                     mainTaskDate.getFullYear(),
@@ -151,7 +151,7 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
             ).getTime();
 
             this.currentDays.set(i, currentDate);
-            
+
             if (this.mainTaskDates.includes(currentDate)) this.eventDays.push(i);
         }
 

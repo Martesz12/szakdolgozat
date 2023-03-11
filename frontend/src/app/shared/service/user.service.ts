@@ -26,11 +26,11 @@ export class UserService {
 
     logout(): void {
         this.authenticationWebService.logout().subscribe({
-            next: (_) => {
+            next: _ => {
                 localStorage.clear();
                 this.router.navigateByUrl('authentication/login');
-            }
-        });;
+            },
+        });
     }
 
     setToken(token: string): void {
@@ -46,6 +46,6 @@ export class UserService {
     }
 
     getUserId(): number {
-        return this.userId
+        return this.userId;
     }
 }

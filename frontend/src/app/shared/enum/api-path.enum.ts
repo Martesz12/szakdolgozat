@@ -10,5 +10,5 @@ export enum ApiPath {
     Register = 'register',
     Authenticate = 'authenticate',
     Logout = 'logout',
-    FindByUserId = 'findByUserId'
+    FindByUserId = 'findByUserId',
 }

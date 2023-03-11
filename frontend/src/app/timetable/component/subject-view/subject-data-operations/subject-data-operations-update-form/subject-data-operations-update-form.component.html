@@ -10,22 +10,39 @@
             <mat-label>Tantárgy</mat-label>
             <input matInput type="text" [formControl]="updatedName" />
             <mat-error *ngIf="updatedName.hasError('required')">Tantárgy megadása kötelező!</mat-error>
-            <mat-error *ngIf="updatedName.hasError('maxlength')">Tantárgy nem lehet hosszabb 255 karakternél!</mat-error>
+            <mat-error *ngIf="updatedName.hasError('maxlength')"
+                >Tantárgy nem lehet hosszabb 255 karakternél!</mat-error
+            >
         </mat-form-field>
         <mat-form-field class="form-field-full-width" appearance="outline">
             <mat-label>Rövidítés</mat-label>
             <input matInput type="text" [formControl]="updatedAbbreviation" />
             <mat-error *ngIf="updatedAbbreviation.hasError('required')">Rövidítés megadása kötelező!</mat-error>
-            <mat-error *ngIf="updatedAbbreviation.hasError('maxlength')">Rövidítés nem lehet hosszabb 255 karakternél!</mat-error>
+            <mat-error *ngIf="updatedAbbreviation.hasError('maxlength')"
+                >Rövidítés nem lehet hosszabb 255 karakternél!</mat-error
+            >
         </mat-form-field>
         <div class="form-field-full-width" [class.color-picker-error]="!colorPickerValid">
             <fieldset class="color-picker-fieldset">
                 <legend [align]="'left'" class="legend-font">Szín *</legend>
                 <div class="color-picker">
-                    <mat-slider #slider min="0" max="20" step="1" [value]="subjectService.colorPickerIndex" (change)="colorSliderChange(slider.value)">
+                    <mat-slider
+                        #slider
+                        min="0"
+                        max="20"
+                        step="1"
+                        [value]="subjectService.colorPickerIndex"
+                        (change)="colorSliderChange(slider.value)"
+                    >
                         <input matSliderThumb />
                     </mat-slider>
-                    <div  class="color-picker-sample ml-10" [ngStyle]="{ 'background-color': slider.value !== 0 ? subjectService.SUBJECT_COLORS[slider.value] : 'white' }"></div>
+                    <div
+                        class="color-picker-sample ml-10"
+                        [ngStyle]="{
+                            'background-color':
+                                slider.value !== 0 ? subjectService.SUBJECT_COLORS[slider.value] : 'white'
+                        }"
+                    ></div>
                 </div>
             </fieldset>
             <div *ngIf="!colorPickerValid" class="legend-font color-picker-error">Szín megadása kötelező!</div>
