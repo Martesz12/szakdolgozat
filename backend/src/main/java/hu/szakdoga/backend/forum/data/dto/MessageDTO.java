@@ -11,14 +11,16 @@ public class MessageDTO {
     public final String content;
     public final Date dateOfUpload;
     public final MessageTypeEnum type;
-    public final UserEntity user;
+    public final Long userId;
+    public final Long forumId;
 
-    public MessageDTO(Long id, boolean pinned, String content, Date dateOfUpload, MessageTypeEnum type, UserEntity user) {
+    public MessageDTO(Long id, boolean pinned, String content, Date dateOfUpload, MessageTypeEnum type, Long userId, Long forumId) {
         this.id = id;
         this.pinned = pinned;
         this.content = content;
         this.dateOfUpload = dateOfUpload;
         this.type = type;
-        this.user = user;
+        this.userId = userId;
+        this.forumId = forumId;
     }
 }

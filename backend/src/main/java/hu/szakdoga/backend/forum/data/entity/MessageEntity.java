@@ -26,6 +26,7 @@ public class MessageEntity {
     private boolean pinned;
 
     @Column(nullable = false)
+    @Lob
     private String content;
 
     @Column(nullable = false)
@@ -38,4 +39,9 @@ public class MessageEntity {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "forumId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private ForumEntity forum;
 }
