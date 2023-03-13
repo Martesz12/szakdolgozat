@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "forum")
 @Data
@@ -26,11 +28,25 @@ public class ForumEntity {
     @JoinColumn(name = "universityId", referencedColumnName = "id")
     private UniversityEntity university;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "facultyId", referencedColumnName = "id")
-    private FacultyEntity faculty;
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
+    @JoinTable(
+            name="forumAndMajor",
+            inverseJoinColumns = @JoinColumn(name = "majorId"),
+            joinColumns = @JoinColumn(name = "forumId")
+    )
+    private List<MajorEntity> majors;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "majorId", referencedColumnName = "id")
-    private MajorEntity major;
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
+    @JoinTable(
+            name="forumAndFaculty",
+            inverseJoinColumns = @JoinColumn(name = "facultyId"),
+            joinColumns = @JoinColumn(name = "forumId")
+    )
+    private List<FacultyEntity> faculties;
 }

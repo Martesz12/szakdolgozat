@@ -23,6 +23,9 @@ public class FacultyEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String abbreviation;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "universityId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
