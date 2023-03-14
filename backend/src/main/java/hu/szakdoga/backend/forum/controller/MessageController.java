@@ -27,8 +27,8 @@ public class MessageController {
         return new ResponseEntity<>(messageById, HttpStatus.OK);
     }
 
-    @GetMapping("/findByUserId/{forumId}")
-    public ResponseEntity<List<MessageDTO>> getLessonsByUserIdAndTimetableId(@PathVariable("forumId") Long forumId) {
+    @GetMapping("/findByForumId/{forumId}")
+    public ResponseEntity<List<MessageDTO>> getMessagesByForumId(@PathVariable("forumId") Long forumId) {
         List<MessageDTO> messagesByForumId = messageService.findMessagesByForumId(forumId);
         return new ResponseEntity<>(messagesByForumId, HttpStatus.OK);
     }
