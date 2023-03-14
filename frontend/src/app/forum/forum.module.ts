@@ -7,9 +7,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ForumNavigationComponent } from './forum-navigation/forum-navigation.component';
 import { ForumMainComponent } from './forum-main/forum-main.component';
 import { ForumSideMenuComponent } from './forum-side-menu/forum-side-menu.component';
+import { ForumCreateFormComponent } from './forum-create-form/forum-create-form.component';
 
 @NgModule({
-    declarations: [ForumComponent, ForumNavigationComponent, ForumMainComponent, ForumSideMenuComponent],
+    declarations: [ForumComponent, ForumNavigationComponent, ForumMainComponent, ForumSideMenuComponent, ForumCreateFormComponent],
     imports: [CommonModule, ForumRoutingModule, SharedModule],
 })
 export class ForumModule {}
