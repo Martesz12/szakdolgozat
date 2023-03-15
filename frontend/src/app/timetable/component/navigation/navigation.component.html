@@ -8,6 +8,7 @@
             fxFlex="initial"
             (click)="drawer.toggle()"
         >
+            <mat-icon [fontIcon]="drawer.opened ? 'close' : 'menu'"></mat-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-main-font">
