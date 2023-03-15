@@ -10,7 +10,7 @@ import { FacultyDto } from 'src/app/shared/model/forum/faculty.dto';
     providedIn: 'root',
 })
 export class FacultyWebService {
-    private specificUrl: string = 'Faculty/';
+    private specificUrl: string = 'faculty/';
 
     constructor(private http: HttpClient, private userService: UserService) {}
 
