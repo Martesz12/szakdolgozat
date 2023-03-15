@@ -14,7 +14,7 @@ export class ForumNavigationComponent implements OnInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
     constructor(private renderer: Renderer2, private userService: UserService) {
-        this.renderer.listen('window', 'resize', this.scrollEvent);
+        this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
 
@@ -31,7 +31,7 @@ export class ForumNavigationComponent implements OnInit {
     isInMobileView(): boolean {
         return this.getScreenWidth() <= 1200;
     }
-    scrollEvent = (e: Event) => {
+    windowResizeEvent = (e: Event) => {
         if (this.isInMobileView()) {
             if (this.drawerMode === 'side') this.drawer.toggle();
             this.drawerMode = 'over';

@@ -1,26 +1,13 @@
 <div fxLayout="column" fxFlexFill="min-height">
     <mat-toolbar fxFlex="initial" color="primary" class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="start stretch">
         <button
-            matTooltip="Menü megnyitása"
+            [matTooltip]="drawer.opened ? 'Menü bezárása' : 'Menü megnyitása'"
             [matTooltipPosition]="'right'"
             [matTooltipShowDelay]="500"
-            *ngIf="!drawer.opened"
             mat-button
             fxFlex="initial"
             (click)="drawer.toggle()"
         >
-            <mat-icon>menu</mat-icon>
-        </button>
-        <button
-            matTooltip="Menü bezárása"
-            [matTooltipPosition]="'right'"
-            [matTooltipShowDelay]="500"
-            *ngIf="drawer.opened"
-            mat-button
-            fxFlex="initial"
-            (click)="drawer.toggle()"
-        >
-            <mat-icon>close</mat-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center" class="navigation-main-font">

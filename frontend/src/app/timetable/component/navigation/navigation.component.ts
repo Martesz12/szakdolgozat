@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
         private userService: UserService,
         private timetableService: TimetableService
     ) {
-        this.renderer.listen('window', 'resize', this.scrollEvent);
+        this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
 
@@ -39,7 +39,7 @@ export class NavigationComponent implements OnInit {
     isInMobileView(): boolean {
         return this.getScreenWidth() <= 1200;
     }
-    scrollEvent = (e: Event) => {
+    windowResizeEvent = (e: Event) => {
         if (this.isInMobileView()) {
             if (this.drawerMode === 'side') this.drawer.toggle();
             this.drawerMode = 'over';
