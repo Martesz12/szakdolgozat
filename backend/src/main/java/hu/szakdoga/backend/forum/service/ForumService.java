@@ -1,8 +1,5 @@
 package hu.szakdoga.backend.forum.service;
 
-import hu.szakdoga.backend.authentication.data.model.UserEntity;
-import hu.szakdoga.backend.authentication.repository.UserRepository;
-
 import hu.szakdoga.backend.forum.data.dto.ForumDTO;
 import hu.szakdoga.backend.forum.data.entity.FacultyEntity;
 import hu.szakdoga.backend.forum.data.entity.ForumEntity;
@@ -69,12 +66,12 @@ public class ForumService {
                 .map(Optional::get)
                 .collect(Collectors.toList());
 
-        return new ForumEntity(dto.id, dto.name, dto.description, university, majorEntities, facultyEntities);
+        return new ForumEntity(dto.id, dto.name, dto.description, dto.approved, university, majorEntities, facultyEntities);
     }
 
     public ForumDTO convertEntityToDto(ForumEntity entity){
         return new ForumDTO(entity.getId(), entity.getName(), entity.getDescription(), entity.getUniversity().getId(),
                 entity.getFaculties().stream().map(FacultyEntity::getId).collect(Collectors.toList()),
-                entity.getMajors().stream().map(MajorEntity::getId).collect(Collectors.toList()));
+                entity.getMajors().stream().map(MajorEntity::getId).collect(Collectors.toList()), entity.isApproved());
     }
 }

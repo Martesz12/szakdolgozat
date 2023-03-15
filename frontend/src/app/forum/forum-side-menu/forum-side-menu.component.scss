@@ -1,3 +1,48 @@
-.create-request-button {
+.side-menu {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.create-request-button-container {
+    width: calc(100% - 20px);
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-request-button {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.line{
+    width: 100%;
+    height: 0px;
+    border-bottom: 1px solid var(--neutral200);
+}
+
+.room-filter-container {
+    width: calc(100% - 20px);
+    margin: 10px 10px 0 10px;
+}
+
+.room-filter-input {
+    width: 100%;
+}
+
+.filter-container {
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filter-container:hover,
+.filter-container:active {
+    color: var(--primary100);
+    background-color: var(--neutral200);
 }

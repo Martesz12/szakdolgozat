@@ -10,12 +10,16 @@ public class ForumDTO {
     public final List<Long> facultyIds;
     public final List<Long> majorIds;
 
-    public ForumDTO(Long id, String name, String description, Long universityId, List<Long> facultyIds, List<Long> majorIds) {
+    public final boolean approved;
+
+    public ForumDTO(Long id, String name, String description, Long universityId, List<Long> facultyIds, List<Long> majorIds, boolean isApproved) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.universityId = universityId;
         this.facultyIds = facultyIds;
-        this.majorIds = majorIds;;
+        this.majorIds = majorIds;
+        this.approved = isApproved;
+        ;
     }
 }

@@ -21,8 +21,11 @@ public class ForumEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column()
     private String description;
+
+    @Column(nullable = false)
+    private boolean approved;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "universityId", referencedColumnName = "id")
