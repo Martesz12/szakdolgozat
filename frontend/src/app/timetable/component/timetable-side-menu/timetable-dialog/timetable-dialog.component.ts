@@ -39,9 +39,9 @@ export class TimetableDialogComponent {
         private teacherService: TeacherService,
         private userService: UserService
     ) {
+        this.currentUserId = this.userService.getUserId();
         this.getTimetables();
         this.getSelectedTimetableId();
-        this.currentUserId = this.userService.getUserId();
     }
 
     getTimetables(): void {

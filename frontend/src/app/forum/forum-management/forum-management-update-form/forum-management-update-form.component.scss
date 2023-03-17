@@ -1,0 +1,34 @@
+
+.forum-create-main {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+.forum-create-card {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.forum-create-form {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form-inputs-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-field-full-width{
+    width: 80%;
+    margin: 10px 0;
+}
+
+.submit-button-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
