@@ -56,13 +56,13 @@ export class ForumManagementUpdateFormComponent implements OnInit {
             .getSelectedForumSubject()
             .pipe(filter(selectedForum => !!selectedForum && !!Object.keys(selectedForum).length))
             .subscribe(selectedForum => {
-                console.log(selectedForum);
-
                 this.updatedName.setValue(selectedForum.name);
                 this.updatedDescription.setValue(selectedForum.description);
                 this.updatedUniversity.setValue(selectedForum.universityId);
-                this.updatedMajors.setValue(selectedForum.majorIds);
+                this.universityChanged(selectedForum.universityId);
                 this.updatedFaculties.setValue(selectedForum.facultyIds);
+                this.facultyChanged(selectedForum.facultyIds);
+                this.updatedMajors.setValue(selectedForum.majorIds);
                 this.selectedForumId = selectedForum.id!;
             });
     }
