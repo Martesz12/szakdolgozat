@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter } from 'rxjs';
+import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
+import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { FacultyDto } from 'src/app/shared/model/forum/faculty.dto';
 import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { MajorDto } from 'src/app/shared/model/forum/major.dto';
@@ -30,13 +33,15 @@ export class ForumManagementUpdateFormComponent implements OnInit {
     filteredMajors: MajorDto[] = [];
 
     selectedForumId: number = 0;
+    isForumApproved: boolean = false;
 
     constructor(
         private universityService: UniversityService,
         private facultyService: FacultyService,
         private majorService: MajorService,
         private forumService: ForumService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -64,6 +69,7 @@ export class ForumManagementUpdateFormComponent implements OnInit {
                 this.facultyChanged(selectedForum.facultyIds);
                 this.updatedMajors.setValue(selectedForum.majorIds);
                 this.selectedForumId = selectedForum.id!;
+                this.isForumApproved = selectedForum.approved;
             });
     }
 
@@ -100,22 +106,22 @@ export class ForumManagementUpdateFormComponent implements OnInit {
         this.updatedMajors.setValue(this.updatedMajors.value!.filter(majorId => majorIds.includes(majorId)));
     }
 
-    addForum(): void {
+    updateForum(): void {
         if (this.isFormValid()) {
-            let newforum: ForumDto = this.createforum();
-            this.forumService.addForum(newforum).subscribe({
+            let newforum: ForumDto = this.createForum();
+            this.forumService.updateForum(newforum).subscribe({
                 next: _ => {
                     this.forumService.getAllForum();
                     this.resetForm();
-                    this.snackBar.open('Szoba módosítása sikeres!', 'X', {
+                    this.snackBar.open(`Szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} sikeres!`, 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
                         panelClass: ['info-snackbar'],
                     });
                 },
-                error: error =>
-                    this.snackBar.open('Hiba szoba módosítása során: ' + error, 'X', {
+                error: _ =>
+                    this.snackBar.open(`Hiba szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} során!`, 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
                         panelClass: ['error-snackbar'],
@@ -153,14 +159,15 @@ export class ForumManagementUpdateFormComponent implements OnInit {
         this.updatedMajors.markAsUntouched();
     }
 
-    private createforum(): ForumDto {
+    private createForum(): ForumDto {
         return new ForumDto(
             this.updatedName.value!,
             this.updatedUniversity.value!,
             this.updatedMajors.value!,
             this.updatedFaculties.value!,
             this.updatedDescription.value!,
-            true
+            true,
+            this.selectedForumId
         );
     }
 
@@ -168,5 +175,42 @@ export class ForumManagementUpdateFormComponent implements OnInit {
         return (control: AbstractControl): ValidationErrors | null => {
             return this.updatedUniversity.value !== 0 ? null : { idNotValid: { value: control.value } };
         };
+    }
+
+    openDeleteDialog(forumId: number | null): void {
+        const dialogInterface: DialogData = {
+            dialogHeader: 'Szoba törlése',
+            dialogContent:
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A szoba törlése magával vonja az összes hozzá tartozó üzenet törlését.',
+            cancelButtonLabel: 'Vissza',
+            confirmButtonLabel: 'Törlés',
+            callbackMethod: () => {
+                this.deleteForum(forumId);
+            },
+        };
+        this.dialog.open(DialogComponent, {
+            data: dialogInterface,
+        });
+    }
+
+    deleteForum(forumId: number | null): void {
+        if (forumId !== null)
+            this.forumService.deleteForum(forumId).subscribe({
+                next: _ => {
+                    this.forumService.resetForumState(true);
+                    this.snackBar.open(`Szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} sikeres!`, 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar'],
+                    });
+                },
+                error: error =>
+                    this.snackBar.open(`Hiba szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} során!`, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    }),
+            });
     }
 }

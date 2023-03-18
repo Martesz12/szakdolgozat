@@ -8,38 +8,65 @@
                 <mat-hint hidden></mat-hint>
             </mat-form-field>
         </div>
-
-        <div
-            *ngFor="let forum of filteredAllForum; let i = index"
-            class="list-row"
-            [ngClass]="selectedForum.id === forum.id ? 'list-row-selected' : ''"
-            [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
-        >
-            <div class="list-row-name ml-10 content-font content-overflow" (dblclick)="selectForum(forum.id)">
-                {{ forum.name }}
-            </div>
-            <div class="list-row-buttons">
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab label="Jóváhagyott szobák">
                 <div
-                    matTooltip="Fórum szerkesztése"
-                    [matTooltipPosition]="'left'"
-                    [matTooltipShowDelay]="500"
-                    class="list-action-button"
+                    *ngFor="let forum of filteredAllApprovedForum; let i = index"
+                    class="list-row"
+                    [ngClass]="selectedForum.id === forum.id ? 'list-row-selected' : ''"
+                    [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
                 >
-                    <button mat-icon-button (click)="modifyForum(forum.id)">
-                        <mat-icon> edit </mat-icon>
-                    </button>
+                    <div class="list-row-name ml-10 content-font content-overflow" (dblclick)="selectForum(forum.id)">
+                        {{ forum.name }}
+                    </div>
+                    <div class="list-row-buttons">
+                        <div
+                            matTooltip="Szoba szerkesztése"
+                            [matTooltipPosition]="'left'"
+                            [matTooltipShowDelay]="500"
+                            class="list-action-button"
+                        >
+                            <button mat-icon-button (click)="modifyForum(forum.id)">
+                                <mat-icon> edit </mat-icon>
+                            </button>
+                        </div>
+                        <div
+                            matTooltip="Szoba törlése"
+                            [matTooltipPosition]="'right'"
+                            [matTooltipShowDelay]="500"
+                            class="list-delete-button"
+                        >
+                            <button mat-icon-button (click)="openDeleteDialog(forum.id)">
+                                <mat-icon> delete </mat-icon>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </mat-tab>
+            <mat-tab label="Kérelmek">
                 <div
-                    matTooltip="Fórum törlése"
-                    [matTooltipPosition]="'right'"
-                    [matTooltipShowDelay]="500"
-                    class="list-delete-button"
+                    *ngFor="let forum of filteredAllDisapprovedForum; let i = index"
+                    class="list-row"
+                    [ngClass]="selectedForum.id === forum.id ? 'list-row-selected' : ''"
+                    [ngStyle]="{ 'border-top': i === 0 ? '1px solid var(--neutral);' : 'none' }"
                 >
-                    <button mat-icon-button (click)="openDeleteDialog(forum.id)">
-                        <mat-icon> delete </mat-icon>
-                    </button>
+                    <div class="list-row-name ml-10 content-font content-overflow" (dblclick)="selectForum(forum.id)">
+                        {{ forum.name }}
+                    </div>
+                    <div class="list-row-buttons">
+                        <div
+                            matTooltip="Kérvény bírálása"
+                            [matTooltipPosition]="'left'"
+                            [matTooltipShowDelay]="500"
+                            class="list-action-button"
+                        >
+                            <button mat-icon-button (click)="modifyForum(forum.id)">
+                                <mat-icon> gavel </mat-icon>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </mat-card>

@@ -12,8 +12,10 @@ import { ForumService } from 'src/app/shared/service/forum/forum.service';
   styleUrls: ['./forum-management-list.component.scss']
 })
 export class ForumManagementListComponent {
-    allForum: ForumDto[] = [];
-    filteredAllForum: ForumDto[] = [];
+    allApprovedForum: ForumDto[] = [];
+    allDisapprovedForum: ForumDto[] = [];
+    filteredAllApprovedForum: ForumDto[] = [];
+    filteredAllDisapprovedForum: ForumDto[] = [];
     filterText: string = '';
     selectedForum: ForumDto = {} as ForumDto;
 
@@ -35,8 +37,10 @@ export class ForumManagementListComponent {
 
     private getAllForum() {
         this.forumService.getAllForumSubject().subscribe(forums => {
-            this.allForum = forums;
-            this.filteredAllForum = forums;
+            this.allApprovedForum = forums.filter(forum => forum.approved);
+            this.filteredAllApprovedForum = forums.filter(forum => forum.approved);
+            this.allDisapprovedForum = forums.filter(forum => !forum.approved);
+            this.filteredAllDisapprovedForum = forums.filter(forum => !forum.approved);
         });
     }
 
@@ -56,9 +60,9 @@ export class ForumManagementListComponent {
 
     openDeleteDialog(forumId: number | null): void {
         const dialogInterface: DialogData = {
-            dialogHeader: 'Fórum törlése',
+            dialogHeader: 'Szoba törlése',
             dialogContent:
-                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A fórum törlése magával vonja az összes hozzá tartozó üzenet törlését.',
+                'Biztos ki akarod törölni? A "Törlés" gombra nyomva végleg törlöd. A szoba törlése magával vonja az összes hozzá tartozó üzenet törlését.',
             cancelButtonLabel: 'Vissza',
             confirmButtonLabel: 'Törlés',
             callbackMethod: () => {
@@ -75,7 +79,7 @@ export class ForumManagementListComponent {
             this.forumService.deleteForum(forumId).subscribe({
                 next: _ => {
                     this.forumService.resetForumState(true);
-                    this.snackBar.open('Fórum törlése sikeres!', 'X', {
+                    this.snackBar.open('Szoba törlése sikeres!', 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
@@ -83,7 +87,7 @@ export class ForumManagementListComponent {
                     });
                 },
                 error: error =>
-                    this.snackBar.open('Hiba fórum törlése során: ' + error, 'X', {
+                    this.snackBar.open('Hiba szoba törlése során!', 'X', {
                         horizontalPosition: 'right',
                         verticalPosition: 'bottom',
                         panelClass: ['error-snackbar'],
@@ -98,7 +102,10 @@ export class ForumManagementListComponent {
     }
 
     private filterOnAllForum() {
-        this.filteredAllForum = this.allForum.filter(forum =>
+        this.filteredAllApprovedForum = this.allApprovedForum.filter(forum =>
+            forum.name.toLowerCase().includes(this.filterText.toLowerCase())
+        );
+        this.filteredAllDisapprovedForum = this.allDisapprovedForum.filter(forum =>
             forum.name.toLowerCase().includes(this.filterText.toLowerCase())
         );
     }

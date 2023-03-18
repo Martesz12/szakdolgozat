@@ -1,2 +1,2 @@
-TODO routing timetab-nél az újratöltés miatt
+TODO szobák közötti keresés bug, törlés nem működik foreign key miatt
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
