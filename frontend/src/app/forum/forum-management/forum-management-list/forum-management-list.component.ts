@@ -7,23 +7,24 @@ import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
 
 @Component({
-  selector: 'app-forum-management-list',
-  templateUrl: './forum-management-list.component.html',
-  styleUrls: ['./forum-management-list.component.scss']
+    selector: 'app-forum-management-list',
+    templateUrl: './forum-management-list.component.html',
+    styleUrls: ['./forum-management-list.component.scss'],
 })
 export class ForumManagementListComponent {
     allApprovedForum: ForumDto[] = [];
     allDisapprovedForum: ForumDto[] = [];
     filteredAllApprovedForum: ForumDto[] = [];
     filteredAllDisapprovedForum: ForumDto[] = [];
-    filterText: string = '';
+    approvedFilterText: string = '';
+    disapprovedFilterText: string = '';
     selectedForum: ForumDto = {} as ForumDto;
 
     constructor(
         private forumService: ForumService,
         private changeDetection: ChangeDetectorRef,
         private snackBar: MatSnackBar,
-        private dialog: MatDialog,
+        private dialog: MatDialog
     ) {
         this.getAllForum();
         this.getSelectedForum();
@@ -95,24 +96,27 @@ export class ForumManagementListComponent {
             });
     }
 
-    applyFilter() {
+    applyFilter(isApproved: boolean) {
         this.filterOnAllForum();
         this.changeDetection.detectChanges();
-        this.highlightMatch();
+        this.highlightMatch(isApproved);
     }
 
     private filterOnAllForum() {
+        //todo filters
         this.filteredAllApprovedForum = this.allApprovedForum.filter(forum =>
-            forum.name.toLowerCase().includes(this.filterText.toLowerCase())
+            forum.name.toLowerCase().includes(this.approvedFilterText.toLowerCase())
         );
         this.filteredAllDisapprovedForum = this.allDisapprovedForum.filter(forum =>
-            forum.name.toLowerCase().includes(this.filterText.toLowerCase())
+            forum.name.toLowerCase().includes(this.disapprovedFilterText.toLowerCase())
         );
     }
 
-    private highlightMatch() {
-        let matchingAttributes = document.getElementsByClassName('list-row-name');
-        let lowerFilterText = this.filterText.toLowerCase();
+    private highlightMatch(isApproved: boolean) {
+        let matchingAttributes = document.getElementsByClassName(
+            isApproved ? 'approved-list-row-name' : 'disapproved-list-row-name'
+        );
+        let lowerFilterText = (isApproved ? this.approvedFilterText : this.disapprovedFilterText).toLowerCase();
         let lowerAttributeText = '';
         let originalAttributeText = '';
         let indexOfMatching = 0;
@@ -139,5 +143,4 @@ export class ForumManagementListComponent {
             }
         }
     }
-
 }
