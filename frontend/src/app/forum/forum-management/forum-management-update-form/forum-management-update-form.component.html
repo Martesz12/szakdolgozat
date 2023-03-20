@@ -1,6 +1,14 @@
 <div class="forum-create-main">
-    <mat-card class="mat-elevation-z4 forum-create-card">
+    <mat-card [class.hidden]="!hasSelectedForum" class="mat-elevation-z4 forum-create-card">
         <div class="main-title-font main-title">{{isForumApproved ? 'Szoba módosítás' : 'Szoba bírálás'}}</div>
+        
+        <div class="mt-20 mb-20 navigation-container">
+            <div class="navigation-secondary-font operation-button" (click)="backToListView()">
+                <mat-icon>arrow_back</mat-icon>
+                <div class="operation-button-text ml-5">Lista</div>
+            </div>
+        </div>
+        
         <div class="forum-create-form">
             <form class="form-inputs-center">
                 <mat-form-field class="form-field-full-width" appearance="outline">
@@ -86,6 +94,12 @@
                     {{ isForumApproved ? 'Törlés' : 'Elutasítás' }}
                 </button>
             </div>
+        </div>
+    </mat-card>
+    <mat-card [class.hidden]="hasSelectedForum" class="mat-elevation-z4 forum-create-card">
+        <div class="no-selected-element">
+            <mat-icon class="no-selected-element-icon mb-20">info_outline</mat-icon>
+            <div class="no-element-found-font">Válassz egy szobát a listából a szerkesztéshez!</div>
         </div>
     </mat-card>
 </div>

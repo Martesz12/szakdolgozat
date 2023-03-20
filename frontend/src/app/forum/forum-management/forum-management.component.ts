@@ -7,9 +7,15 @@ import { ForumService } from 'src/app/shared/service/forum/forum.service';
     styleUrls: ['./forum-management.component.scss'],
 })
 export class ForumManagementComponent implements OnInit, OnDestroy {
+    hasSelectedForum: boolean = false;
+    
     constructor(private forumService: ForumService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.forumService.getSelectedForumSubject().subscribe(selectedForum => {
+            this.hasSelectedForum = !!Object.keys(selectedForum).length
+        });
+    }
 
     ngOnDestroy(): void {
         this.forumService.resetForumState();
@@ -23,11 +29,11 @@ export class ForumManagementComponent implements OnInit, OnDestroy {
         return this.getScreenWidth() > 1000;
     }
 
-    // showForumListCard(): boolean {
-    //     return this.showBothCard() || (!this.showBothCard() && this.isStateTheCurrentPageState('base'));
-    // }
+    showForumListCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && !this.hasSelectedForum);
+    }
 
-    // showForumDataOperationCard(): boolean {
-    //     return this.showBothCard() || (!this.showBothCard() && !this.isStateTheCurrentPageState('base'));
-    // }
+    showForumModifyCard(): boolean {
+        return this.showBothCard() || (!this.showBothCard() && this.hasSelectedForum);
+    }
 }

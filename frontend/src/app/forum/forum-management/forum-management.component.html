@@ -1,8 +1,8 @@
 <div class="forum-management-cards">
-    <div class="forum-management-card">
+    <div *ngIf="showForumListCard()" class="forum-management-card">
         <app-forum-management-list></app-forum-management-list>
     </div>
-    <div class="forum-management-card">
+    <div *ngIf="showForumModifyCard()" class="forum-management-card">
         <app-forum-management-update-form></app-forum-management-update-form>
     </div>
 </div>

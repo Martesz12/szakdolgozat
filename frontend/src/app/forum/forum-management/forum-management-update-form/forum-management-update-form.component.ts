@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { filter } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { FacultyDto } from 'src/app/shared/model/forum/faculty.dto';
@@ -35,6 +35,8 @@ export class ForumManagementUpdateFormComponent implements OnInit {
     selectedForumId: number = 0;
     isForumApproved: boolean = false;
 
+    hasSelectedForum: boolean = false;
+
     constructor(
         private universityService: UniversityService,
         private facultyService: FacultyService,
@@ -59,7 +61,13 @@ export class ForumManagementUpdateFormComponent implements OnInit {
     getSelectedForum(): void {
         this.forumService
             .getSelectedForumSubject()
-            .pipe(filter(selectedForum => !!selectedForum && !!Object.keys(selectedForum).length))
+            .pipe(
+                map(selectedForum => {
+                    this.hasSelectedForum = !!Object.keys(selectedForum).length;
+                    return selectedForum;
+                }),
+                filter(selectedForum => !!selectedForum && !!Object.keys(selectedForum).length)
+            )
             .subscribe(selectedForum => {
                 this.updatedName.setValue(selectedForum.name);
                 this.updatedDescription.setValue(selectedForum.description);
@@ -111,6 +119,7 @@ export class ForumManagementUpdateFormComponent implements OnInit {
             let newforum: ForumDto = this.createForum();
             this.forumService.updateForum(newforum).subscribe({
                 next: _ => {
+                    this.forumService.resetForumState();
                     this.forumService.getAllForum();
                     this.resetForm();
                     this.snackBar.open(`Szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} sikeres!`, 'X', {
@@ -121,11 +130,15 @@ export class ForumManagementUpdateFormComponent implements OnInit {
                     });
                 },
                 error: _ =>
-                    this.snackBar.open(`Hiba szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} során!`, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                    this.snackBar.open(
+                        `Hiba szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} során!`,
+                        'X',
+                        {
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['error-snackbar'],
+                        }
+                    ),
             });
         } else {
             if (this.updatedName.invalid) this.updatedName.markAsTouched();
@@ -198,6 +211,7 @@ export class ForumManagementUpdateFormComponent implements OnInit {
             this.forumService.deleteForum(forumId).subscribe({
                 next: _ => {
                     this.forumService.resetForumState(true);
+                    this.resetForm();
                     this.snackBar.open(`Szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} sikeres!`, 'X', {
                         duration: 2000,
                         horizontalPosition: 'right',
@@ -212,5 +226,9 @@ export class ForumManagementUpdateFormComponent implements OnInit {
                         panelClass: ['error-snackbar'],
                     }),
             });
+    }
+    
+    backToListView(): void {
+        this.forumService.resetForumState();
     }
 }

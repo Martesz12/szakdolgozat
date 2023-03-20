@@ -103,7 +103,6 @@ export class ForumManagementListComponent {
     }
 
     private filterOnAllForum() {
-        //todo filters
         this.filteredAllApprovedForum = this.allApprovedForum.filter(forum =>
             forum.name.toLowerCase().includes(this.approvedFilterText.toLowerCase())
         );
