@@ -32,7 +32,7 @@
     width: 100%;
 }
 
-.filter-container {
+.side-menu-element {
     width: 100%;
     padding: 10px 10px 10px 10px;
     display: flex;
@@ -41,8 +41,14 @@
     cursor: pointer;
 }
 
-.filter-container:hover,
-.filter-container:active {
+.side-menu-element:hover,
+.side-menu-element:active {
     color: var(--primary100);
     background-color: var(--neutral200);
+}
+
+.filter-header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

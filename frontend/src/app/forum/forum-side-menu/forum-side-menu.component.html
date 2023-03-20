@@ -1,22 +1,33 @@
 <div class="side-menu">
     <div class="create-request-button-container">
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="create-request">Szoba léterhozás kérvény</button>
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="management">Szobák kezelése</button>
+        <button class="create-request-button" mat-raised-button color="primary" routerLink="create-request">
+            Szoba léterhozás kérvény
+        </button>
+        <button class="create-request-button" mat-raised-button color="primary" routerLink="management">
+            Szobák kezelése
+        </button>
     </div>
     <div class="line"></div>
     <div class="room-filter-container">
         <mat-form-field class="room-filter-input" appearance="outline">
             <mat-label>Szoba keresése...</mat-label>
-            <input matInput type="text"/>
-            <!-- (keyup)="applyFilter()" [(ngModel)]="filterText" -->
+            <input matInput type="text" (keyup)="applyFilter()" [(ngModel)]="filterText" />
             <mat-hint hidden></mat-hint>
         </mat-form-field>
     </div>
-    <div class="filter-container">
-        <mat-icon class="mr-10">tune</mat-icon>
-        <div class="content-font">Szobák szűrése</div>
-    </div>
-    <div class="line"></div>
-    <div>szobák listázása</div>
-</div>
 
+    <mat-expansion-panel style="width: calc(100% - 20px); margin: 0px 10px 10px 10px">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="filter-header-container">
+                <mat-icon class="mr-10">tune</mat-icon>
+                <div class="content-font">Szobák szűrése</div>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+
+    <div class="line"></div>
+    <div *ngFor="let forum of filteredForums" class="side-menu-element navigation-secondary-font">
+        {{ forum.name }}
+    </div>
+</div>

@@ -48,14 +48,12 @@ export class ForumManagementListComponent {
     selectForum(forumId: number | null) {
         if (forumId !== null) {
             if (this.selectedForum.id !== forumId) this.forumService.selectForum(forumId);
-            // this.forumService.setForumDataOperationPageState(DataOperationPageState.Description);
         }
     }
 
     modifyForum(forumId: number | null) {
         if (forumId !== null) {
             if (this.selectedForum.id !== forumId) this.forumService.selectForum(forumId);
-            // this.forumService.setForumDataOperationPageState(DataOperationPageState.Modify);
         }
     }
 
