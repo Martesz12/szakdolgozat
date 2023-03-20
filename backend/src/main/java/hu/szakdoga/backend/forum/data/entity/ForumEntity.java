@@ -27,7 +27,7 @@ public class ForumEntity {
     @Column(nullable = false)
     private boolean approved;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "universityId", referencedColumnName = "id")
     private UniversityEntity university;
 
