@@ -18,6 +18,7 @@ export class MessageService {
         this.forumService
             .getSelectedForumSubject()
             .pipe(
+                filter(forum => !!Object.keys(forum).length),
                 switchMap(forum => {
                     return this.messageWebService.getMessagesByForumId(forum.id!);
                 })

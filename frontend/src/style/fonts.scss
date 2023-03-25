@@ -1,6 +1,7 @@
 :root {
     --fw-400: 400;
     --fw-500: 500;
+    --fs-12: 12px;
     --fs-16: 16px;
     --fs-18: 18px;
     --fs-20: 20px;
@@ -23,13 +24,19 @@
     font-weight: var(--fw-500);
 }
 
-.secondary-title-font {
+.secondary-title-font,
+.message-username-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-500);
 }
 
 .content-font {
     font-size: var(--fs-16);
+    font-weight: var(--fw-400);
+}
+
+.message-time-font {
+    font-size: var(--fs-12);
     font-weight: var(--fw-400);
 }
 

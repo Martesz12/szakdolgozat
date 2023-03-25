@@ -31,9 +31,8 @@ export class ForumService {
     }
 
     selectForum(forumId: number) {
-        this.forumWebService
-            .getForumById(forumId)
-            .subscribe(Forum => this.selectedForumSubject.next(Forum));
+        if (!!forumId) this.selectedForumSubject.next({} as ForumDto);
+        this.forumWebService.getForumById(forumId).subscribe(Forum => this.selectedForumSubject.next(Forum));
     }
 
     removeSelectedForum() {

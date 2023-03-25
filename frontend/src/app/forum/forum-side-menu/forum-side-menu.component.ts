@@ -155,4 +155,8 @@ export class ForumSideMenuComponent implements OnInit {
     haveArraysSameElement(array1: number[], array2: number[]): boolean {
         return !!array1.filter(element => array2.includes(element)).length;
     }
+
+    selectForum(id: number): void {
+        this.forumService.selectForum(id);
+    }
 }

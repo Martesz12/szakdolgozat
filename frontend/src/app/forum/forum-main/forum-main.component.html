@@ -1,1 +1,38 @@
-<p>forum-main works!</p>
+<div class="forum-main">
+    <mat-card class="mat-elevation-z4 forum-main-card">
+        <div *ngIf="!isForumSelected()" class="no-selected-element">
+            <mat-icon class="no-selected-element-icon mb-20">info_outline</mat-icon>
+            <div class="no-element-found-font">Válassz egy szobát!</div>
+        </div>
+        <div *ngIf="isForumSelected()" class="forum-content-main">
+            <div class="main-title-font">{{ selectedForum.name }}</div>
+            <div class="content-font forum-description">{{ selectedForum.description }}</div>
+            <div class="line"></div>
+            <div class="messages-container">
+                <div class="message" *ngFor="let message of allMessage">
+                    <div class="message-title">
+                        <div class="mr-10 message-username-font">{{ message.userId }}</div>
+                        <div class="message-time-font forum-time">
+                            {{ message.dateOfUpload | date : 'yyyy-MM-dd HH:mm' }}
+                        </div>
+                    </div>
+                    <div class="content-font message-content">
+                        {{ message.content }}
+                    </div>
+                </div>
+            </div>
+            <mat-form-field class="message-form-field" appearance="outline">
+                <textarea
+                    class="disable-resize-textarea"
+                    matInput
+                    rows="3"
+                    type="text"
+                    [formControl]="message"
+                    placeholder="Üzenet..."
+                    (keyup.enter)="sendMessage()"
+                ></textarea>
+                <mat-icon class="message-send-button" matSuffix (click)="sendMessage()">send</mat-icon>
+            </mat-form-field>
+        </div>
+    </mat-card>
+</div>
