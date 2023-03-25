@@ -1,6 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
+import { FormControl } from '@angular/forms';
+import { UniversityDto } from '../../shared/model/forum/university.dto';
+import { FacultyDto } from '../../shared/model/forum/faculty.dto';
+import { MajorDto } from '../../shared/model/forum/major.dto';
+import { UniversityService } from '../../shared/service/forum/university.service';
+import { FacultyService } from '../../shared/service/forum/faculty.service';
+import { MajorService } from '../../shared/service/forum/major.service';
 
 @Component({
     selector: 'app-forum-side-menu',
@@ -10,19 +17,72 @@ import { ForumService } from 'src/app/shared/service/forum/forum.service';
 export class ForumSideMenuComponent implements OnInit {
     allForum: ForumDto[] = [];
     filteredForums: ForumDto[] = [];
+    filteredAllForums: ForumDto[] = [];
     filterText: string = '';
 
-    constructor(private forumService: ForumService, private changeDetection: ChangeDetectorRef) {}
+    universityFilter = new FormControl(0);
+    majorsFilter = new FormControl([]);
+    facultiesFilter = new FormControl([]);
+    allUniversity: UniversityDto[] = [];
+    allFaculty: FacultyDto[] = [];
+    filteredFaculties: FacultyDto[] = [];
+    allMajor: MajorDto[] = [];
+    filteredMajors: MajorDto[] = [];
+
+    constructor(
+        private forumService: ForumService,
+        private changeDetection: ChangeDetectorRef,
+        private universityService: UniversityService,
+        private facultyService: FacultyService,
+        private majorService: MajorService
+    ) {}
 
     ngOnInit(): void {
         this.getAllForum();
+        this.getAllUniversity();
+        this.getAllFaculty();
+        this.getAllMajor();
     }
 
     private getAllForum() {
         this.forumService.getAllForumSubject().subscribe(forums => {
             this.allForum = forums.filter(forum => forum.approved);
             this.filteredForums = forums.filter(forum => forum.approved);
+            this.filteredAllForums = forums.filter(forum => forum.approved);
         });
+    }
+
+    getAllUniversity(): void {
+        this.universityService.getAllUniversitySubject().subscribe(allUniversity => {
+            this.allUniversity = allUniversity;
+        });
+    }
+
+    getAllFaculty(): void {
+        this.facultyService.getAllFacultySubject().subscribe(allFaculty => {
+            this.allFaculty = allFaculty;
+        });
+    }
+
+    getAllMajor(): void {
+        this.majorService.getAllMajorSubject().subscribe(allMajor => {
+            this.allMajor = allMajor;
+        });
+    }
+
+    universityChanged(universityId: number): void {
+        this.filteredFaculties = this.allFaculty.filter(faculty => faculty.universityId === universityId);
+        this.facultiesFilter.setValue([]);
+        this.majorsFilter.setValue([]);
+    }
+
+    facultyChanged(facultyIds: number[]): void {
+        let majorIds: number[] = [];
+        this.allFaculty.forEach(faculty => {
+            if (facultyIds.includes(faculty.id!)) majorIds.push(...faculty.majorIds);
+        });
+        this.filteredMajors = this.allMajor.filter(major => majorIds.includes(major.id!));
+        this.majorsFilter.setValue(this.majorsFilter.value!.filter(majorId => majorIds.includes(majorId)));
     }
 
     applyFilter() {
@@ -32,13 +92,13 @@ export class ForumSideMenuComponent implements OnInit {
     }
 
     private filterOnAllForum() {
-        this.filteredForums = this.allForum.filter(forum =>
+        this.filteredForums = this.filteredAllForums.filter(forum =>
             forum.name.toLowerCase().includes(this.filterText.toLowerCase())
         );
     }
 
     private highlightMatch() {
-        let matchingAttributes = document.getElementsByClassName('side-menu-element');
+        let matchingAttributes = document.getElementsByClassName('forum-name');
         let lowerFilterText = this.filterText.toLowerCase();
         let lowerAttributeText = '';
         let originalAttributeText = '';
@@ -65,5 +125,34 @@ export class ForumSideMenuComponent implements OnInit {
                 matchingAttributes[i].innerHTML = originalAttributeText;
             }
         }
+    }
+
+    filterForumsByEducation(): void {
+        this.filterText = '';
+        this.applyFilter();
+        if (this.universityFilter.value !== 0) {
+            this.filteredForums = this.allForum.filter(forum => forum.universityId === this.universityFilter.value);
+            this.filteredAllForums = this.allForum.filter(forum => forum.universityId === this.universityFilter.value);
+        } else this.filteredForums = this.allForum;
+        if (!!this.facultiesFilter.value?.length) {
+            this.filteredForums = this.allForum.filter(forum =>
+                this.haveArraysSameElement(forum.facultyIds, this.facultiesFilter.value!)
+            );
+            this.filteredAllForums = this.allForum.filter(forum =>
+                this.haveArraysSameElement(forum.facultyIds, this.facultiesFilter.value!)
+            );
+        }
+        if (!!this.majorsFilter.value?.length) {
+            this.filteredForums = this.allForum.filter(forum =>
+                this.haveArraysSameElement(forum.majorIds, this.majorsFilter.value!)
+            );
+            this.filteredAllForums = this.allForum.filter(forum =>
+                this.haveArraysSameElement(forum.majorIds, this.majorsFilter.value!)
+            );
+        }
+    }
+
+    haveArraysSameElement(array1: number[], array2: number[]): boolean {
+        return !!array1.filter(element => array2.includes(element)).length;
     }
 }
