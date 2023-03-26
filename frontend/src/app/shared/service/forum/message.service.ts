@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
 import { MessageDto } from '../../model/forum/message.dto';
 import { MessageWebService } from '../api/forum/message-web.service';
 import { ForumService } from './forum.service';
@@ -50,5 +50,17 @@ export class MessageService {
 
     resetMessageState(afterDelete: boolean = false): void {
         if (afterDelete) this.getAllMessage();
+    }
+
+    connectToActiveForumMessages(): void {
+        this.messageWebService.connectToActiveForumMessages();
+    }
+
+    disconnectFromActiveForumMessages(): void {
+        this.messageWebService.disconnectFromActiveForumMessages();
+    }
+
+    sendMessageToActiveForum(message: MessageDto): void {
+        this.messageWebService.sendMessageToActiveForum(message);
     }
 }

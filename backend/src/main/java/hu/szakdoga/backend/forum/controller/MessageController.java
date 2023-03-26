@@ -5,6 +5,8 @@ import hu.szakdoga.backend.forum.service.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,11 +16,18 @@ import java.util.List;
 @AllArgsConstructor
 public class MessageController {
     private final MessageService messageService;
+    private final SimpMessagingTemplate template;
 
     @GetMapping("/findAll")
     public ResponseEntity<List<MessageDTO>> getAllMessage() {
         List<MessageDTO> allMessage = messageService.findAllMessage();
         return new ResponseEntity<>(allMessage, HttpStatus.OK);
+    }
+
+    @MessageMapping("/addMessageToActiveForum")
+    public void addMessageToActiveForum(MessageDTO messageDTO){
+        MessageDTO newMessage = messageService.addMessage(messageDTO);
+        this.template.convertAndSend("/activeForumMessages",  newMessage);
     }
 
     @GetMapping("/find/{id}")
