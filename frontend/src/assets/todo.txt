@@ -1,2 +1,9 @@
-TODO mobilos nézet, navigáció
+TODO Üzenetek dinamikusan frissüljenek
+TODO üzenetek fordított sorrendbe töltődjenek be
+TODO a scroll rész legaljára navigáljon egyből
+TODO pinelni üzeneteet
+TODO felhasználó neve jelenjen meg
+TODO egyetem adatait megjeleníteni maybe
+
+TODO felhasználó eltárolását megreformálni
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
