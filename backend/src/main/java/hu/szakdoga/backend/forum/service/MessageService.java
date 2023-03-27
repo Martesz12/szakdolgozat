@@ -32,7 +32,7 @@ public class MessageService {
     }
 
     public List<MessageDTO> findMessagesByForumId(Long userId) {
-        return messageRepository.findByForum_Id(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+        return messageRepository.findByForum_IdOrderByDateOfUploadDesc(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
     public MessageDTO addMessage(MessageDTO messageDTO){

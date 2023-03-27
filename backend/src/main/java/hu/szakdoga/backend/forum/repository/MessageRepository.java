@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
-    List<MessageEntity> findByForum_Id(Long forumId);
+    List<MessageEntity> findByForum_IdOrderByDateOfUploadDesc(Long forumId);
 }

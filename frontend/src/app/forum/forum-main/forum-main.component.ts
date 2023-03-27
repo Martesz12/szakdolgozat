@@ -40,7 +40,9 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     getMessages(): void {
-        this.messageService.getAllMessageSubject().subscribe(messages => (this.allMessage = messages));
+        interval(1000)
+            .pipe(switchMap(() => this.messageService.getAllMessageBySelectedForumId()))
+            .subscribe(messages => (this.allMessage = messages));
     }
 
     isForumSelected(): boolean {

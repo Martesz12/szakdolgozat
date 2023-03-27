@@ -15,17 +15,18 @@ export class MessageService {
     }
 
     getAllMessage() {
-        this.forumService
-            .getSelectedForumSubject()
-            .pipe(
-                filter(forum => !!Object.keys(forum).length),
-                switchMap(forum => {
-                    return this.messageWebService.getMessagesByForumId(forum.id!);
-                })
-            )
-            .subscribe(messages => {
-                this.allMessageSubject.next(messages);
-            });
+        this.getAllMessageBySelectedForumId().subscribe(messages => {
+            this.allMessageSubject.next(messages);
+        });
+    }
+
+    getAllMessageBySelectedForumId(): Observable<MessageDto[]> {
+        return this.forumService.getSelectedForumSubject().pipe(
+            filter(forum => !!Object.keys(forum).length),
+            switchMap(forum => {
+                return this.messageWebService.getMessagesByForumId(forum.id!);
+            })
+        );
     }
 
     getAllMessageSubject(): Observable<MessageDto[]> {
