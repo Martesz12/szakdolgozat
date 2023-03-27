@@ -87,4 +87,41 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             this.selectedForum.id!
         );
     }
+
+    pinMessage(message: MessageDto) {
+        let pinnedMessage = new MessageDto(
+            true,
+            message.content,
+            message.type,
+            message.dateOfUpload,
+            message.userId,
+            message.forumId,
+            message.id
+        );
+        this.updateMessage(pinnedMessage);
+    }
+
+    unpinMessage(message: MessageDto) {
+        let pinnedMessage = new MessageDto(
+            false,
+            message.content,
+            message.type,
+            message.dateOfUpload,
+            message.userId,
+            message.forumId,
+            message.id
+        );
+        this.updateMessage(pinnedMessage);
+    }
+
+    updateMessage(updatedMessage: MessageDto) {
+        this.messageService.updateMessage(updatedMessage).subscribe({
+            next: message => {
+                console.log('message updated');
+            },
+            error: _ => {
+                console.error('message error');
+            },
+        });
+    }
 }

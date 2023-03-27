@@ -5,8 +5,22 @@
             <div class="no-element-found-font">Válassz egy szobát!</div>
         </div>
         <div *ngIf="isForumSelected()" class="forum-content-main">
-            <div class="main-title-font">{{ selectedForum.name }}</div>
-            <div class="content-font forum-description">{{ selectedForum.description }}</div>
+            <div class="forum-content-header">
+                <div>
+                    <div class="main-title-font">{{ selectedForum.name }}</div>
+                    <div class="content-font forum-description">{{ selectedForum.description }}</div>
+                </div>
+                <!-- TODO open dialog with pinned messages -->
+                <div class="forum-content-header-button-container">
+                    <button mat-mini-fab color="primary">
+                        <mat-icon>push_pin</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="primary" [matMenuTriggerFor]="infoMenu">
+                        <mat-icon>info</mat-icon>
+                    </button>
+                </div>
+            </div>
+
             <div class="line"></div>
             <div class="messages-container">
                 <div class="message" *ngFor="let message of allMessage">
@@ -16,9 +30,23 @@
                                 userMap.get(message.userId!) ? userMap.get(message.userId!)?.appUsername : 'Ismeretlen'
                             }}
                         </div>
-                        <div class="message-time-font forum-time">
+                        <div class="message-time-font forum-time mr-10">
                             {{ message.dateOfUpload | date : 'yyyy-MM-dd HH:mm' }}
                         </div>
+                        <img
+                            *ngIf="!message.pinned"
+                            class="pin-icon"
+                            src="assets/icons/push_pin.svg"
+                            alt="pin"
+                            (click)="pinMessage(message)"
+                        />
+                        <img
+                            *ngIf="message.pinned"
+                            class="pin-icon"
+                            src="assets/icons/push_pin_filled.svg"
+                            alt="unpin"
+                            (click)="unpinMessage(message)"
+                        />
                     </div>
                     <div class="content-font message-content">
                         {{ message.content }}
@@ -40,3 +68,18 @@
         </div>
     </mat-card>
 </div>
+
+<mat-menu #infoMenu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+    </button>
+    <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voice mail</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+    </button>
+</mat-menu>

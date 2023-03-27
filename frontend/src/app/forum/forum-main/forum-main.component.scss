@@ -84,3 +84,31 @@
     cursor: pointer;
     color: var(--primary);
 }
+
+.pin-icon {
+    opacity: 0;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.pin-icon:hover {
+    filter: invert(17%) sepia(81%) saturate(1563%) hue-rotate(173deg) brightness(93%) contrast(101%);
+}
+
+.message-title:hover {
+    & .pin-icon {
+        opacity: 1;
+    }
+}
+
+.forum-content-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forum-content-header-button-container {
+    width: 120px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
