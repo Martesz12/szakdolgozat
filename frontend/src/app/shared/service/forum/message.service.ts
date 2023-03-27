@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
 import { MessageDto } from '../../model/forum/message.dto';
 import { MessageWebService } from '../api/forum/message-web.service';
 import { ForumService } from './forum.service';
@@ -15,17 +15,18 @@ export class MessageService {
     }
 
     getAllMessage() {
-        this.forumService
-            .getSelectedForumSubject()
-            .pipe(
-                filter(forum => !!Object.keys(forum).length),
-                switchMap(forum => {
-                    return this.messageWebService.getMessagesByForumId(forum.id!);
-                })
-            )
-            .subscribe(messages => {
-                this.allMessageSubject.next(messages);
-            });
+        this.getAllMessageBySelectedForumId().subscribe(messages => {
+            this.allMessageSubject.next(messages);
+        });
+    }
+
+    getAllMessageBySelectedForumId(): Observable<MessageDto[]> {
+        return this.forumService.getSelectedForumSubject().pipe(
+            filter(forum => !!Object.keys(forum).length),
+            switchMap(forum => {
+                return this.messageWebService.getMessagesByForumId(forum.id!);
+            })
+        );
     }
 
     getAllMessageSubject(): Observable<MessageDto[]> {

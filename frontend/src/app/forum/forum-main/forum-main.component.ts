@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ForumService } from '../../shared/service/forum/forum.service';
 import { ForumDto } from '../../shared/model/forum/forum.dto';
 import { FormControl } from '@angular/forms';
@@ -6,13 +6,14 @@ import { MessageService } from '../../shared/service/forum/message.service';
 import { MessageDto } from '../../shared/model/forum/message.dto';
 import { MessageTypeEnum } from '../../shared/model/forum/message-type.enum';
 import { UserService } from '../../shared/service/user.service';
+import { interval, switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-forum-main',
     templateUrl: './forum-main.component.html',
     styleUrls: ['./forum-main.component.scss'],
 })
-export class ForumMainComponent implements OnInit {
+export class ForumMainComponent implements OnInit, OnDestroy {
     selectedForum: ForumDto = {} as ForumDto;
     message = new FormControl('');
     allMessage: MessageDto[] = [];
@@ -37,7 +38,9 @@ export class ForumMainComponent implements OnInit {
     }
 
     getMessages(): void {
-        this.messageService.getAllMessageSubject().subscribe(messages => (this.allMessage = messages));
+        interval(1000)
+            .pipe(switchMap(() => this.messageService.getAllMessageBySelectedForumId()))
+            .subscribe(messages => (this.allMessage = messages));
     }
 
     isForumSelected(): boolean {
