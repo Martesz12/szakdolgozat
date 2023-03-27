@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationWebService } from './api/authentication/authentication-web.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthenticationResponse } from '../model/authentication/authentication-response';
 import { AuthenticationRequest } from '../model/authentication/authentication-request';
 import { RegisterRequest } from '../model/authentication/register-request';
 import { UserDto } from '../model/authentication/dto/user.dto';
 import { Router } from '@angular/router';
+import { UserWebService } from './api/authentication/user-web.service';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,11 @@ export class UserService {
     private userId: number = 0;
     private token: string = '';
 
-    constructor(private authenticationWebService: AuthenticationWebService, private router: Router) {}
+    constructor(
+        private authenticationWebService: AuthenticationWebService,
+        private router: Router,
+        private userWebService: UserWebService
+    ) {}
 
     login(authRequest: AuthenticationRequest): Observable<AuthenticationResponse> {
         return this.authenticationWebService.login(authRequest);
@@ -47,5 +52,9 @@ export class UserService {
 
     getUserId(): number {
         return this.userId;
+    }
+
+    getUsersByIds(userIds: number[]): Observable<UserDto[]> {
+        return this.userWebService.getUsersByIds(userIds);
     }
 }

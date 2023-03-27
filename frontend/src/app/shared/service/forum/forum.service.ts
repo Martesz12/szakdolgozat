@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { ForumDto } from '../../model/forum/forum.dto';
 import { ForumWebService } from '../api/forum/forum-web.service';
 import { UserService } from '../user.service';
@@ -31,7 +30,7 @@ export class ForumService {
     }
 
     selectForum(forumId: number) {
-        if (!!forumId) this.selectedForumSubject.next({} as ForumDto);
+        if (!forumId) this.selectedForumSubject.next({} as ForumDto);
         this.forumWebService.getForumById(forumId).subscribe(Forum => this.selectedForumSubject.next(Forum));
     }
 

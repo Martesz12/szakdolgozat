@@ -28,6 +28,7 @@ export class ForumSideMenuComponent implements OnInit {
     filteredFaculties: FacultyDto[] = [];
     allMajor: MajorDto[] = [];
     filteredMajors: MajorDto[] = [];
+    selectedForumId: number = 0;
 
     constructor(
         private forumService: ForumService,
@@ -157,6 +158,7 @@ export class ForumSideMenuComponent implements OnInit {
     }
 
     selectForum(id: number): void {
+        this.selectedForumId = id;
         this.forumService.selectForum(id);
     }
 }

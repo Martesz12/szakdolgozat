@@ -6,7 +6,8 @@ import { MessageService } from '../../shared/service/forum/message.service';
 import { MessageDto } from '../../shared/model/forum/message.dto';
 import { MessageTypeEnum } from '../../shared/model/forum/message-type.enum';
 import { UserService } from '../../shared/service/user.service';
-import { interval, switchMap } from 'rxjs';
+import { UserDto } from '../../shared/model/authentication/dto/user.dto';
+import { switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-forum-main',
@@ -17,6 +18,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     selectedForum: ForumDto = {} as ForumDto;
     message = new FormControl('');
     allMessage: MessageDto[] = [];
+    userMap: Map<number, UserDto> = new Map<number, UserDto>();
 
     constructor(
         private forumService: ForumService,
@@ -38,9 +40,22 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     getMessages(): void {
-        interval(1000)
-            .pipe(switchMap(() => this.messageService.getAllMessageBySelectedForumId()))
-            .subscribe(messages => (this.allMessage = messages));
+        this.messageService
+            .getAllMessageSubject()
+            .pipe(
+                switchMap(messages => {
+                    this.allMessage = messages;
+                    let userIds: Set<number> = new Set();
+                    messages.forEach(message => userIds.add(message.userId));
+                    return this.userService.getUsersByIds(Array.from(userIds));
+                })
+            )
+            .subscribe(users => {
+                users.forEach(user => this.userMap.set(user.id!, user));
+            });
+        // interval(1000)
+        //     .pipe(switchMap(() => this.messageService.getAllMessageBySelectedForumId()))
+        //     .subscribe(messages => (this.allMessage = messages));
     }
 
     isForumSelected(): boolean {

@@ -11,7 +11,11 @@
             <div class="messages-container">
                 <div class="message" *ngFor="let message of allMessage">
                     <div class="message-title">
-                        <div class="mr-10 message-username-font">{{ message.userId }}</div>
+                        <div class="mr-10 message-username-font">
+                            {{
+                                userMap.get(message.userId!) ? userMap.get(message.userId!)?.appUsername : 'Ismeretlen'
+                            }}
+                        </div>
                         <div class="message-time-font forum-time">
                             {{ message.dateOfUpload | date : 'yyyy-MM-dd HH:mm' }}
                         </div>

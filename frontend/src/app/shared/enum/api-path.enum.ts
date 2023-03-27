@@ -12,4 +12,5 @@ export enum ApiPath {
     Logout = 'logout',
     FindByUserId = 'findByUserId',
     FindByForumId = 'findByForumId',
+    FindUsersByIds = 'findUsersByIds',
 }
