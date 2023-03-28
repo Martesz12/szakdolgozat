@@ -18,6 +18,10 @@ public class MajorService {
         return majorRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
+    public List<MajorDTO> findMajorsByIds(List<Long> userId) {
+        return this.majorRepository.findMajorsByIds(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public MajorDTO convertEntityToDto(MajorEntity entity) {
         return new MajorDTO(entity.getId(), entity.getName(), entity.getAbbreviation());
     }

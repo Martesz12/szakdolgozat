@@ -14,12 +14,10 @@ export class FacultyService {
     }
 
     getAllFaculty() {
-        this.facultyWebService
-            .getAllFaculty()
-            .subscribe(facultys => {
-                console.log(facultys);
-                this.allFacultySubject.next(facultys);
-            });
+        this.facultyWebService.getAllFaculty().subscribe(facultys => {
+            console.log(facultys);
+            this.allFacultySubject.next(facultys);
+        });
     }
 
     getAllFacultySubject(): Observable<FacultyDto[]> {
@@ -28,5 +26,9 @@ export class FacultyService {
 
     resetFacultyState(afterDelete: boolean = false): void {
         if (afterDelete) this.getAllFaculty();
+    }
+
+    getFacultiesByIds(facultyIds: number[]): Observable<FacultyDto[]> {
+        return this.facultyWebService.getFacultiesByIds(facultyIds);
     }
 }

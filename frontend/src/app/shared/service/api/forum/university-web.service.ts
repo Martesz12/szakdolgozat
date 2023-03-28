@@ -5,6 +5,7 @@ import { ApiPath } from 'src/app/shared/enum/api-path.enum';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../../user.service';
 import { UniversityDto } from 'src/app/shared/model/forum/university.dto';
+import { TeacherDto } from '../../../model/timetable/dto/teacher.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +22,12 @@ export class UniversityWebService {
     getAllUniversity(): Observable<UniversityDto[]> {
         var fullPath = this.buildFullPath(ApiPath.FindAll);
         return this.http.get<UniversityDto[]>(fullPath, { headers: this.createHeader() });
+    }
+
+    getUniversityById(universityId: number): Observable<UniversityDto> {
+        var fullPath = this.buildFullPath(ApiPath.FindById);
+        fullPath += '/' + universityId;
+        return this.http.get<UniversityDto>(fullPath, { headers: this.createHeader() });
     }
 
     createHeader(): HttpHeaders {

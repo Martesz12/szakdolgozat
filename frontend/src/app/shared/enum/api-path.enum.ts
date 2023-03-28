@@ -13,4 +13,6 @@ export enum ApiPath {
     FindByUserId = 'findByUserId',
     FindByForumId = 'findByForumId',
     FindUsersByIds = 'findUsersByIds',
+    FindMajorsByIds = 'findMajorsByIds',
+    FindFacultiesByIds = 'findFacultiesByIds',
 }

@@ -7,7 +7,13 @@ import { MessageDto } from '../../shared/model/forum/message.dto';
 import { MessageTypeEnum } from '../../shared/model/forum/message-type.enum';
 import { UserService } from '../../shared/service/user.service';
 import { UserDto } from '../../shared/model/authentication/dto/user.dto';
-import { switchMap } from 'rxjs';
+import { filter, forkJoin, of, switchMap } from 'rxjs';
+import { UniversityDto } from '../../shared/model/forum/university.dto';
+import { MajorDto } from '../../shared/model/forum/major.dto';
+import { FacultyDto } from '../../shared/model/forum/faculty.dto';
+import { UniversityService } from '../../shared/service/forum/university.service';
+import { MajorService } from '../../shared/service/forum/major.service';
+import { FacultyService } from '../../shared/service/forum/faculty.service';
 
 @Component({
     selector: 'app-forum-main',
@@ -20,15 +26,25 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     allMessage: MessageDto[] = [];
     userMap: Map<number, UserDto> = new Map<number, UserDto>();
 
+    selectedForumUniversity: UniversityDto = {} as UniversityDto;
+    selectedForumMajors: MajorDto[] = [];
+    selectedForumFaculties: FacultyDto[] = [];
+
+    isForumSelected: boolean = false;
+
     constructor(
         private forumService: ForumService,
         private messageService: MessageService,
-        private userService: UserService
+        private userService: UserService,
+        private universtiyService: UniversityService,
+        private majorService: MajorService,
+        private facultyService: FacultyService
     ) {}
 
     ngOnInit(): void {
         this.getSelectedForum();
         this.getMessages();
+        this.checkForumSelected();
     }
 
     ngOnDestroy(): void {
@@ -36,7 +52,24 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     getSelectedForum(): void {
-        this.forumService.getSelectedForumSubject().subscribe(forum => (this.selectedForum = forum));
+        this.forumService
+            .getSelectedForumSubject()
+            .pipe(
+                filter(forum => !!Object.keys(forum).length),
+                switchMap(forum => {
+                    this.selectedForum = forum;
+                    return forkJoin([
+                        this.universtiyService.getUniversityById(forum.universityId),
+                        this.majorService.getMajorsByIds(forum.majorIds),
+                        this.facultyService.getFacultiesByIds(forum.facultyIds),
+                    ]);
+                })
+            )
+            .subscribe(data => {
+                this.selectedForumUniversity = data[0];
+                this.selectedForumMajors = data[1];
+                this.selectedForumFaculties = data[2];
+            });
     }
 
     getMessages(): void {
@@ -58,8 +91,10 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         //     .subscribe(messages => (this.allMessage = messages));
     }
 
-    isForumSelected(): boolean {
-        return !!Object.keys(this.selectedForum).length;
+    checkForumSelected() {
+        this.forumService.getSelectedForumSubject().subscribe(forum => {
+            this.isForumSelected = !!Object.keys(forum).length;
+        });
     }
 
     sendMessage() {

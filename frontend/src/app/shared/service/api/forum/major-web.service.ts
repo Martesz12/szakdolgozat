@@ -5,6 +5,7 @@ import { ApiPath } from 'src/app/shared/enum/api-path.enum';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../../user.service';
 import { MajorDto } from 'src/app/shared/model/forum/major.dto';
+import { UserDto } from '../../../model/authentication/dto/user.dto';
 
 @Injectable({
     providedIn: 'root',
@@ -21,6 +22,11 @@ export class MajorWebService {
     getAllMajor(): Observable<MajorDto[]> {
         var fullPath = this.buildFullPath(ApiPath.FindAll);
         return this.http.get<MajorDto[]>(fullPath, { headers: this.createHeader() });
+    }
+
+    getMajorsByIds(majorIds: number[]): Observable<MajorDto[]> {
+        var fullPath = this.buildFullPath(ApiPath.FindMajorsByIds);
+        return this.http.post<MajorDto[]>(fullPath, majorIds, { headers: this.createHeader() });
     }
 
     createHeader(): HttpHeaders {
