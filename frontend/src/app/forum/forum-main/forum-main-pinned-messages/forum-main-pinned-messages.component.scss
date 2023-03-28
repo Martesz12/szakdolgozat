@@ -1,0 +1,45 @@
+.pinned-message-title-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.line {
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid var(--neutral200);
+}
+
+.messages-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.message-title {
+    display: flex;
+    align-items: baseline;
+    margin: 5px 0;
+}
+
+.forum-time {
+    color: var(--grey);
+}
+
+.message-content {
+    padding-left: 10px;
+}
+
+.no-pinned-message {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 30px;
+}

@@ -34,6 +34,9 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     isForumSelected: boolean = false;
 
+    isFileSelectionDisplayed: boolean = false;
+    messageFile: File | null = null;
+
     constructor(
         private forumService: ForumService,
         private messageService: MessageService,
@@ -101,8 +104,8 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        if (this.message.value !== '') {
-            let message = this.createMessage();
+        if (this.message.value !== '' && !this.isFileSelectionDisplayed) {
+            let message = this.createMessage(MessageTypeEnum.MESSAGE);
             this.messageService.addMessage(message).subscribe({
                 next: message => {
                     this.message.setValue('');
@@ -112,14 +115,16 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                     console.error('message error');
                 },
             });
+        } else {
+            console.log('file upload');
         }
     }
 
-    private createMessage() {
+    private createMessage(type: MessageTypeEnum) {
         return new MessageDto(
             false,
             this.message.value!,
-            MessageTypeEnum.MESSAGE,
+            type,
             new Date(),
             this.userService.getUserId(),
             this.selectedForum.id!
@@ -169,5 +174,16 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             width: '700px',
             height: '500px',
         });
+    }
+
+    onFileSelected($event: any) {
+        console.log($event.target.files[0]);
+        this.messageFile = $event.target.files[0];
+    }
+
+    setFileSelection(): void {
+        if (!this.isFileSelectionDisplayed) this.message.disable();
+        if (this.isFileSelectionDisplayed) this.message.enable();
+        this.isFileSelectionDisplayed = !this.isFileSelectionDisplayed;
     }
 }

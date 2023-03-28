@@ -1,0 +1,23 @@
+<div>
+    <div class="pinned-message-title-container">
+        <mat-icon class="mr-10">push_pin</mat-icon>
+        <div class="secondary-title-font">Kitűzött üzenetek</div>
+    </div>
+    <div class="line"></div>
+    <div class="messages-container">
+        <div class="message" *ngFor="let message of pinnedMessage">
+            <div class="message-title">
+                <div class="mr-10 message-username-font">
+                    {{ userMap.get(message.userId!) ? userMap.get(message.userId!)?.appUsername : 'Ismeretlen' }}
+                </div>
+                <div class="message-time-font forum-time mr-10">
+                    {{ message.dateOfUpload | date : 'yyyy-MM-dd HH:mm' }}
+                </div>
+            </div>
+            <div class="content-font message-content">
+                {{ message.content }}
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!pinnedMessage.length" class="main-title-font no-pinned-message">Nincs még kitűzött üzenet!</div>
+</div>

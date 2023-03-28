@@ -60,7 +60,11 @@
                 </div>
                 <div class="main-title-font welcome-message">Üdv a szobában!</div>
             </div>
+            <div><input *ngIf="isFileSelectionDisplayed" type="file" (change)="onFileSelected($event)" /></div>
             <mat-form-field class="message-form-field" appearance="outline">
+                <mat-icon matPrefix class="message-send-button" (click)="setFileSelection()">
+                    {{ isFileSelectionDisplayed ? 'remove_circle' : 'add_circle' }}
+                </mat-icon>
                 <textarea
                     class="disable-resize-textarea"
                     matInput
@@ -91,8 +95,8 @@
     </div>
     <div class="line mt-5 mb-5"></div>
     <div *ngFor="let major of selectedForumMajors">
-        <mat-chip-list
-            ><mat-chip class="message-time-font">{{ major.name }}</mat-chip></mat-chip-list
-        >
+        <mat-chip-list>
+            <mat-chip class="message-time-font">{{ major.name }}</mat-chip>
+        </mat-chip-list>
     </div>
 </mat-menu>
