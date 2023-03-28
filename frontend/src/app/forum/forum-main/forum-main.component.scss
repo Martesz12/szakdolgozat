@@ -112,3 +112,14 @@
     display: flex;
     justify-content: space-between;
 }
+
+.info-menu-university-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+::ng-deep .info-menu-class {
+    padding: 10px !important;
+    font-size: 12px !important;
+}

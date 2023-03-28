@@ -69,8 +69,23 @@
     </mat-card>
 </div>
 
-<mat-menu #infoMenu="matMenu">
-    <div>{{ selectedForumUniversity.name }}</div>
-    <div *ngFor="let faculty of selectedForumFaculties">{{ faculty.name }}</div>
-    <div *ngFor="let major of selectedForumMajors">{{ major.name }}</div>
+<mat-menu #infoMenu="matMenu" class="info-menu-class">
+    <div class="info-menu-university-container">
+        <mat-icon class="mr-10">school</mat-icon>
+        <div class="content-font">{{ selectedForumUniversity.name }}</div>
+    </div>
+    <div class="line mt-5 mb-5"></div>
+    <div>
+        <mat-chip-list>
+            <mat-chip class="message-time-font" *ngFor="let faculty of selectedForumFaculties" disableRipple>{{
+                faculty.name
+            }}</mat-chip>
+        </mat-chip-list>
+    </div>
+    <div class="line mt-5 mb-5"></div>
+    <div *ngFor="let major of selectedForumMajors">
+        <mat-chip-list
+            ><mat-chip class="message-time-font">{{ major.name }}</mat-chip></mat-chip-list
+        >
+    </div>
 </mat-menu>
