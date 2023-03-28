@@ -7,13 +7,15 @@ import { MessageDto } from '../../shared/model/forum/message.dto';
 import { MessageTypeEnum } from '../../shared/model/forum/message-type.enum';
 import { UserService } from '../../shared/service/user.service';
 import { UserDto } from '../../shared/model/authentication/dto/user.dto';
-import { filter, forkJoin, of, switchMap } from 'rxjs';
+import { filter, forkJoin, switchMap } from 'rxjs';
 import { UniversityDto } from '../../shared/model/forum/university.dto';
 import { MajorDto } from '../../shared/model/forum/major.dto';
 import { FacultyDto } from '../../shared/model/forum/faculty.dto';
 import { UniversityService } from '../../shared/service/forum/university.service';
 import { MajorService } from '../../shared/service/forum/major.service';
 import { FacultyService } from '../../shared/service/forum/faculty.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ForumMainPinnedMessagesComponent } from './forum-main-pinned-messages/forum-main-pinned-messages.component';
 
 @Component({
     selector: 'app-forum-main',
@@ -38,7 +40,8 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private universtiyService: UniversityService,
         private majorService: MajorService,
-        private facultyService: FacultyService
+        private facultyService: FacultyService,
+        public dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -157,6 +160,14 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             error: _ => {
                 console.error('message error');
             },
+        });
+    }
+
+    openPinnedMessages(): void {
+        this.dialog.open(ForumMainPinnedMessagesComponent, {
+            data: { messages: this.allMessage, userMap: this.userMap },
+            width: '700px',
+            height: '500px',
         });
     }
 }
