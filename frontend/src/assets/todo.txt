@@ -1,6 +1,5 @@
 TODO Üzenetek dinamikusan frissüljenek
 TODO pinelni üzeneteet
-TODO egyetem adatait megjeleníteni maybe
 
 TODO felhasználó eltárolását megreformálni
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
