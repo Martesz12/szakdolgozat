@@ -60,6 +60,7 @@
                 </div>
                 <div class="main-title-font welcome-message">Üdv a szobában!</div>
             </div>
+<!--            <div><img [src]="this.fileWebService.getMessageFile('zv_szakdoga.png')" /></div>-->
             <div><input *ngIf="isFileSelectionDisplayed" type="file" (change)="onFileSelected($event)" /></div>
             <mat-form-field class="message-form-field" appearance="outline">
                 <mat-icon matPrefix class="message-send-button" (click)="setFileSelection()">

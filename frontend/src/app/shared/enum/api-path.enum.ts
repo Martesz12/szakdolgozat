@@ -15,4 +15,6 @@ export enum ApiPath {
     FindUsersByIds = 'findUsersByIds',
     FindMajorsByIds = 'findMajorsByIds',
     FindFacultiesByIds = 'findFacultiesByIds',
+    UploadMessageFile = 'upload',
+    GetMessageFile = 'get',
 }

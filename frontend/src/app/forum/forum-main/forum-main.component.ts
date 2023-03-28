@@ -16,6 +16,7 @@ import { MajorService } from '../../shared/service/forum/major.service';
 import { FacultyService } from '../../shared/service/forum/faculty.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForumMainPinnedMessagesComponent } from './forum-main-pinned-messages/forum-main-pinned-messages.component';
+import { FileWebService } from '../../shared/service/api/file-web.service';
 
 @Component({
     selector: 'app-forum-main',
@@ -36,6 +37,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     isFileSelectionDisplayed: boolean = false;
     messageFile: File | null = null;
+    imgUrl: string = '';
 
     constructor(
         private forumService: ForumService,
@@ -44,7 +46,8 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         private universtiyService: UniversityService,
         private majorService: MajorService,
         private facultyService: FacultyService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public fileWebService: FileWebService
     ) {}
 
     ngOnInit(): void {
@@ -116,7 +119,10 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                 },
             });
         } else {
-            console.log('file upload');
+            if (this.messageFile)
+                this.fileWebService.uploadMessageFile(this.messageFile).subscribe(file => {
+                    console.log('file upload');
+                });
         }
     }
 
@@ -185,5 +191,11 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         if (!this.isFileSelectionDisplayed) this.message.disable();
         if (this.isFileSelectionDisplayed) this.message.enable();
         this.isFileSelectionDisplayed = !this.isFileSelectionDisplayed;
+        this.fileWebService.getMessageFile('zv_szakdoga.png').subscribe(file => {
+            console.log('file loaded');
+            console.log(file);
+            // this.messageFile = file;
+            // this.imgUrl = URL.createObjectURL(file);
+        });
     }
 }
