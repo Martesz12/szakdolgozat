@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT user FROM UserEntity user WHERE user.id IN ?1")
     List<UserEntity> findUsersByIds(List<Long> id);
+
+    @Query("SELECT user FROM UserEntity user WHERE ?1 IN (SELECT token.token FROM Token token)")
+    Optional<UserEntity> findUserByToken(String token);
 }

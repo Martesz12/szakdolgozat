@@ -12,7 +12,6 @@ import { UserWebService } from './api/authentication/user-web.service';
     providedIn: 'root',
 })
 export class UserService {
-    private userId: number = 0;
     private token: string = '';
 
     constructor(
@@ -46,15 +45,11 @@ export class UserService {
         return this.token;
     }
 
-    setUserId(userId: number): void {
-        this.userId = userId;
-    }
-
-    getUserId(): number {
-        return this.userId;
-    }
-
     getUsersByIds(userIds: number[]): Observable<UserDto[]> {
         return this.userWebService.getUsersByIds(userIds);
+    }
+
+    getUserByToken(): Observable<UserDto> {
+        return this.userWebService.getUserByToken();
     }
 }

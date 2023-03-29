@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
 import { TeacherDto } from '../../model/timetable/dto/teacher.dto';
 import { TeacherWebService } from '../api/timetable/teacher-web.service';
@@ -18,9 +18,12 @@ export class TeacherService {
     }
 
     getAllTeacher() {
-        this.teacherWebService.getTeachersByUserId(this.userService.getUserId()).subscribe(teachers => {
-            this.allTeacherSubject.next(teachers);
-        });
+        this.userService
+            .getUserByToken()
+            .pipe(switchMap(user => this.teacherWebService.getTeachersByUserId(user.id!)))
+            .subscribe(teachers => {
+                this.allTeacherSubject.next(teachers);
+            });
     }
 
     getAllTeacherSubject(): Observable<TeacherDto[]> {

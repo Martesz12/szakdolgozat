@@ -22,4 +22,10 @@ public class UserController {
         List<UserDTO> users = userService.findUsersByIds(userIds);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @PostMapping("/findUserByToken")
+    public ResponseEntity<UserDTO> findUserByToken(@RequestBody String token) {
+        UserDTO user = userService.findUserByToken(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }

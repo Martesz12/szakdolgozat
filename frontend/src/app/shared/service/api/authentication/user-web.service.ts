@@ -32,6 +32,20 @@ export class UserWebService {
         );
     }
 
+    getUserByToken(): Observable<UserDto> {
+        var fullPath = this.buildFullPath(ApiPath.FindUserByToken);
+        return this.http.post<UserDto>(fullPath, localStorage.getItem('token'), { headers: this.createHeader() }).pipe(
+            catchError(err => {
+                if (err.status === 403) {
+                    localStorage.clear();
+                    this.router.navigateByUrl('authentication/login');
+                    throw 'Authentication error';
+                }
+                throw err;
+            })
+        );
+    }
+
     createHeader(): HttpHeaders {
         let token = localStorage.getItem('token');
         return new HttpHeaders({

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
-import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -18,7 +17,7 @@ export class TeacherDataOperationsSaveFormComponent {
     newWebpage = new FormControl('');
     newOffice = new FormControl('');
     newMoreInformation = new FormControl('');
-    currentUserId: number;
+    currentUserId: number | null = null;
 
     constructor(
         private teacherService: TeacherService,
@@ -29,37 +28,50 @@ export class TeacherDataOperationsSaveFormComponent {
         this.newEmail?.addValidators(Validators.maxLength(255));
         this.newWebpage?.addValidators(Validators.maxLength(255));
         this.newOffice?.addValidators(Validators.maxLength(255));
-        this.currentUserId = this.userService.getUserId();
+        this.getUserId();
+    }
+
+    getUserId(): void {
+        this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
 
     addTeacher(): void {
-        if (this.newName.valid && this.newEmail.valid && this.newWebpage.valid && this.newOffice.valid) {
-            let newTeacher: TeacherDto = this.createTeacher();
-            this.teacherService.addTeacher(newTeacher).subscribe({
-                next: teacher => {
-                    this.teacherService.getAllTeacher();
-                    this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
-                    if (teacher.id !== null) this.teacherService.selectTeacher(teacher.id);
-                    this.newName.markAsUntouched();
-                    this.snackBar.open('Tanár hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
-                },
-                error: error =>
-                    this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
-            });
+        if (this.currentUserId) {
+            if (this.newName.valid && this.newEmail.valid && this.newWebpage.valid && this.newOffice.valid) {
+                let newTeacher: TeacherDto = this.createTeacher();
+                this.teacherService.addTeacher(newTeacher).subscribe({
+                    next: teacher => {
+                        this.teacherService.getAllTeacher();
+                        this.teacherService.setTeacherDataOperationPageState(DataOperationPageState.Description);
+                        if (teacher.id !== null) this.teacherService.selectTeacher(teacher.id);
+                        this.newName.markAsUntouched();
+                        this.snackBar.open('Tanár hozzáadása sikeres!', 'X', {
+                            duration: 2000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['info-snackbar'],
+                        });
+                    },
+                    error: error =>
+                        this.snackBar.open('Hiba tanár hozzáadása során: ' + error, 'X', {
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['error-snackbar'],
+                        }),
+                });
+            } else {
+                if (this.newName.invalid) this.newName.markAsTouched();
+                if (this.newEmail.invalid) this.newEmail.markAsTouched();
+                if (this.newWebpage.invalid) this.newWebpage.markAsTouched();
+                if (this.newOffice.invalid) this.newOffice.markAsTouched();
+            }
         } else {
-            if (this.newName.invalid) this.newName.markAsTouched();
-            if (this.newEmail.invalid) this.newEmail.markAsTouched();
-            if (this.newWebpage.invalid) this.newWebpage.markAsTouched();
-            if (this.newOffice.invalid) this.newOffice.markAsTouched();
+            this.getUserId();
+            this.snackBar.open('Hiba tantárgy hozzáadása során: Felhasználó ismeretlen', 'X', {
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
         }
     }
 
@@ -75,7 +87,7 @@ export class TeacherDataOperationsSaveFormComponent {
         if (this.newEmail.value !== null) email = this.newEmail.value;
         if (this.newOffice.value !== null) office = this.newOffice.value;
         if (this.newMoreInformation.value !== null) moreInformation = this.newMoreInformation.value;
-        return new TeacherDto(name, webpage, email, this.currentUserId, office, moreInformation);
+        return new TeacherDto(name, webpage, email, this.currentUserId!, office, moreInformation);
     }
 
     getScreenWidth(): number {

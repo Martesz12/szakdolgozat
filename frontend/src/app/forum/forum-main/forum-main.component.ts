@@ -38,8 +38,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     isFileSelectionDisplayed: boolean = false;
     messageFile: File | null = null;
-    imgUrl: string = '';
-    imgBlob: Blob = new Blob();
+    currentUserId: number | null = null;
 
     constructor(
         private forumService: ForumService,
@@ -57,6 +56,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         this.getSelectedForum();
         this.getMessages();
         this.checkForumSelected();
+        this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
 
     ngOnDestroy(): void {
@@ -107,51 +107,59 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        if (this.message.value !== '' && !this.isFileSelectionDisplayed) {
-            let message = this.createMessage(MessageTypeEnum.MESSAGE, this.message.value!);
-            this.messageService.addMessage(message).subscribe({
-                next: message => {
-                    this.message.setValue('');
-                },
-                error: _ => {
-                    this.snackBar.open('Hiba üzenet elküldése során!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    });
-                },
-            });
-        } else if (this.messageFile) {
-            if (this.checkFileSize(this.messageFile)) return;
-            let messageType = this.getMessageType(this.messageFile.type);
-            if (!messageType) return;
-            let message = this.createMessage(messageType!, this.messageFile.name);
-            this.messageService
-                .addMessage(message)
-                .pipe(
-                    switchMap(newMessage => {
-                        message = newMessage;
-                        return this.fileWebService.uploadMessageFile(this.messageFile!);
-                    })
-                )
-                .subscribe({
-                    next: _ => {
-                        this.setFileSelection();
+        if (this.currentUserId) {
+            if (this.message.value !== '' && !this.isFileSelectionDisplayed) {
+                let message = this.createMessage(MessageTypeEnum.MESSAGE, this.message.value!);
+                this.messageService.addMessage(message).subscribe({
+                    next: message => {
+                        this.message.setValue('');
                     },
-                    error: err => {
-                        this.snackBar.open('Hiba a kép feltöltése során!', 'X', {
+                    error: _ => {
+                        this.snackBar.open('Hiba üzenet elküldése során!', 'X', {
                             duration: 2000,
                             horizontalPosition: 'right',
                             verticalPosition: 'bottom',
                             panelClass: ['error-snackbar'],
                         });
-                        this.messageService.deleteMessage(message.id!).subscribe();
                     },
                 });
+            } else if (this.messageFile) {
+                if (this.checkFileSize(this.messageFile)) return;
+                let messageType = this.getMessageType(this.messageFile.type);
+                if (!messageType) return;
+                let message = this.createMessage(messageType!, this.messageFile.name);
+                this.messageService
+                    .addMessage(message)
+                    .pipe(
+                        switchMap(newMessage => {
+                            message = newMessage;
+                            return this.fileWebService.uploadMessageFile(this.messageFile!);
+                        })
+                    )
+                    .subscribe({
+                        next: _ => {
+                            this.setFileSelection();
+                        },
+                        error: err => {
+                            this.snackBar.open('Hiba a kép feltöltése során!', 'X', {
+                                duration: 2000,
+                                horizontalPosition: 'right',
+                                verticalPosition: 'bottom',
+                                panelClass: ['error-snackbar'],
+                            });
+                            this.messageService.deleteMessage(message.id!).subscribe();
+                        },
+                    });
+            } else {
+                this.snackBar.open('Hiba az üzenet elküldése során!', 'X', {
+                    duration: 2000,
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                });
+            }
         } else {
-            this.snackBar.open('Hiba az üzenet elküldése során!', 'X', {
-                duration: 2000,
+            this.snackBar.open('Hiba órarend hozzáadása során: Felhasználó ismeretlen', 'X', {
                 horizontalPosition: 'right',
                 verticalPosition: 'bottom',
                 panelClass: ['error-snackbar'],
@@ -173,7 +181,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     private createMessage(type: MessageTypeEnum, content: string) {
-        return new MessageDto(false, content, type, new Date(), this.userService.getUserId(), this.selectedForum.id!);
+        return new MessageDto(false, content, type, new Date(), this.currentUserId!, this.selectedForum.id!);
     }
 
     pinMessage(message: MessageDto) {
