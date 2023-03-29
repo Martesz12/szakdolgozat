@@ -17,6 +17,7 @@ import { FacultyService } from '../../shared/service/forum/faculty.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForumMainPinnedMessagesComponent } from './forum-main-pinned-messages/forum-main-pinned-messages.component';
 import { FileWebService } from '../../shared/service/api/file-web.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-forum-main',
@@ -48,7 +49,8 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         private majorService: MajorService,
         private facultyService: FacultyService,
         public dialog: MatDialog,
-        public fileWebService: FileWebService
+        public fileWebService: FileWebService,
+        public snackBar: MatSnackBar
     ) {}
 
     ngOnInit(): void {
@@ -96,9 +98,6 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             .subscribe(users => {
                 users.forEach(user => this.userMap.set(user.id!, user));
             });
-        // interval(1000)
-        //     .pipe(switchMap(() => this.messageService.getAllMessageBySelectedForumId()))
-        //     .subscribe(messages => (this.allMessage = messages));
     }
 
     checkForumSelected() {
@@ -113,28 +112,64 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             this.messageService.addMessage(message).subscribe({
                 next: message => {
                     this.message.setValue('');
-                    console.log('message sent');
                 },
                 error: _ => {
-                    console.error('message error');
+                    this.snackBar.open('Hiba üzenet elküldése során!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    });
                 },
             });
+        } else if (this.messageFile) {
+            if (this.checkFileSize(this.messageFile)) return;
+            let messageType = this.getMessageType(this.messageFile.type);
+            if (!messageType) return;
+            let message = this.createMessage(messageType!, this.messageFile.name);
+            this.messageService
+                .addMessage(message)
+                .pipe(
+                    switchMap(newMessage => {
+                        message = newMessage;
+                        return this.fileWebService.uploadMessageFile(this.messageFile!);
+                    })
+                )
+                .subscribe({
+                    next: _ => {
+                        this.setFileSelection();
+                    },
+                    error: err => {
+                        this.snackBar.open('Hiba a kép feltöltése során!', 'X', {
+                            duration: 2000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['error-snackbar'],
+                        });
+                        this.messageService.deleteMessage(message.id!).subscribe();
+                    },
+                });
         } else {
-            if (this.messageFile) {
-                let fileType = this.messageFile.type.split('/')[0];
-                let messageType;
-                if (fileType === 'image') messageType = MessageTypeEnum.IMAGE;
-                else if (fileType === 'application') messageType = MessageTypeEnum.FILE;
-                else return; //TODO error msg nem támogatott formátum
-                let message = this.createMessage(messageType, this.messageFile.name);
-                this.messageService
-                    .addMessage(message)
-                    .pipe(switchMap(_ => this.fileWebService.uploadMessageFile(this.messageFile!)))
-                    .subscribe(_ => {
-                        console.log('file uploaded');
-                    });
-            }
+            this.snackBar.open('Hiba az üzenet elküldése során!', 'X', {
+                duration: 2000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
         }
+    }
+
+    private checkFileSize(messageFile: File): boolean {
+        if (messageFile.size > 500000) {
+            this.snackBar.open('A fájl mérete túl nagy! Legfejlebb 500KB méretű fájl feltöltése támogatott!', 'X', {
+                duration: 2000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
+            return true;
+        }
+        return false;
     }
 
     private createMessage(type: MessageTypeEnum, content: string) {
@@ -169,11 +204,14 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     updateMessage(updatedMessage: MessageDto) {
         this.messageService.updateMessage(updatedMessage).subscribe({
-            next: message => {
-                console.log('message updated');
-            },
+            next: message => {},
             error: _ => {
-                console.error('message error');
+                this.snackBar.open('Hiba üzenet kitűzése során!', 'X', {
+                    duration: 2000,
+                    horizontalPosition: 'right',
+                    verticalPosition: 'bottom',
+                    panelClass: ['error-snackbar'],
+                });
             },
         });
     }
@@ -187,16 +225,15 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     onFileSelected($event: any) {
-        console.log($event.target.files[0]);
         this.messageFile = $event.target.files[0];
     }
 
-    imageToShow: any = null;
-    result: any;
-
     setFileSelection(): void {
         if (!this.isFileSelectionDisplayed) this.message.disable();
-        if (this.isFileSelectionDisplayed) this.message.enable();
+        if (this.isFileSelectionDisplayed) {
+            this.messageFile = null;
+            this.message.enable();
+        }
         this.isFileSelectionDisplayed = !this.isFileSelectionDisplayed;
     }
 
@@ -209,5 +246,20 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             elem.click();
             document.body.removeChild(elem);
         });
+    }
+
+    private getMessageType(type: string): MessageTypeEnum | null {
+        let fileType = type.split('/')[0];
+        if (fileType === 'image') return MessageTypeEnum.IMAGE;
+        else if (fileType === 'application' || fileType === 'text') return MessageTypeEnum.FILE;
+        else {
+            this.snackBar.open('Ez a fájlformátum nem támogatott!', 'X', {
+                duration: 2000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
+            return null;
+        }
     }
 }

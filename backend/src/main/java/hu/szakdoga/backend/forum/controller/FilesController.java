@@ -23,33 +23,21 @@ public class FilesController {
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         storageService.save(file);
         return new ResponseEntity<>(HttpStatus.OK);
-//        String message = "";
-//        try {
-//            storageService.save(file);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } catch (Exception e) {
-//            message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
-//            return new ResponseEntity<>(message, HttpStatus.EXPECTATION_FAILED);
-//        }
     }
 
     @GetMapping("/get/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.load(filename);
-        //TODO ellenőrizni a mediatype típusokra
+        MediaType mediaType = storageService.checkFileType(filename);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .contentType(MediaType.TEXT_PLAIN)
+                .contentType(mediaType)
                 .body(file);
     }
 
     @GetMapping("/getImage/{filename:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IllegalAccessException {
-        String fileType = filename.split("\\.")[1];
-        MediaType mediaType = null;
-        if(Objects.equals(fileType, "png")) mediaType = MediaType.IMAGE_PNG;
-        else if(Objects.equals(fileType, "jpeg") || Objects.equals(fileType, "jpg")) mediaType = MediaType.IMAGE_JPEG;
-        else if(Objects.equals(fileType, "gif")) mediaType = MediaType.IMAGE_GIF;
+        MediaType mediaType = storageService.checkIfFileImage(filename);
         if(mediaType == null) throw new IllegalAccessException("A fájl nem kép");
         Resource file = storageService.load(filename);
         return ResponseEntity.ok()

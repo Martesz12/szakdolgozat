@@ -2,6 +2,7 @@ package hu.szakdoga.backend.forum.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Service
@@ -64,5 +66,22 @@ public class FilesStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
+    }
+
+    public MediaType checkIfFileImage(String filename) {
+        String fileType = filename.split("\\.")[1];
+        if(Objects.equals(fileType, "png")) return MediaType.IMAGE_PNG;
+        else if(Objects.equals(fileType, "jpeg") || Objects.equals(fileType, "jpg")) return MediaType.IMAGE_JPEG;
+        else if(Objects.equals(fileType, "gif")) return MediaType.IMAGE_GIF;
+        else return null;
+    }
+
+    public MediaType checkFileType(String filename) {
+        String fileType = filename.split("\\.")[1];
+        if(Objects.equals(fileType, "png")) return MediaType.IMAGE_PNG;
+        else if(Objects.equals(fileType, "jpeg") || Objects.equals(fileType, "jpg")) return MediaType.IMAGE_JPEG;
+        else if(Objects.equals(fileType, "gif")) return MediaType.IMAGE_GIF;
+        else if(Objects.equals(fileType, "pdf")) return MediaType.APPLICATION_PDF;
+        else return MediaType.TEXT_PLAIN;
     }
 }

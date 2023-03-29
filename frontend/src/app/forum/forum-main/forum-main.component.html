@@ -10,12 +10,25 @@
                     <div class="main-title-font">{{ selectedForum.name }}</div>
                     <div class="content-font forum-description">{{ selectedForum.description }}</div>
                 </div>
-                <!-- TODO open dialog with pinned messages -->
                 <div class="forum-content-header-button-container">
-                    <button mat-mini-fab color="primary" (click)="openPinnedMessages()">
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        (click)="openPinnedMessages()"
+                        [matTooltip]="'Kitűzött üzenetek'"
+                        [matTooltipPosition]="'left'"
+                        [matTooltipShowDelay]="500"
+                    >
                         <mat-icon>push_pin</mat-icon>
                     </button>
-                    <button mat-mini-fab color="primary" [matMenuTriggerFor]="infoMenu">
+                    <button
+                        mat-mini-fab
+                        color="primary"
+                        [matMenuTriggerFor]="infoMenu"
+                        [matTooltip]="'Szoba infók'"
+                        [matTooltipPosition]="'below'"
+                        [matTooltipShowDelay]="500"
+                    >
                         <mat-icon>info</mat-icon>
                     </button>
                 </div>
@@ -60,9 +73,14 @@
                     <div *ngIf="message.type === 'FILE'" class="content-font message-content">
                         <div class="file-message-container">
                             <mat-icon> insert_drive_file </mat-icon>
-                            <span class="downloadable-file" (click)="downloadFile(message.content)">{{
-                                message.content
-                            }}</span>
+                            <span
+                                class="downloadable-file"
+                                (click)="downloadFile(message.content)"
+                                [matTooltip]="'Kattints a fájl letöltéséhez'"
+                                [matTooltipPosition]="'above'"
+                                [matTooltipShowDelay]="500"
+                                >{{ message.content }}</span
+                            >
                         </div>
                     </div>
                     <div *ngIf="message.type === 'IMAGE'" class="content-font message-content">
@@ -71,7 +89,12 @@
                             [src]="'http://localhost:8080/file/getImage/' + message.content"
                             alt=""
                         />
-                        <mat-icon class="ml-5 image-download-icon" (click)="downloadFile(message.content)"
+                        <mat-icon
+                            class="ml-5 image-download-icon"
+                            (click)="downloadFile(message.content)"
+                            [matTooltip]="'Kép letöltése'"
+                            [matTooltipPosition]="'right'"
+                            [matTooltipShowDelay]="500"
                             >download</mat-icon
                         >
                     </div>
@@ -80,7 +103,14 @@
             </div>
             <div><input *ngIf="isFileSelectionDisplayed" type="file" (change)="onFileSelected($event)" /></div>
             <mat-form-field class="message-form-field" appearance="outline">
-                <mat-icon matPrefix class="message-send-button" (click)="setFileSelection()">
+                <mat-icon
+                    matPrefix
+                    class="message-send-button"
+                    (click)="setFileSelection()"
+                    [matTooltip]="'Fájl küldése'"
+                    [matTooltipPosition]="'right'"
+                    [matTooltipShowDelay]="500"
+                >
                     {{ isFileSelectionDisplayed ? 'remove_circle' : 'add_circle' }}
                 </mat-icon>
                 <textarea
@@ -92,7 +122,15 @@
                     placeholder="Üzenet..."
                     (keyup.enter)="sendMessage()"
                 ></textarea>
-                <mat-icon class="message-send-button" matSuffix (click)="sendMessage()">send</mat-icon>
+                <mat-icon
+                    class="message-send-button"
+                    matSuffix
+                    (click)="sendMessage()"
+                    [matTooltip]="'Üzenet küldése'"
+                    [matTooltipPosition]="'left'"
+                    [matTooltipShowDelay]="500"
+                    >send</mat-icon
+                >
             </mat-form-field>
         </div>
     </mat-card>
