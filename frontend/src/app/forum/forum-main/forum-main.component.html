@@ -68,7 +68,9 @@
                         />
                     </div>
                     <div *ngIf="message.type === 'MESSAGE'" class="content-font message-content">
-                        {{ message.content }}
+                        <div *ngFor="let paragraph of message.content.split('\n')">
+                            {{ paragraph }}
+                        </div>
                     </div>
                     <div *ngIf="message.type === 'FILE'" class="content-font message-content">
                         <div class="file-message-container">

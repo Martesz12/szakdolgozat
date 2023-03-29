@@ -1,9 +1,14 @@
 <div class="side-menu">
     <div class="create-request-button-container">
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="create-request">
+        <button
+            class="create-request-button"
+            mat-raised-button
+            color="primary"
+            (click)="goToForumView('create-request')"
+        >
             Szoba léterhozás kérvény
         </button>
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="management">
+        <button class="create-request-button" mat-raised-button color="primary" (click)="goToForumView('management')">
             Szobák kezelése
         </button>
     </div>

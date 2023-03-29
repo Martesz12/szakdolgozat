@@ -1,9 +1,8 @@
-TODO megformázni a fájl kiválasztós gombot
-TODO forum message, hosszú szövegek, eltárolni, újsorok
+TODO forum-ot elmenteni újratöltés miatt
 
-TODO fájlra rákattintva dialogon nagyobb méretben
 TODO authguard ellenőrizni tokent + admin-e a fórum kezelésnél
 TODO felhasználó eltárolását megreformálni
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
 
 TODO Üzenetek dinamikusan frissüljenek
+TODO fájlra rákattintva dialogon nagyobb méretben

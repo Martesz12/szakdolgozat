@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
 import { FormControl } from '@angular/forms';
@@ -8,13 +8,14 @@ import { MajorDto } from '../../shared/model/forum/major.dto';
 import { UniversityService } from '../../shared/service/forum/university.service';
 import { FacultyService } from '../../shared/service/forum/faculty.service';
 import { MajorService } from '../../shared/service/forum/major.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-forum-side-menu',
     templateUrl: './forum-side-menu.component.html',
     styleUrls: ['./forum-side-menu.component.scss'],
 })
-export class ForumSideMenuComponent implements OnInit {
+export class ForumSideMenuComponent implements OnInit, OnDestroy {
     allForum: ForumDto[] = [];
     filteredForums: ForumDto[] = [];
     filteredAllForums: ForumDto[] = [];
@@ -35,7 +36,8 @@ export class ForumSideMenuComponent implements OnInit {
         private changeDetection: ChangeDetectorRef,
         private universityService: UniversityService,
         private facultyService: FacultyService,
-        private majorService: MajorService
+        private majorService: MajorService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -43,6 +45,10 @@ export class ForumSideMenuComponent implements OnInit {
         this.getAllUniversity();
         this.getAllFaculty();
         this.getAllMajor();
+    }
+
+    ngOnDestroy() {
+        this.selectedForumId = 0;
     }
 
     private getAllForum() {
@@ -160,5 +166,11 @@ export class ForumSideMenuComponent implements OnInit {
     selectForum(id: number): void {
         this.selectedForumId = id;
         this.forumService.selectForum(id);
+        if (this.router.url !== '/forum/main') this.router.navigateByUrl('forum/main');
+    }
+
+    goToForumView(view: string) {
+        this.router.navigateByUrl(`forum/${view}`);
+        this.selectedForumId = 0;
     }
 }
