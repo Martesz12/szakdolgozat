@@ -8,7 +8,13 @@
         >
             Szoba léterhozás kérvény
         </button>
-        <button class="create-request-button" mat-raised-button color="primary" (click)="goToForumView('management')">
+        <button
+            *ngIf="isUserAdmin"
+            class="create-request-button"
+            mat-raised-button
+            color="primary"
+            (click)="goToForumView('management')"
+        >
             Szobák kezelése
         </button>
     </div>

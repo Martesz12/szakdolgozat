@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ForumMainComponent } from './forum-main/forum-main.component';
 import { ForumCreateFormComponent } from './forum-create-form/forum-create-form.component';
 import { ForumManagementComponent } from './forum-management/forum-management.component';
+import { AdminAuthGuardService } from '../shared/service/admin-auth-guard.service';
 
 const routes: Routes = [
     {
@@ -16,6 +17,7 @@ const routes: Routes = [
     {
         path: 'management',
         component: ForumManagementComponent,
+        canActivate: [AdminAuthGuardService],
     },
     {
         path: '',

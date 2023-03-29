@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationWebService } from './api/authentication/authentication-web.service';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { AuthenticationResponse } from '../model/authentication/authentication-response';
 import { AuthenticationRequest } from '../model/authentication/authentication-request';
 import { RegisterRequest } from '../model/authentication/register-request';
 import { UserDto } from '../model/authentication/dto/user.dto';
 import { Router } from '@angular/router';
 import { UserWebService } from './api/authentication/user-web.service';
+import { Role } from '../model/authentication/role.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -51,5 +52,9 @@ export class UserService {
 
     getUserByToken(): Observable<UserDto> {
         return this.userWebService.getUserByToken();
+    }
+
+    isUserAdmin(): Observable<boolean> {
+        return this.userWebService.getUserByToken().pipe(switchMap(user => of(user.role === Role.ADMIN)));
     }
 }

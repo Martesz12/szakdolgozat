@@ -9,6 +9,7 @@ import { UniversityService } from '../../shared/service/forum/university.service
 import { FacultyService } from '../../shared/service/forum/faculty.service';
 import { MajorService } from '../../shared/service/forum/major.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../shared/service/user.service';
 
 @Component({
     selector: 'app-forum-side-menu',
@@ -30,6 +31,7 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
     allMajor: MajorDto[] = [];
     filteredMajors: MajorDto[] = [];
     selectedForumId: number = 0;
+    isUserAdmin: boolean = false;
 
     constructor(
         private forumService: ForumService,
@@ -37,7 +39,8 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
         private universityService: UniversityService,
         private facultyService: FacultyService,
         private majorService: MajorService,
-        private router: Router
+        private router: Router,
+        public userService: UserService
     ) {}
 
     ngOnInit(): void {
@@ -46,6 +49,7 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
         this.getAllFaculty();
         this.getAllMajor();
         this.setViewdForum();
+        this.userService.isUserAdmin().subscribe(isAdmin => (this.isUserAdmin = isAdmin));
     }
 
     ngOnDestroy() {
