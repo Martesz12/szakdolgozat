@@ -145,11 +145,29 @@
 }
 
 .message-image {
-    height: 200px;
-    width: 350px;
+    max-height: 200px;
+    max-width: 350px;
 }
 
 .image-download-icon:hover {
     color: var(--primary);
     cursor: pointer;
+}
+@media (max-width: 500px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 300px;
+    }
+}
+@media (max-width: 400px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 250px;
+    }
+}
+@media (max-width: 350px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 200px;
+    }
 }

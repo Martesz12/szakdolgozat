@@ -1,7 +1,7 @@
 TODO megformázni a fájl kiválasztós gombot
-TODO kép méretezése (max-width, max-height)
 TODO forum message, hosszú szövegek, eltárolni, újsorok
 
+TODO fájlra rákattintva dialogon nagyobb méretben
 TODO authguard ellenőrizni tokent + admin-e a fórum kezelésnél
 TODO felhasználó eltárolását megreformálni
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
