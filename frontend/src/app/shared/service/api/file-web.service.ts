@@ -23,10 +23,11 @@ export class FileWebService {
         return this.http.post<string>(fullPath, formData, { headers: this.createHeader() });
     }
 
-    getMessageFile(filename: string): Observable<any> {
+    getMessageFile(filename: string): Observable<Blob> {
         var fullPath = this.buildFullPath(ApiPath.GetMessageFile);
         fullPath += '/' + filename;
-        return this.http.get<any>(fullPath, { headers: this.createHeader() });
+        // @ts-ignore
+        return this.http.get<Blob>(fullPath, { headers: this.createHeader(), responseType: 'blob' });
     }
 
     createHeader(): HttpHeaders {

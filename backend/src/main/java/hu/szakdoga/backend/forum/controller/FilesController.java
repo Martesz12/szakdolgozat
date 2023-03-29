@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/file")
@@ -31,11 +34,27 @@ public class FilesController {
     }
 
     @GetMapping("/get/{filename:.+}")
-    @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.load(filename);
-        return new ResponseEntity<>(file, HttpStatus.OK);
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        //TODO ellenőrizni a mediatype típusokra
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(file);
+    }
+
+    @GetMapping("/getImage/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) throws IllegalAccessException {
+        String fileType = filename.split("\\.")[1];
+        MediaType mediaType = null;
+        if(Objects.equals(fileType, "png")) mediaType = MediaType.IMAGE_PNG;
+        else if(Objects.equals(fileType, "jpeg") || Objects.equals(fileType, "jpg")) mediaType = MediaType.IMAGE_JPEG;
+        else if(Objects.equals(fileType, "gif")) mediaType = MediaType.IMAGE_GIF;
+        if(mediaType == null) throw new IllegalAccessException("A fájl nem kép");
+        Resource file = storageService.load(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .contentType(mediaType)
+                .body(file);
     }
 }

@@ -38,6 +38,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     isFileSelectionDisplayed: boolean = false;
     messageFile: File | null = null;
     imgUrl: string = '';
+    imgBlob: Blob = new Blob();
 
     constructor(
         private forumService: ForumService,
@@ -108,7 +109,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     sendMessage() {
         if (this.message.value !== '' && !this.isFileSelectionDisplayed) {
-            let message = this.createMessage(MessageTypeEnum.MESSAGE);
+            let message = this.createMessage(MessageTypeEnum.MESSAGE, this.message.value!);
             this.messageService.addMessage(message).subscribe({
                 next: message => {
                     this.message.setValue('');
@@ -119,22 +120,25 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                 },
             });
         } else {
-            if (this.messageFile)
-                this.fileWebService.uploadMessageFile(this.messageFile).subscribe(file => {
-                    console.log('file upload');
-                });
+            if (this.messageFile) {
+                let fileType = this.messageFile.type.split('/')[0];
+                let messageType;
+                if (fileType === 'image') messageType = MessageTypeEnum.IMAGE;
+                else if (fileType === 'application') messageType = MessageTypeEnum.FILE;
+                else return; //TODO error msg nem támogatott formátum
+                let message = this.createMessage(messageType, this.messageFile.name);
+                this.messageService
+                    .addMessage(message)
+                    .pipe(switchMap(_ => this.fileWebService.uploadMessageFile(this.messageFile!)))
+                    .subscribe(_ => {
+                        console.log('file uploaded');
+                    });
+            }
         }
     }
 
-    private createMessage(type: MessageTypeEnum) {
-        return new MessageDto(
-            false,
-            this.message.value!,
-            type,
-            new Date(),
-            this.userService.getUserId(),
-            this.selectedForum.id!
-        );
+    private createMessage(type: MessageTypeEnum, content: string) {
+        return new MessageDto(false, content, type, new Date(), this.userService.getUserId(), this.selectedForum.id!);
     }
 
     pinMessage(message: MessageDto) {
@@ -187,15 +191,23 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         this.messageFile = $event.target.files[0];
     }
 
+    imageToShow: any = null;
+    result: any;
+
     setFileSelection(): void {
         if (!this.isFileSelectionDisplayed) this.message.disable();
         if (this.isFileSelectionDisplayed) this.message.enable();
         this.isFileSelectionDisplayed = !this.isFileSelectionDisplayed;
-        this.fileWebService.getMessageFile('zv_szakdoga.png').subscribe(file => {
-            console.log('file loaded');
-            console.log(file);
-            // this.messageFile = file;
-            // this.imgUrl = URL.createObjectURL(file);
+    }
+
+    downloadFile(fileName: string): void {
+        this.fileWebService.getMessageFile(fileName).subscribe(file => {
+            const elem = window.document.createElement('a');
+            elem.href = window.URL.createObjectURL(file);
+            elem.download = fileName;
+            document.body.appendChild(elem);
+            elem.click();
+            document.body.removeChild(elem);
         });
     }
 }

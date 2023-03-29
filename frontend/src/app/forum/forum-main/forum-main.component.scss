@@ -132,3 +132,24 @@
     align-content: center;
     padding: 30px;
 }
+
+.downloadable-file:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.file-message-container {
+    color: var(--primary);
+    display: flex;
+    align-items: flex-end;
+}
+
+.message-image {
+    height: 200px;
+    width: 350px;
+}
+
+.image-download-icon:hover {
+    color: var(--primary);
+    cursor: pointer;
+}

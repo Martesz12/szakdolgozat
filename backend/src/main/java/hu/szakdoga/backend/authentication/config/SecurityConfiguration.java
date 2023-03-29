@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/authentication/**")
                 .permitAll()
-                .requestMatchers("/file/**")
+                .requestMatchers("/file/getImage/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
