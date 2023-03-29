@@ -144,14 +144,30 @@
     align-items: flex-end;
 }
 
-.message-image {
-    max-height: 200px;
-    max-width: 350px;
-}
-
 .image-download-icon:hover {
     color: var(--primary);
     cursor: pointer;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.file-upload-container {
+    margin: 5px;
+}
+
+.file-upload-button {
+    background-color: var(--primary);
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.message-image {
+    max-height: 200px;
+    max-width: 350px;
 }
 @media (max-width: 500px) {
     .message-image {

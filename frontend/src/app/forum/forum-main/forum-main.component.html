@@ -101,7 +101,15 @@
                 </div>
                 <div class="main-title-font welcome-message">Üdv a szobában!</div>
             </div>
-            <div><input *ngIf="isFileSelectionDisplayed" type="file" (change)="onFileSelected($event)" /></div>
+            <div *ngIf="isFileSelectionDisplayed" class="file-upload-container">
+                <label for="file-upload">
+                    <span class="small-button-font file-upload-button">Fájl kiválasztása</span>
+                    <span class="small-button-font ml-10">{{
+                        this.messageFile ? this.messageFile.name : 'Nincs még fájl kiválasztva...'
+                    }}</span>
+                </label>
+                <input id="file-upload" type="file" (change)="onFileSelected($event)" />
+            </div>
             <mat-form-field class="message-form-field" appearance="outline">
                 <mat-icon
                     matPrefix
