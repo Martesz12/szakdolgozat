@@ -1,5 +1,3 @@
-TODO forum-ot elmenteni újratöltés miatt
-
 TODO authguard ellenőrizni tokent + admin-e a fórum kezelésnél
 TODO felhasználó eltárolását megreformálni
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet

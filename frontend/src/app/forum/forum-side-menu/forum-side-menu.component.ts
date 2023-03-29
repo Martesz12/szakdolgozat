@@ -45,10 +45,17 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
         this.getAllUniversity();
         this.getAllFaculty();
         this.getAllMajor();
+        this.setViewdForum();
     }
 
     ngOnDestroy() {
         this.selectedForumId = 0;
+    }
+
+    setViewdForum(): void {
+        if (this.router.url === '/forum/main' && localStorage.getItem('viewdForum')) {
+            this.selectForum(+localStorage.getItem('viewdForum')!);
+        }
     }
 
     private getAllForum() {
@@ -166,11 +173,13 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
     selectForum(id: number): void {
         this.selectedForumId = id;
         this.forumService.selectForum(id);
+        localStorage.setItem('viewdForum', String(id));
         if (this.router.url !== '/forum/main') this.router.navigateByUrl('forum/main');
     }
 
     goToForumView(view: string) {
         this.router.navigateByUrl(`forum/${view}`);
         this.selectedForumId = 0;
+        localStorage.removeItem('viewdForum');
     }
 }
