@@ -1,6 +1,6 @@
-TODO authguard ellenőrizni tokent + admin-e a fórum kezelésnél
-
 TODO Üzenetek dinamikusan frissüljenek
+TODO pin-ek frissüljenek
+
 TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
 
 TODO fájlra rákattintva dialogon nagyobb méretben

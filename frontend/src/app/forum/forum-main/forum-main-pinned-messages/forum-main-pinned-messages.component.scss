@@ -33,13 +33,65 @@
     color: var(--grey);
 }
 
-.message-content {
-    padding-left: 10px;
-}
-
 .no-pinned-message {
     display: flex;
     justify-content: center;
     align-content: center;
     padding: 30px;
+}
+
+.message-content {
+    padding-left: 10px;
+    line-height: 1.4;
+}
+
+.message-send-button:hover {
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.downloadable-file:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.file-message-container {
+    color: var(--primary);
+    display: flex;
+    align-items: flex-end;
+}
+
+.image-download-icon:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.message-image {
+    max-height: 200px;
+    max-width: 350px;
+}
+@media (max-width: 550px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 250px;
+    }
+}
+@media (max-width: 450px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 200px;
+    }
+}
+@media (max-width: 400px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 100px;
+    }
 }
