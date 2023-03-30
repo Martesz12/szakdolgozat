@@ -27,9 +27,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ForumMainComponent implements OnInit, OnDestroy {
     selectedForum: ForumDto = {} as ForumDto;
     message = new FormControl('');
-    allMessage: MessageDto[] = [];
-    userMap: Map<number, UserDto> = new Map<number, UserDto>();
-
     selectedForumUniversity: UniversityDto = {} as UniversityDto;
     selectedForumMajors: MajorDto[] = [];
     selectedForumFaculties: FacultyDto[] = [];
@@ -42,7 +39,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     constructor(
         private forumService: ForumService,
-        private messageService: MessageService,
+        public messageService: MessageService,
         private userService: UserService,
         private universtiyService: UniversityService,
         private majorService: MajorService,
@@ -55,7 +52,6 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.messageService.connectToActiveForumMessages();
         this.getSelectedForum();
-        this.getMessages();
         this.checkForumSelected();
         this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
@@ -86,22 +82,6 @@ export class ForumMainComponent implements OnInit, OnDestroy {
             });
     }
 
-    getMessages(): void {
-        this.messageService
-            .getAllMessageSubject()
-            .pipe(
-                switchMap(messages => {
-                    this.allMessage = messages;
-                    let userIds: Set<number> = new Set();
-                    messages.forEach(message => userIds.add(message.userId));
-                    return this.userService.getUsersByIds(Array.from(userIds));
-                })
-            )
-            .subscribe(users => {
-                users.forEach(user => this.userMap.set(user.id!, user));
-            });
-    }
-
     checkForumSelected() {
         this.forumService.getSelectedForumSubject().subscribe(forum => {
             this.isForumSelected = !!Object.keys(forum).length;
@@ -115,6 +95,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                 this.messageService.addMessage(message).subscribe({
                     next: message => {
                         this.message.setValue('');
+                        this.messageService.sendMessageToActiveForum(message);
                     },
                     error: _ => {
                         this.snackBar.open('Hiba üzenet elküldése során!', 'X', {
@@ -141,6 +122,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                     .subscribe({
                         next: _ => {
                             this.setFileSelection();
+                            this.messageService.sendMessageToActiveForum(message);
                         },
                         error: err => {
                             this.snackBar.open('Hiba a kép feltöltése során!', 'X', {
@@ -161,7 +143,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                 });
             }
         } else {
-            this.snackBar.open('Hiba órarend hozzáadása során: Felhasználó ismeretlen', 'X', {
+            this.snackBar.open('Hiba üzenet elküldése során: Felhasználó ismeretlen', 'X', {
                 horizontalPosition: 'right',
                 verticalPosition: 'bottom',
                 panelClass: ['error-snackbar'],
@@ -214,7 +196,9 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     updateMessage(updatedMessage: MessageDto) {
         this.messageService.updateMessage(updatedMessage).subscribe({
-            next: message => {},
+            next: message => {
+                this.messageService.sendMessageToActiveForum(message);
+            },
             error: _ => {
                 this.snackBar.open('Hiba üzenet kitűzése során!', 'X', {
                     duration: 2000,
@@ -228,7 +212,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
 
     openPinnedMessages(): void {
         this.dialog.open(ForumMainPinnedMessagesComponent, {
-            data: { messages: this.allMessage, userMap: this.userMap },
+            data: { messages: this.messageService.allMessage, userMap: this.messageService.userMap },
             width: '700px',
             height: '500px',
         });

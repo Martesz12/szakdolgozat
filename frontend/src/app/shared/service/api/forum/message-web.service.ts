@@ -5,8 +5,6 @@ import { ApiPath } from 'src/app/shared/enum/api-path.enum';
 import { MessageDto } from 'src/app/shared/model/forum/message.dto';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../../user.service';
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -16,42 +14,6 @@ export class MessageWebService {
     private specificUrl: string = 'message/';
 
     constructor(private http: HttpClient, private userService: UserService, private router: Router) {}
-
-    public stompClient: any;
-
-    connectToActiveForumMessages() {
-        const socket = new SockJS('http://localhost:8080/socket');
-        this.stompClient = Stomp.over(socket);
-        const _this = this;
-        this.stompClient.connect({}, function (frame: any) {
-            _this.stompClient.subscribe('/activeForumMessages', function (hello: any) {
-                console.log(JSON.parse(hello.body) as MessageDto);
-            });
-        });
-    }
-
-    disconnectFromActiveForumMessages() {
-        if (this.stompClient !== null) {
-            this.stompClient.disconnect();
-        }
-    }
-
-    sendMessageToActiveForum(newMessage: MessageDto) {
-        console.log(newMessage);
-        this.stompClient.send(
-            '/app/addMessageToActiveForum',
-            {},
-            JSON.stringify({
-                id: newMessage.id,
-                pinned: newMessage.pinned,
-                content: newMessage.content,
-                dateOfUpload: newMessage.dateOfUpload,
-                type: newMessage.type,
-                userId: newMessage.userId,
-                forumId: newMessage.forumId,
-            })
-        );
-    }
 
     private buildFullPath(path: ApiPath): string {
         return environment.apiBaseUrl + this.specificUrl + path;

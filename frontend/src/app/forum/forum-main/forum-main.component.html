@@ -36,11 +36,13 @@
 
             <div class="line"></div>
             <div class="messages-container">
-                <div class="message" *ngFor="let message of allMessage">
+                <div class="message" *ngFor="let message of messageService.allMessage">
                     <div class="message-title">
                         <div class="mr-10 message-username-font">
                             {{
-                                userMap.get(message.userId!) ? userMap.get(message.userId!)?.appUsername : 'Ismeretlen'
+                                messageService.userMap.get(message.userId!)
+                                    ? messageService.userMap.get(message.userId!)?.appUsername
+                                    : 'Ismeretlen'
                             }}
                         </div>
                         <div class="message-time-font forum-time mr-10">

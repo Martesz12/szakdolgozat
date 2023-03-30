@@ -39,7 +39,6 @@ export class TimetableDialogComponent {
         private userService: UserService
     ) {
         this.getUserId();
-        this.getTimetables();
         this.getSelectedTimetableId();
     }
 
@@ -47,11 +46,11 @@ export class TimetableDialogComponent {
         this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
 
-    getTimetables(): void {
-        this.timetableService.getAllTimetableSubject().subscribe(timetables => {
-            if (timetables.length === 0) this.addTimetable();
-        });
-    }
+    // getTimetables(): void {
+    //     this.timetableService.getAllTimetableSubject().subscribe(timetables => {
+    //         if (timetables.length === 0) this.addTimetable();
+    //     });
+    // }
 
     getSelectedTimetableId() {
         this.timetableService
