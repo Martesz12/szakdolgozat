@@ -63,7 +63,7 @@
 .message {
     display: flex;
     flex-direction: column;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .message-title {
@@ -78,9 +78,113 @@
 
 .message-content {
     padding-left: 10px;
+    line-height: 1.4;
 }
 
 .message-send-button:hover {
     cursor: pointer;
     color: var(--primary);
+}
+
+.pin-icon {
+    opacity: 0;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.pin-icon:hover {
+    filter: invert(17%) sepia(81%) saturate(1563%) hue-rotate(173deg) brightness(93%) contrast(101%);
+}
+
+.message-title:hover {
+    & .pin-icon {
+        opacity: 1;
+    }
+}
+
+.forum-content-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forum-content-header-button-container {
+    width: 120px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-menu-university-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+::ng-deep .info-menu-class {
+    margin-top: 10px;
+    height: 300px;
+    padding: 10px !important;
+    font-size: 12px !important;
+}
+
+.welcome-message {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 30px;
+}
+
+.downloadable-file:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.file-message-container {
+    color: var(--primary);
+    display: flex;
+    align-items: flex-end;
+}
+
+.image-download-icon:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.file-upload-container {
+    margin: 5px;
+}
+
+.file-upload-button {
+    background-color: var(--primary);
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.message-image {
+    max-height: 200px;
+    max-width: 350px;
+}
+@media (max-width: 500px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 300px;
+    }
+}
+@media (max-width: 400px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 250px;
+    }
+}
+@media (max-width: 350px) {
+    .message-image {
+        max-height: 300px;
+        max-width: 200px;
+    }
 }

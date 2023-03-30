@@ -11,9 +11,20 @@ import { ForumCreateFormComponent } from './forum-create-form/forum-create-form.
 import { ForumManagementComponent } from './forum-management/forum-management.component';
 import { ForumManagementListComponent } from './forum-management/forum-management-list/forum-management-list.component';
 import { ForumManagementUpdateFormComponent } from './forum-management/forum-management-update-form/forum-management-update-form.component';
+import { ForumMainPinnedMessagesComponent } from './forum-main/forum-main-pinned-messages/forum-main-pinned-messages.component';
 
 @NgModule({
-    declarations: [ForumComponent, ForumNavigationComponent, ForumMainComponent, ForumSideMenuComponent, ForumCreateFormComponent, ForumManagementComponent, ForumManagementListComponent, ForumManagementUpdateFormComponent],
+    declarations: [
+        ForumComponent,
+        ForumNavigationComponent,
+        ForumMainComponent,
+        ForumSideMenuComponent,
+        ForumCreateFormComponent,
+        ForumManagementComponent,
+        ForumManagementListComponent,
+        ForumManagementUpdateFormComponent,
+        ForumMainPinnedMessagesComponent,
+    ],
     imports: [CommonModule, ForumRoutingModule, SharedModule],
 })
 export class ForumModule {}

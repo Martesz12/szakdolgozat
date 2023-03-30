@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
-import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { TimetableDto } from 'src/app/shared/model/timetable/dto/timetable.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
@@ -25,7 +24,7 @@ export class TimetableDialogComponent {
     timetableName = new FormControl('', Validators.required);
     editedTimetables: Map<number, string> = new Map<number, string>();
     selectedTimetableId: number = 0;
-    currentUserId: number;
+    currentUserId: number | null = null;
 
     constructor(
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
@@ -39,9 +38,13 @@ export class TimetableDialogComponent {
         private teacherService: TeacherService,
         private userService: UserService
     ) {
-        this.currentUserId = this.userService.getUserId();
+        this.getUserId();
         this.getTimetables();
         this.getSelectedTimetableId();
+    }
+
+    getUserId(): void {
+        this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
 
     getTimetables(): void {
@@ -61,25 +64,34 @@ export class TimetableDialogComponent {
     }
 
     addTimetable(): void {
-        let timetable: TimetableDto = new TimetableDto('Új órarend', this.currentUserId);
-        this.timetableService.addTimetable(timetable).subscribe({
-            next: newTimetable => {
-                this.timetableService.getAllTimetable();
-                this.modifyTimetable(newTimetable);
-                this.snackBar.open('Órarend hozzáadása sikeres!', 'X', {
-                    duration: 2000,
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['info-snackbar'],
-                });
-            },
-            error: error =>
-                this.snackBar.open('Hiba órarend hozzáadása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
-        });
+        if (this.currentUserId) {
+            let timetable: TimetableDto = new TimetableDto('Új órarend', this.currentUserId);
+            this.timetableService.addTimetable(timetable).subscribe({
+                next: newTimetable => {
+                    this.timetableService.getAllTimetable();
+                    this.modifyTimetable(newTimetable);
+                    this.snackBar.open('Órarend hozzáadása sikeres!', 'X', {
+                        duration: 2000,
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['info-snackbar'],
+                    });
+                },
+                error: error =>
+                    this.snackBar.open('Hiba órarend hozzáadása során: ' + error, 'X', {
+                        horizontalPosition: 'right',
+                        verticalPosition: 'bottom',
+                        panelClass: ['error-snackbar'],
+                    }),
+            });
+        } else {
+            this.getUserId();
+            this.snackBar.open('Hiba órarend hozzáadása során: Felhasználó ismeretlen', 'X', {
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
+        }
     }
 
     saveTimetable(timetable: TimetableDto): void {

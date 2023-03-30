@@ -12,4 +12,10 @@ export enum ApiPath {
     Logout = 'logout',
     FindByUserId = 'findByUserId',
     FindByForumId = 'findByForumId',
+    FindUsersByIds = 'findUsersByIds',
+    FindUserByToken = 'findUserByToken',
+    FindMajorsByIds = 'findMajorsByIds',
+    FindFacultiesByIds = 'findFacultiesByIds',
+    UploadMessageFile = 'upload',
+    GetMessageFile = 'get',
 }

@@ -14,11 +14,9 @@ export class UniversityService {
     }
 
     getAllUniversity() {
-        this.universityWebService
-            .getAllUniversity()
-            .subscribe(universities => {
-                this.allUniversitySubject.next(universities);
-            });
+        this.universityWebService.getAllUniversity().subscribe(universities => {
+            this.allUniversitySubject.next(universities);
+        });
     }
 
     getAllUniversitySubject(): Observable<UniversityDto[]> {
@@ -27,5 +25,9 @@ export class UniversityService {
 
     resetUniversityState(afterDelete: boolean = false): void {
         if (afterDelete) this.getAllUniversity();
+    }
+
+    getUniversityById(universityId: number): Observable<UniversityDto> {
+        return this.universityWebService.getUniversityById(universityId);
     }
 }

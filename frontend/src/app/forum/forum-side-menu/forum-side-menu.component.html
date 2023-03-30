@@ -1,9 +1,20 @@
 <div class="side-menu">
     <div class="create-request-button-container">
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="create-request">
+        <button
+            class="create-request-button"
+            mat-raised-button
+            color="primary"
+            (click)="goToForumView('create-request')"
+        >
             Szoba léterhozás kérvény
         </button>
-        <button class="create-request-button" mat-raised-button color="primary" routerLink="management">
+        <button
+            *ngIf="isUserAdmin"
+            class="create-request-button"
+            mat-raised-button
+            color="primary"
+            (click)="goToForumView('management')"
+        >
             Szobák kezelése
         </button>
     </div>
@@ -75,6 +86,7 @@
     <div
         *ngFor="let forum of filteredForums"
         class="side-menu-element navigation-secondary-font"
+        [class.selected-side-menu-element]="selectedForumId === forum.id!"
         (click)="selectForum(forum.id!)"
     >
         <mat-icon class="mr-5">tag</mat-icon>

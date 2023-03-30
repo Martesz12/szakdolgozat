@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
-import { UserDto } from 'src/app/shared/model/authentication/dto/user.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -14,7 +13,7 @@ import { UserService } from 'src/app/shared/service/user.service';
 })
 export class SubjectDataOperationsSaveFormComponent {
     colorPickerValid: boolean = true;
-    currentUserId: number;
+    currentUserId: number | null = null;
 
     newName = new FormControl('');
     newAbbreviation = new FormControl('');
@@ -27,36 +26,49 @@ export class SubjectDataOperationsSaveFormComponent {
     ) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
         this.newAbbreviation?.addValidators([Validators.required, Validators.maxLength(255)]);
-        this.currentUserId = this.userService.getUserId();
+        this.getUserId();
+    }
+
+    getUserId(): void {
+        this.userService.getUserByToken().subscribe(user => (this.currentUserId = user.id!));
     }
 
     addSubject(): void {
-        if (this.newName.valid && this.newAbbreviation.valid && this.colorPickerValid) {
-            let newSubject: SubjectDto = this.createSubject();
-            this.subjectService.addSubject(newSubject).subscribe({
-                next: subject => {
-                    this.subjectService.getAllSubject();
-                    this.subjectService.setSubjectDataOperationPageState(DataOperationPageState.Description);
-                    if (subject.id !== null) this.subjectService.selectSubject(subject.id);
-                    this.newName.markAsUntouched();
-                    this.snackBar.open('Tantárgy hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
-                },
-                error: error =>
-                    this.snackBar.open('Hiba tantárgy hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
-            });
+        if (this.currentUserId) {
+            if (this.newName.valid && this.newAbbreviation.valid && this.colorPickerValid) {
+                let newSubject: SubjectDto = this.createSubject();
+                this.subjectService.addSubject(newSubject).subscribe({
+                    next: subject => {
+                        this.subjectService.getAllSubject();
+                        this.subjectService.setSubjectDataOperationPageState(DataOperationPageState.Description);
+                        if (subject.id !== null) this.subjectService.selectSubject(subject.id);
+                        this.newName.markAsUntouched();
+                        this.snackBar.open('Tantárgy hozzáadása sikeres!', 'X', {
+                            duration: 2000,
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['info-snackbar'],
+                        });
+                    },
+                    error: error =>
+                        this.snackBar.open('Hiba tantárgy hozzáadása során: ' + error, 'X', {
+                            horizontalPosition: 'right',
+                            verticalPosition: 'bottom',
+                            panelClass: ['error-snackbar'],
+                        }),
+                });
+            } else {
+                if (this.subjectService.colorPickerIndex === 0) this.colorPickerValid = false;
+                if (this.newName.invalid) this.newName.markAsTouched();
+                if (this.newAbbreviation.invalid) this.newAbbreviation.markAsTouched();
+            }
         } else {
-            if (this.subjectService.colorPickerIndex === 0) this.colorPickerValid = false;
-            if (this.newName.invalid) this.newName.markAsTouched();
-            if (this.newAbbreviation.invalid) this.newAbbreviation.markAsTouched();
+            this.getUserId();
+            this.snackBar.open('Hiba tantárgy hozzáadása során: Felhasználó ismeretlen', 'X', {
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+                panelClass: ['error-snackbar'],
+            });
         }
     }
 
@@ -69,7 +81,7 @@ export class SubjectDataOperationsSaveFormComponent {
         color = this.subjectService.SUBJECT_COLORS[this.subjectService.colorPickerIndex];
         if (this.newAbbreviation.value !== null) abbreviation = this.newAbbreviation.value;
         if (this.newRequirement.value !== null) requirement = this.newRequirement.value;
-        return new SubjectDto(name, abbreviation, color, requirement, this.currentUserId);
+        return new SubjectDto(name, abbreviation, color, requirement, this.currentUserId!);
     }
 
     getScreenWidth(): number {

@@ -19,6 +19,10 @@ public class FacultyService {
         return facultyRepository.findAll().stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
     }
 
+    public List<FacultyDTO> findFacultiesByIds(List<Long> userId) {
+        return this.facultyRepository.findFacultiesByIds(userId).stream().map(entity -> convertEntityToDto(entity)).collect(Collectors.toList());
+    }
+
     public FacultyDTO convertEntityToDto(FacultyEntity entity) {
         return new FacultyDTO(entity.getId(), entity.getName(),
                 entity.getUniversity().getId(),

@@ -27,6 +27,8 @@ import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/mate
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomDateAdapter } from './adapter/custom-date-adapter';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [DialogComponent],
@@ -58,6 +60,8 @@ import { CustomDateAdapter } from './adapter/custom-date-adapter';
         MatNativeDateModule,
         MatExpansionModule,
         MatTooltipModule,
+        MatMenuModule,
+        MatChipsModule,
     ],
     exports: [
         CommonModule,
@@ -86,6 +90,8 @@ import { CustomDateAdapter } from './adapter/custom-date-adapter';
         MatNativeDateModule,
         MatExpansionModule,
         MatTooltipModule,
+        MatMenuModule,
+        MatChipsModule,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' },

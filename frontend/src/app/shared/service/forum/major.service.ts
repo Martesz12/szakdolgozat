@@ -14,11 +14,9 @@ export class MajorService {
     }
 
     getAllMajor() {
-        this.majorWebService
-            .getAllMajor()
-            .subscribe(majors => {
-                this.allMajorSubject.next(majors);
-            });
+        this.majorWebService.getAllMajor().subscribe(majors => {
+            this.allMajorSubject.next(majors);
+        });
     }
 
     getAllMajorSubject(): Observable<MajorDto[]> {
@@ -27,5 +25,9 @@ export class MajorService {
 
     resetMajorState(afterDelete: boolean = false): void {
         if (afterDelete) this.getAllMajor();
+    }
+
+    getMajorsByIds(majorIds: number[]): Observable<MajorDto[]> {
+        return this.majorWebService.getMajorsByIds(majorIds);
     }
 }

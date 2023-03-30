@@ -30,6 +30,8 @@ public class SecurityConfiguration {
 //                .requestMatchers("/authentication/**")
                 .requestMatchers("/**")
                 .permitAll()
+                .requestMatchers("/file/getImage/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

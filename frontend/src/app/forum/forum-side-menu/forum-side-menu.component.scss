@@ -43,7 +43,8 @@
 }
 
 .side-menu-element:hover,
-.side-menu-element:active {
+.side-menu-element:active,
+.selected-side-menu-element {
     color: var(--primary100);
     background-color: var(--neutral200);
 }

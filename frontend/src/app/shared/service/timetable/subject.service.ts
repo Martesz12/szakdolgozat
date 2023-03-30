@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SubjectDto } from '../../model/timetable/dto/subject.dto';
 import { DataOperationPageState } from '../../enum/DataOperationPageState.enum';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { SubjectWebService } from '../api/timetable/subject-web.service';
 import { UserService } from '../user.service';
 
@@ -42,9 +42,12 @@ export class SubjectService {
     }
 
     getAllSubject() {
-        this.subjectWebService.getSubjectsByUserId(this.userService.getUserId()).subscribe(subjects => {
-            this.allSubjectSubject.next(subjects);
-        });
+        this.userService
+            .getUserByToken()
+            .pipe(switchMap(user => this.subjectWebService.getSubjectsByUserId(user.id!)))
+            .subscribe(subjects => {
+                this.allSubjectSubject.next(subjects);
+            });
     }
 
     getAllSubjectSubject(): Observable<SubjectDto[]> {
