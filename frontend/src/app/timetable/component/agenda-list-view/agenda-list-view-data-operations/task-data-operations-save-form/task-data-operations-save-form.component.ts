@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
@@ -9,6 +8,7 @@ import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-task-data-operations-save-form',
@@ -28,7 +28,7 @@ export class TaskDataOperationsSaveFormComponent {
 
     constructor(
         private mainTaskService: MainTaskService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private lessonService: LessonService,
         private subjectService: SubjectService
     ) {
@@ -57,19 +57,9 @@ export class TaskDataOperationsSaveFormComponent {
                     this.newLesson.markAsUntouched();
                     this.newName.markAsUntouched();
                     this.newDeadline.markAsUntouched();
-                    this.snackBar.open('Feladat hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Feladat hozzáadása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba feladat hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba feladat hozzáadása során!'),
             });
         } else {
             if (this.newLesson.invalid) this.newLesson.markAsTouched();

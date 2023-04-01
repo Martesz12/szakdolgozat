@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { MainTaskDto } from 'src/app/shared/model/timetable/dto/main-task.dto';
@@ -9,6 +8,7 @@ import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { SnackBarService } from '../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-agenda-monthly-view-list',
@@ -31,7 +31,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
         private subTaskService: SubTaskService,
         private lessonService: LessonService,
         private subjectService: SubjectService,
-        private snackBar: MatSnackBar
+        private snackBarService: SnackBarService
     ) {
         this.getAllMainTask();
         this.getAllSubTask();
@@ -127,12 +127,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
             next: _ => {
                 this.mainTaskService.getMainTasksByLessonIds();
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat módosítása során!'),
         });
     }
 
@@ -147,12 +142,7 @@ export class AgendaMonthlyViewListComponent implements OnChanges {
             next: _ => {
                 this.allSubTask[this.allSubTask.findIndex(task => task.id === subTask.id)] = { ...updatedSubtask };
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat módosítása során!'),
         });
     }
 

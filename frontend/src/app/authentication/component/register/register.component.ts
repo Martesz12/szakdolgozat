@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/shared/model/authentication/register-request';
 import { UserService } from 'src/app/shared/service/user.service';
+import { SnackBarService } from '../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-register',
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
     username = new FormControl('');
     arePasswordsEqual: boolean = true;
 
-    constructor(private userService: UserService, private snackBar: MatSnackBar, private router: Router) {}
+    constructor(private userService: UserService, private snackBarService: SnackBarService, private router: Router) {}
 
     ngOnInit(): void {
         this.addValidators();
@@ -50,19 +50,11 @@ export class RegisterComponent implements OnInit {
             let registerRequest = this.createRegisterRequest();
             this.userService.register(registerRequest).subscribe({
                 next: response => {
-                    this.snackBar.open('Sikeres regisztráció!', 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Sikeres regisztráció!');
                     this.router.navigateByUrl('authentication/login');
                 },
                 error: error => {
-                    this.snackBar.open('Hiba regisztráció során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    });
+                    this.snackBarService.errorSnackBar('Hiba regisztráció során!');
                 },
             });
         } else {

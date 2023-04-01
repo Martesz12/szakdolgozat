@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { UserService } from 'src/app/shared/service/user.service';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-subject-data-operations-save-form',
@@ -21,7 +21,7 @@ export class SubjectDataOperationsSaveFormComponent {
 
     constructor(
         public subjectService: SubjectService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private userService: UserService
     ) {
         this.newName?.addValidators([Validators.required, Validators.maxLength(255)]);
@@ -43,19 +43,9 @@ export class SubjectDataOperationsSaveFormComponent {
                         this.subjectService.setSubjectDataOperationPageState(DataOperationPageState.Description);
                         if (subject.id !== null) this.subjectService.selectSubject(subject.id);
                         this.newName.markAsUntouched();
-                        this.snackBar.open('Tantárgy hozzáadása sikeres!', 'X', {
-                            duration: 2000,
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['info-snackbar'],
-                        });
+                        this.snackBarService.infoSnackBar('Tantárgy hozzáadása sikeres!');
                     },
-                    error: error =>
-                        this.snackBar.open('Hiba tantárgy hozzáadása során: ' + error, 'X', {
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['error-snackbar'],
-                        }),
+                    error: error => this.snackBarService.errorSnackBar('Hiba tantárgy hozzáadása során!'),
                 });
             } else {
                 if (this.subjectService.colorPickerIndex === 0) this.colorPickerValid = false;
@@ -64,11 +54,7 @@ export class SubjectDataOperationsSaveFormComponent {
             }
         } else {
             this.getUserId();
-            this.snackBar.open('Hiba tantárgy hozzáadása során: Felhasználó ismeretlen', 'X', {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar('Hiba tantárgy hozzáadása során: Felhasználó ismeretlen!');
         }
     }
 

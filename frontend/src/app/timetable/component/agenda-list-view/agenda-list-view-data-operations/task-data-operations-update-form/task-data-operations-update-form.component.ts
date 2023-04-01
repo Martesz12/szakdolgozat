@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
@@ -13,6 +12,7 @@ import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-task-data-operations-update-form',
@@ -33,7 +33,7 @@ export class TaskDataOperationsUpdateFormComponent {
 
     constructor(
         private mainTaskService: MainTaskService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private lessonService: LessonService,
         private subjectService: SubjectService,
         private dialog: MatDialog,
@@ -76,19 +76,9 @@ export class TaskDataOperationsUpdateFormComponent {
                     this.updatedLesson.markAsUntouched();
                     this.updatedName.markAsUntouched();
                     this.updatedDeadline.markAsUntouched();
-                    this.snackBar.open('Feladat módosítása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Feladat módosítása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba feladat módosítása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba feladat módosítása során!'),
             });
         } else {
             if (this.updatedLesson.invalid) this.updatedLesson.markAsTouched();
@@ -133,19 +123,9 @@ export class TaskDataOperationsUpdateFormComponent {
                 next: _ => {
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
-                    this.snackBar.open('Feladat törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Feladat törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba feladat törlése során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba feladat törlése során!'),
             });
     }
 

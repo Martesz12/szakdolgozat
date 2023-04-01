@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
+import { SnackBarService } from '../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-forum-management-list',
@@ -23,7 +23,7 @@ export class ForumManagementListComponent {
     constructor(
         private forumService: ForumService,
         private changeDetection: ChangeDetectorRef,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private dialog: MatDialog
     ) {
         this.getAllForum();
@@ -78,19 +78,9 @@ export class ForumManagementListComponent {
             this.forumService.deleteForum(forumId).subscribe({
                 next: _ => {
                     this.forumService.resetForumState(true);
-                    this.snackBar.open('Szoba törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Szoba törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba szoba törlése során!', 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba szoba törlése során!'),
             });
     }
 

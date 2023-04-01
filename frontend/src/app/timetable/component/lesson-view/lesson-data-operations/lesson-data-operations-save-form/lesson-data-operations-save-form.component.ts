@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
@@ -9,6 +8,7 @@ import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-lesson-data-operations-save-form',
@@ -34,7 +34,7 @@ export class LessonDataOperationsSaveFormComponent {
 
     constructor(
         private lessonService: LessonService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private subjectService: SubjectService,
         private teacherService: TeacherService,
         private timetableService: TimetableService
@@ -85,20 +85,11 @@ export class LessonDataOperationsSaveFormComponent {
                     this.newType.markAsUntouched();
                     this.newSubjectId.markAsUntouched();
                     this.newTeacherId.markAsUntouched();
-                    this.snackBar.open('Tanóra hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Tanóra hozzáadása sikeres!');
                 },
                 error: error => {
                     if (this.selectedTimetableId === 0) error = 'Nincs kiválasztott órarend!';
-                    this.snackBar.open('Hiba tanóra hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    });
+                    this.snackBarService.errorSnackBar('Hiba tanóra hozzáadása során! ' + error);
                 },
             });
         } else {

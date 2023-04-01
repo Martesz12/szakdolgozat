@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthenticationRequest } from 'src/app/shared/model/authentication/authentication-request';
 import { UserService } from 'src/app/shared/service/user.service';
+import { SnackBarService } from '../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     email = new FormControl('');
     password = new FormControl('');
 
-    constructor(private userService: UserService, private snackBar: MatSnackBar, private router: Router) {}
+    constructor(private userService: UserService, private snackBarService: SnackBarService, private router: Router) {}
 
     ngOnInit(): void {
         this.addValidators();
@@ -35,11 +35,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl('timetable/timetable-daily');
                 },
                 error: error => {
-                    this.snackBar.open('Hiba bejelentkezés során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    });
+                    this.snackBarService.errorSnackBar('Hiba bejelentkezés során!');
                 },
             });
         } else {

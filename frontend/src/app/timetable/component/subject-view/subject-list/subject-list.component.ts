@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
@@ -9,6 +8,7 @@ import { LessonService } from 'src/app/shared/service/timetable/lesson.service';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
+import { SnackBarService } from '../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-subject-list',
@@ -24,7 +24,7 @@ export class SubjectListComponent {
     constructor(
         private subjectService: SubjectService,
         private changeDetection: ChangeDetectorRef,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private dialog: MatDialog,
         private lessonService: LessonService,
         private mainTaskService: MainTaskService,
@@ -90,19 +90,9 @@ export class SubjectListComponent {
                     this.lessonService.resetLessonState(true);
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
-                    this.snackBar.open('Tantárgy törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Tantárgy törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba tantárgy törlése során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba tantárgy törlése során!'),
             });
     }
 

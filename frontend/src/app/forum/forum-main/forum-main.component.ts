@@ -6,7 +6,6 @@ import { MessageService } from '../../shared/service/forum/message.service';
 import { MessageDto } from '../../shared/model/forum/message.dto';
 import { MessageTypeEnum } from '../../shared/model/forum/message-type.enum';
 import { UserService } from '../../shared/service/user.service';
-import { UserDto } from '../../shared/model/authentication/dto/user.dto';
 import { filter, forkJoin, switchMap } from 'rxjs';
 import { UniversityDto } from '../../shared/model/forum/university.dto';
 import { MajorDto } from '../../shared/model/forum/major.dto';
@@ -17,7 +16,7 @@ import { FacultyService } from '../../shared/service/forum/faculty.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ForumMainPinnedMessagesComponent } from './forum-main-pinned-messages/forum-main-pinned-messages.component';
 import { FileWebService } from '../../shared/service/api/file-web.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from '../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-forum-main',
@@ -46,7 +45,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         private facultyService: FacultyService,
         public dialog: MatDialog,
         public fileWebService: FileWebService,
-        public snackBar: MatSnackBar
+        private snackBarService: SnackBarService
     ) {}
 
     ngOnInit(): void {
@@ -98,12 +97,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                         this.messageService.sendMessageToActiveForum(message);
                     },
                     error: _ => {
-                        this.snackBar.open('Hiba üzenet elküldése során!', 'X', {
-                            duration: 2000,
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['error-snackbar'],
-                        });
+                        this.snackBarService.errorSnackBar('Hiba üzenet elküldése során!');
                     },
                 });
             } else if (this.messageFile) {
@@ -125,40 +119,23 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                             this.messageService.sendMessageToActiveForum(message);
                         },
                         error: err => {
-                            this.snackBar.open('Hiba a kép feltöltése során!', 'X', {
-                                duration: 2000,
-                                horizontalPosition: 'right',
-                                verticalPosition: 'bottom',
-                                panelClass: ['error-snackbar'],
-                            });
+                            this.snackBarService.errorSnackBar('Hiba a kép feltöltése során!');
                             this.messageService.deleteMessage(message.id!).subscribe();
                         },
                     });
             } else {
-                this.snackBar.open('Hiba az üzenet elküldése során!', 'X', {
-                    duration: 2000,
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                });
+                this.snackBarService.errorSnackBar('Hiba az üzenet elküldése során!');
             }
         } else {
-            this.snackBar.open('Hiba üzenet elküldése során: Felhasználó ismeretlen', 'X', {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar('Hiba üzenet elküldése során: Felhasználó ismeretlen');
         }
     }
 
     private checkFileSize(messageFile: File): boolean {
         if (messageFile.size > 500000) {
-            this.snackBar.open('A fájl mérete túl nagy! Legfejlebb 500KB méretű fájl feltöltése támogatott!', 'X', {
-                duration: 2000,
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar(
+                'A fájl mérete túl nagy! Legfejlebb 500KB méretű fájl feltöltése támogatott!'
+            );
             return true;
         }
         return false;
@@ -200,12 +177,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
                 this.messageService.sendMessageToActiveForum(message);
             },
             error: _ => {
-                this.snackBar.open('Hiba üzenet kitűzése során!', 'X', {
-                    duration: 2000,
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                });
+                this.snackBarService.errorSnackBar('Hiba üzenet kitűzése során!');
             },
         });
     }
@@ -247,12 +219,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
         if (fileType === 'image') return MessageTypeEnum.IMAGE;
         else if (fileType === 'application' || fileType === 'text') return MessageTypeEnum.FILE;
         else {
-            this.snackBar.open('Ez a fájlformátum nem támogatott!', 'X', {
-                duration: 2000,
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar('Ez a fájlformátum nem támogatott!');
             return null;
         }
     }

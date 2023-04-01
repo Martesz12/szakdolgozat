@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-teacher-data-operations-description',
@@ -12,18 +12,17 @@ import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
 export class TeacherDataOperationsDescriptionComponent {
     selectedTeacher: TeacherDto = {} as TeacherDto;
 
-    constructor(private teacherService: TeacherService, private snackBar: MatSnackBar, private clipboard: Clipboard) {
+    constructor(
+        private teacherService: TeacherService,
+        private snackBarService: SnackBarService,
+        private clipboard: Clipboard
+    ) {
         this.getSelectedTeacher();
     }
 
     copyEmail(email: string) {
         this.clipboard.copy(email);
-        this.snackBar.open('Email cím lemásolva!', 'X', {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'bottom',
-            panelClass: ['info-snackbar'],
-        });
+        this.snackBarService.infoSnackBar('Email cím lemásolva!');
     }
 
     private getSelectedTeacher() {

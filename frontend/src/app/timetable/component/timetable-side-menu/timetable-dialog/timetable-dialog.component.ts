@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
@@ -13,6 +12,7 @@ import { SubjectService } from 'src/app/shared/service/timetable/subject.service
 import { TeacherService } from 'src/app/shared/service/timetable/teacher.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 import { UserService } from 'src/app/shared/service/user.service';
+import { SnackBarService } from '../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-timetable-dialog',
@@ -30,7 +30,7 @@ export class TimetableDialogComponent {
         public dialogRef: MatDialogRef<TimetableDialogComponent>,
         public timetableService: TimetableService,
         public dialog: MatDialog,
-        public snackBar: MatSnackBar,
+        public snackBarService: SnackBarService,
         private lessonService: LessonService,
         private mainTaskService: MainTaskService,
         private subTaskService: SubTaskService,
@@ -69,27 +69,13 @@ export class TimetableDialogComponent {
                 next: newTimetable => {
                     this.timetableService.getAllTimetable();
                     this.modifyTimetable(newTimetable);
-                    this.snackBar.open('Órarend hozzáadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Órarend hozzáadása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba órarend hozzáadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba órarend hozzáadása során!'),
             });
         } else {
             this.getUserId();
-            this.snackBar.open('Hiba órarend hozzáadása során: Felhasználó ismeretlen', 'X', {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar('Hiba órarend hozzáadása során: Felhasználó ismeretlen!');
         }
     }
 
@@ -105,26 +91,14 @@ export class TimetableDialogComponent {
                     next: _ => {
                         this.timetableService.getAllTimetable();
                         this.editedTimetables.delete(timetable.id!);
-                        this.snackBar.open('Órarend módosítása sikeres!', 'X', {
-                            duration: 2000,
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['info-snackbar'],
-                        });
+                        this.snackBarService.infoSnackBar('Órarend módosítása sikeres!');
                     },
-                    error: error =>
-                        this.snackBar.open('Hiba órarend módosítása során: ' + error, 'X', {
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['error-snackbar'],
-                        }),
+                    error: error => this.snackBarService.errorSnackBar('Hiba órarend módosítása során!'),
                 });
             } else {
-                this.snackBar.open('Hiba órarend módosítása során: A név nem lehet hosszabb 255 karakternél!', 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                });
+                this.snackBarService.errorSnackBar(
+                    'Hiba órarend módosítása során: A név nem lehet hosszabb 255 karakternél!'
+                );
             }
         }
     }
@@ -157,19 +131,9 @@ export class TimetableDialogComponent {
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
                     this.editedTimetables.delete(timetableId);
-                    this.snackBar.open('Órarend törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Órarend törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba órarend törlése során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba órarend törlése során!'),
             });
     }
 

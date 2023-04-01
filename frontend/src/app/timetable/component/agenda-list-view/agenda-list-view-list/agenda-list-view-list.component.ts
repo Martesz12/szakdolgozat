@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { filter, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { DataOperationPageState } from 'src/app/shared/enum/DataOperationPageState.enum';
@@ -14,6 +13,7 @@ import { MainTaskService } from 'src/app/shared/service/timetable/main-task.serv
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
 import { SubjectService } from 'src/app/shared/service/timetable/subject.service';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
+import { SnackBarService } from '../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-agenda-list-view-list',
@@ -36,7 +36,7 @@ export class AgendaListViewListComponent {
     constructor(
         private mainTaskService: MainTaskService,
         private dialog: MatDialog,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private timetableService: TimetableService,
         private subTaskService: SubTaskService,
         private lessonService: LessonService,
@@ -125,19 +125,9 @@ export class AgendaListViewListComponent {
                 next: _ => {
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
-                    this.snackBar.open('Feladat törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Feladat törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba feladat törlése során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba feladat törlése során!'),
             });
     }
 
@@ -147,19 +137,9 @@ export class AgendaListViewListComponent {
             next: subTask => {
                 this.subTaskService.getSubTasksByMainTaskIds();
                 this.modifySubTask(subTask);
-                this.snackBar.open('Alfeladat hozzáadása sikeres!', 'X', {
-                    duration: 2000,
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['info-snackbar'],
-                });
+                this.snackBarService.infoSnackBar('Alfeladat hozzáadása sikeres!');
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat hozzáadása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat hozzáadása során!'),
         });
     }
 
@@ -187,26 +167,14 @@ export class AgendaListViewListComponent {
                 next: _ => {
                     this.subTaskService.getSubTasksByMainTaskIds();
                     this.editedSubTasks.delete(subTask.id!);
-                    this.snackBar.open('Alfeladat módosítása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Alfeladat módosítása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba alfeladat módosítása során!'),
             });
         } else {
-            this.snackBar.open('Hiba alfeladat módosítása során: A név nem lehet hosszabb 255 karakternél!', 'X', {
-                horizontalPosition: 'right',
-                verticalPosition: 'bottom',
-                panelClass: ['error-snackbar'],
-            });
+            this.snackBarService.errorSnackBar(
+                'Hiba alfeladat módosítása során: A név nem lehet hosszabb 255 karakternél!'
+            );
         }
     }
 
@@ -215,19 +183,9 @@ export class AgendaListViewListComponent {
             next: _ => {
                 this.subTaskService.resetSubTaskState(true);
                 this.editedSubTasks.delete(subTaskId);
-                this.snackBar.open('Alfeladat törlése sikeres!', 'X', {
-                    duration: 2000,
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['info-snackbar'],
-                });
+                this.snackBarService.infoSnackBar('Alfeladat törlése sikeres!');
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat törlése során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat törlése során!'),
         });
     }
 
@@ -258,12 +216,7 @@ export class AgendaListViewListComponent {
             next: _ => {
                 this.allSubTask[this.allSubTask.findIndex(task => task.id === subTask.id)] = { ...updatedSubtask };
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat módosítása során!'),
         });
     }
 
@@ -313,12 +266,7 @@ export class AgendaListViewListComponent {
             next: _ => {
                 this.mainTaskService.getMainTasksByLessonIds();
             },
-            error: error =>
-                this.snackBar.open('Hiba alfeladat módosítása során: ' + error, 'X', {
-                    horizontalPosition: 'right',
-                    verticalPosition: 'bottom',
-                    panelClass: ['error-snackbar'],
-                }),
+            error: error => this.snackBarService.errorSnackBar('Hiba alfeladat módosítása során!'),
         });
     }
 

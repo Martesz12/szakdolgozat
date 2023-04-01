@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { LessonDto } from 'src/app/shared/model/timetable/dto/lesson.dto';
 import { SubjectDto } from 'src/app/shared/model/timetable/dto/subject.dto';
 import { TeacherDto } from 'src/app/shared/model/timetable/dto/teacher.dto';
@@ -13,6 +12,7 @@ import { DialogComponent } from 'src/app/shared/component/dialog/dialog.componen
 import { MatDialog } from '@angular/material/dialog';
 import { MainTaskService } from 'src/app/shared/service/timetable/main-task.service';
 import { SubTaskService } from 'src/app/shared/service/timetable/sub-task.service';
+import { SnackBarService } from '../../../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-lesson-data-operations-update-form',
@@ -37,7 +37,7 @@ export class LessonDataOperationsUpdateFormComponent {
 
     constructor(
         private lessonService: LessonService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private subjectService: SubjectService,
         private teacherService: TeacherService,
         private dialog: MatDialog,
@@ -99,19 +99,9 @@ export class LessonDataOperationsUpdateFormComponent {
                     this.updatedType.markAsUntouched();
                     this.updatedSubjectId.markAsUntouched();
                     this.updatedTeacherId.markAsUntouched();
-                    this.snackBar.open('Tanóra módosítása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Tanóra módosítása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba tanóra módosítása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba tanóra módosítása során!'),
             });
         } else {
             if (this.updatedDay.invalid) this.updatedDay.markAsTouched();
@@ -146,19 +136,9 @@ export class LessonDataOperationsUpdateFormComponent {
                     this.lessonService.resetLessonState(true);
                     this.mainTaskService.resetMainTaskState(true);
                     this.subTaskService.resetSubTaskState(true);
-                    this.snackBar.open('Tanóra törlése sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Tanóra törlése sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba tanóra törlése során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba tanóra törlése során!'),
             });
     }
 

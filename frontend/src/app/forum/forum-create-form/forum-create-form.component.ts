@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FacultyDto } from 'src/app/shared/model/forum/faculty.dto';
 import { ForumDto } from 'src/app/shared/model/forum/forum.dto';
 import { MajorDto } from 'src/app/shared/model/forum/major.dto';
@@ -9,6 +8,7 @@ import { FacultyService } from 'src/app/shared/service/forum/faculty.service';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
 import { MajorService } from 'src/app/shared/service/forum/major.service';
 import { UniversityService } from 'src/app/shared/service/forum/university.service';
+import { SnackBarService } from '../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-forum-create-form',
@@ -33,7 +33,7 @@ export class ForumCreateFormComponent implements OnInit {
         private facultyService: FacultyService,
         private majorService: MajorService,
         private forumService: ForumService,
-        private snackBar: MatSnackBar
+        private snackBarService: SnackBarService
     ) {}
 
     ngOnInit(): void {
@@ -87,19 +87,9 @@ export class ForumCreateFormComponent implements OnInit {
                 next: _ => {
                     this.forumService.getAllForum();
                     this.resetForm();
-                    this.snackBar.open('Szoba kérvény beadása sikeres!', 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar('Szoba kérvény beadása sikeres!');
                 },
-                error: error =>
-                    this.snackBar.open('Hiba szoba kérvény beadása során: ' + error, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                error: error => this.snackBarService.errorSnackBar('Hiba szoba kérvény beadása során!'),
             });
         } else {
             if (this.newName.invalid) this.newName.markAsTouched();

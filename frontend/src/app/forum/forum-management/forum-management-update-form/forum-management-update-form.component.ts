@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { filter, map, tap } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { DialogData } from 'src/app/shared/component/dialog/dialog-data.model';
 import { DialogComponent } from 'src/app/shared/component/dialog/dialog.component';
 import { FacultyDto } from 'src/app/shared/model/forum/faculty.dto';
@@ -13,6 +12,7 @@ import { FacultyService } from 'src/app/shared/service/forum/faculty.service';
 import { ForumService } from 'src/app/shared/service/forum/forum.service';
 import { MajorService } from 'src/app/shared/service/forum/major.service';
 import { UniversityService } from 'src/app/shared/service/forum/university.service';
+import { SnackBarService } from '../../../shared/service/snack-bar.service';
 
 @Component({
     selector: 'app-forum-management-update-form',
@@ -42,7 +42,7 @@ export class ForumManagementUpdateFormComponent implements OnInit {
         private facultyService: FacultyService,
         private majorService: MajorService,
         private forumService: ForumService,
-        private snackBar: MatSnackBar,
+        private snackBarService: SnackBarService,
         private dialog: MatDialog
     ) {}
 
@@ -122,22 +122,13 @@ export class ForumManagementUpdateFormComponent implements OnInit {
                     this.forumService.resetForumState();
                     this.forumService.getAllForum();
                     this.resetForm();
-                    this.snackBar.open(`Szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} sikeres!`, 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar(
+                        `Szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} sikeres!`
+                    );
                 },
                 error: _ =>
-                    this.snackBar.open(
-                        `Hiba szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} során!`,
-                        'X',
-                        {
-                            horizontalPosition: 'right',
-                            verticalPosition: 'bottom',
-                            panelClass: ['error-snackbar'],
-                        }
+                    this.snackBarService.errorSnackBar(
+                        `Hiba szoba ${this.isForumApproved ? 'módosítása' : 'jóváhagyása'} során!`
                     ),
             });
         } else {
@@ -212,22 +203,17 @@ export class ForumManagementUpdateFormComponent implements OnInit {
                 next: _ => {
                     this.forumService.resetForumState(true);
                     this.resetForm();
-                    this.snackBar.open(`Szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} sikeres!`, 'X', {
-                        duration: 2000,
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['info-snackbar'],
-                    });
+                    this.snackBarService.infoSnackBar(
+                        `Szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} sikeres!`
+                    );
                 },
                 error: error =>
-                    this.snackBar.open(`Hiba szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} során!`, 'X', {
-                        horizontalPosition: 'right',
-                        verticalPosition: 'bottom',
-                        panelClass: ['error-snackbar'],
-                    }),
+                    this.snackBarService.errorSnackBar(
+                        `Hiba szoba ${this.isForumApproved ? 'törlése' : 'elutasítása'} során!`
+                    ),
             });
     }
-    
+
     backToListView(): void {
         this.forumService.resetForumState();
     }
