@@ -1,6 +1,8 @@
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 import { UserService } from 'src/app/shared/service/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileComponent } from '../../component/profile/profile.component';
 
 export const drawerModes = ['side', 'over'] as const;
 export type DrawerModes = (typeof drawerModes)[number];
@@ -13,7 +15,7 @@ export type DrawerModes = (typeof drawerModes)[number];
 export class ForumNavigationComponent implements OnInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
-    constructor(private renderer: Renderer2, private userService: UserService) {
+    constructor(private renderer: Renderer2, private userService: UserService, private dialog: MatDialog) {
         this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
@@ -43,5 +45,12 @@ export class ForumNavigationComponent implements OnInit {
 
     onLogoutClick(): void {
         this.userService.logout();
+    }
+
+    openProfileDialog() {
+        this.dialog.open(ProfileComponent, {
+            width: '90%',
+            height: '90%',
+        });
     }
 }

@@ -17,6 +17,7 @@
 
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
             <div fxLayout fxLayoutGap="20px" class="navigation-items navigation-main-font">
+                <div (click)="openProfileDialog()" class="navigation-item">Profil</div>
                 <div routerLink="/timetable" class="navigation-item">Órarend</div>
                 <div routerLink="/forum" class="navigation-item">Fórum</div>
                 <div (click)="onLogoutClick()" class="navigation-item">Kijelentkezés</div>

@@ -2,6 +2,8 @@ import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 import { UserService } from 'src/app/shared/service/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileComponent } from '../../../component/profile/profile.component';
 
 export const drawerModes = ['side', 'over'] as const;
 export type DrawerModes = (typeof drawerModes)[number];
@@ -17,7 +19,8 @@ export class NavigationComponent implements OnInit {
     constructor(
         private renderer: Renderer2,
         private userService: UserService,
-        private timetableService: TimetableService
+        private timetableService: TimetableService,
+        private dialog: MatDialog
     ) {
         this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
@@ -51,5 +54,12 @@ export class NavigationComponent implements OnInit {
 
     onLogoutClick(): void {
         this.userService.logout();
+    }
+
+    openProfileDialog() {
+        this.dialog.open(ProfileComponent, {
+            width: '90%',
+            height: '90%',
+        });
     }
 }
