@@ -1,0 +1,51 @@
+.line {
+    width: 100%;
+    height: 0;
+    border-bottom: 1px solid var(--neutral200);
+}
+
+.profile-form-field {
+    width: 80%;
+    padding-left: 10px;
+}
+
+.profile-form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.profile-forms {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.profile-button {
+    width: 120px;
+}
+
+.profile-form-button {
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.close-button {
+    float: right;
+    top: -24px;
+    right: -24px;
+}
+
+@media (max-width: 640px) {
+    .profile-form-button {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-button {
+        width: 80%;
+    }
+}

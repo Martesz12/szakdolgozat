@@ -47,8 +47,19 @@ public class UserEntity implements Serializable, UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
-//    @Column(nullable = false)
-//    private Long primaryTimetableId;
+    @Column()
+    private Long timetablePreference;
+
+    @Column()
+    private Long universityPreference;
+
+    @Column()
+    @ElementCollection
+    private List<Long> facultiesPreference;
+
+    @Column()
+    @ElementCollection
+    private List<Long> majorsPreference;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

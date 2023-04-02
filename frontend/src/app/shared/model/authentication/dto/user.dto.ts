@@ -7,6 +7,10 @@ export class UserDto {
     public readonly appUsername: string;
     public readonly email: string;
     public readonly role: Role;
+    public readonly timetablePreference: number | null;
+    public readonly universityPreference: number | null;
+    public readonly facultiesPreference: number[] | null;
+    public readonly majorsPreference: number[] | null;
 
     constructor(
         id: number | null = null,
@@ -14,7 +18,11 @@ export class UserDto {
         lastname: string,
         appUsername: string,
         email: string,
-        role: Role
+        role: Role,
+        timetablePreference: number | null,
+        universityPreference: number | null,
+        facultiesPreference: number[] | null,
+        majorsPreference: number[] | null
     ) {
         this.id = id;
         this.firstname = firstname;
@@ -22,5 +30,9 @@ export class UserDto {
         this.appUsername = appUsername;
         this.email = email;
         this.role = role;
+        this.timetablePreference = timetablePreference;
+        this.universityPreference = universityPreference;
+        this.facultiesPreference = facultiesPreference;
+        this.majorsPreference = majorsPreference;
     }
 }

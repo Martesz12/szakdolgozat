@@ -5,6 +5,7 @@ import { ApiPath } from 'src/app/shared/enum/api-path.enum';
 import { environment } from 'src/environments/environment';
 import { UserDto } from '../../../model/authentication/dto/user.dto';
 import { Router } from '@angular/router';
+import { AuthenticationModifyRequest } from '../../../model/authentication/authentication-modify-request';
 
 @Injectable({
     providedIn: 'root',
@@ -35,6 +36,34 @@ export class UserWebService {
     getUserByToken(): Observable<UserDto> {
         var fullPath = this.buildFullPath(ApiPath.FindUserByToken);
         return this.http.post<UserDto>(fullPath, localStorage.getItem('token'), { headers: this.createHeader() }).pipe(
+            catchError(err => {
+                if (err.status === 403) {
+                    localStorage.clear();
+                    this.router.navigateByUrl('authentication/login');
+                    throw 'Authentication error';
+                }
+                throw err;
+            })
+        );
+    }
+
+    modifyUserPreference(userDto: UserDto): Observable<UserDto> {
+        var fullPath = this.buildFullPath(ApiPath.ModifyUserPreference);
+        return this.http.post<UserDto>(fullPath, userDto, { headers: this.createHeader() }).pipe(
+            catchError(err => {
+                if (err.status === 403) {
+                    localStorage.clear();
+                    this.router.navigateByUrl('authentication/login');
+                    throw 'Authentication error';
+                }
+                throw err;
+            })
+        );
+    }
+
+    modifyUserAuthenticationData(authenticationRequest: AuthenticationModifyRequest): Observable<UserDto> {
+        var fullPath = this.buildFullPath(ApiPath.ModifyUserAuthenticationData);
+        return this.http.post<UserDto>(fullPath, authenticationRequest, { headers: this.createHeader() }).pipe(
             catchError(err => {
                 if (err.status === 403) {
                     localStorage.clear();

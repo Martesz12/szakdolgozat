@@ -1,6 +1,8 @@
 package hu.szakdoga.backend.authentication.controller;
 
 import hu.szakdoga.backend.authentication.data.dto.UserDTO;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationModifyRequest;
+import hu.szakdoga.backend.authentication.data.model.AuthenticationRequest;
 import hu.szakdoga.backend.authentication.data.model.UserEntity;
 import hu.szakdoga.backend.authentication.service.UserService;
 import hu.szakdoga.backend.forum.data.dto.ForumDTO;
@@ -26,6 +28,18 @@ public class UserController {
     @PostMapping("/findUserByToken")
     public ResponseEntity<UserDTO> findUserByToken(@RequestBody String token) {
         UserDTO user = userService.findUserByToken(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/modifyUserPreference")
+    public ResponseEntity<UserDTO> modifyUserPreference(@RequestBody UserDTO userDTO) {
+        UserDTO user = userService.modifyUserPreference(userDTO);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/modifyUserAuthenticationData")
+    public ResponseEntity<UserDTO> modifyUserAuthenticationData(@RequestBody AuthenticationModifyRequest authenticationRequest) {
+        UserDTO user = userService.modifyUserAuthenticationData(authenticationRequest);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

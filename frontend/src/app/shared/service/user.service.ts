@@ -8,6 +8,7 @@ import { UserDto } from '../model/authentication/dto/user.dto';
 import { Router } from '@angular/router';
 import { UserWebService } from './api/authentication/user-web.service';
 import { Role } from '../model/authentication/role.enum';
+import { AuthenticationModifyRequest } from '../model/authentication/authentication-modify-request';
 
 @Injectable({
     providedIn: 'root',
@@ -56,5 +57,13 @@ export class UserService {
 
     isUserAdmin(): Observable<boolean> {
         return this.userWebService.getUserByToken().pipe(switchMap(user => of(user.role === Role.ADMIN)));
+    }
+
+    modifyUserPreference(userDto: UserDto): Observable<UserDto> {
+        return this.userWebService.modifyUserPreference(userDto);
+    }
+
+    modifyUserAuthenticationData(authenticationRequest: AuthenticationModifyRequest): Observable<UserDto> {
+        return this.userWebService.modifyUserAuthenticationData(authenticationRequest);
     }
 }

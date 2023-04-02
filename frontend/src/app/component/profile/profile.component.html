@@ -1,0 +1,174 @@
+<div>
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+        <mat-icon class="close-icon" color="warn">close</mat-icon>
+    </button>
+    <div class="user-preferences-container">
+        <div class="main-title-font mb-20">Preferenciák</div>
+        <div class="secondary-title-font mb-5 mt-10">Alapértelemzett órarend</div>
+        <div class="profile-form-container">
+            <div class="profile-forms">
+                <mat-form-field
+                    matTooltip="Válassz egy órerendet!"
+                    [matTooltipPosition]="'right'"
+                    [matTooltipShowDelay]="500"
+                    class="profile-form-field"
+                    appearance="outline"
+                >
+                    <mat-label>Órarend</mat-label>
+                    <mat-select
+                        #timetableSelect
+                        disableOptionCentering
+                        (selectionChange)="onTimetableSelected($event)"
+                        [value]="selectedTimetableId"
+                    >
+                        <mat-option [value]="0"> Nincs </mat-option>
+                        <mat-option *ngFor="let element of allTimetable$ | async" [value]="element.id">
+                            {{ element.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="secondary-title-font mb-5 mt-10">Alapértelemzett fórum szoba szűrés</div>
+        <div class="profile-form-container">
+            <div class="profile-forms">
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Egyetem</mat-label>
+                    <mat-select
+                        [formControl]="newUniversity"
+                        disableOptionCentering
+                        (selectionChange)="universityChanged($event.value)"
+                    >
+                        <mat-option [value]="0"> Mind </mat-option>
+                        <mat-option *ngFor="let university of allUniversity" [value]="university.id">
+                            {{ university.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="newUniversity.hasError('required')">Egyetem megadása kötelező!</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="newUniversity.value" class="profile-form-field" appearance="outline">
+                    <mat-label>Karok</mat-label>
+                    <mat-select
+                        [formControl]="newFaculties"
+                        disableOptionCentering
+                        multiple
+                        (selectionChange)="facultyChanged($event.value)"
+                    >
+                        <mat-option *ngFor="let faculty of filteredFaculties" [value]="faculty.id">
+                            {{ faculty.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="newFaculties.hasError('required')">Kar(ok) kiválasztása kötelező!</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="newFaculties.value!.length" class="profile-form-field" appearance="outline">
+                    <mat-label>Szakok</mat-label>
+                    <mat-select [formControl]="newMajors" disableOptionCentering multiple>
+                        <mat-option *ngFor="let major of filteredMajors" [value]="major.id">
+                            {{ major.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="newMajors.hasError('required')">Szak(ok) kiválasztása kötelező!</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="secondary-title-font mb-5 mt-10">Nevek módosítása</div>
+        <div class="profile-form-container">
+            <div class="profile-forms">
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Vezetéknév</mat-label>
+                    <input matInput type="text" [formControl]="lastname" />
+                    <mat-error *ngIf="lastname.hasError('required')">Vezetéknév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="lastname.hasError('maxlength')"
+                        >Vezetéknév nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                </mat-form-field>
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Keresztnév</mat-label>
+                    <input matInput type="text" [formControl]="firstname" />
+                    <mat-error *ngIf="firstname.hasError('required')">Keresztnév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="firstname.hasError('maxlength')"
+                        >Keresztnév nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                </mat-form-field>
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Felhasználónév</mat-label>
+                    <input matInput type="text" [formControl]="username" />
+                    <mat-error *ngIf="username.hasError('required')">Felhasználónév megadása kötelező!</mat-error>
+                    <mat-error *ngIf="username.hasError('maxlength')"
+                        >Felhasználónév nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="profile-form-button">
+            <button
+                class="content-font profile-button"
+                mat-raised-button
+                color="primary"
+                (click)="savePreferenceData()"
+            >
+                Módosítás
+            </button>
+            <button
+                class="content-font profile-button"
+                mat-raised-button
+                color="warn"
+                (click)="setFormControlValues(false)"
+            >
+                Visszaállítás
+            </button>
+        </div>
+    </div>
+    <div class="line mb-15 mt-15"></div>
+    <div class="user-modify-container">
+        <div class="main-title-font mb-15">Autentikációs adatok módosítása</div>
+        <div class="secondary-title-font mb-5 mt-10">Email-cím módosítása</div>
+        <div class="profile-form-container">
+            <div class="profile-forms">
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Email cím</mat-label>
+                    <input matInput type="text" [formControl]="email" />
+                    <mat-error *ngIf="email.hasError('required')">Email cím megadása kötelező!</mat-error>
+                    <mat-error *ngIf="email.hasError('maxlength')"
+                        >Email cím nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                    <mat-error *ngIf="email.hasError('email')">Rossz email formátum</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="secondary-title-font mb-5 mt-20">Jelszó módosítása</div>
+        <div class="profile-form-container">
+            <div class="profile-forms">
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Jelszó</mat-label>
+                    <input matInput type="password" [formControl]="password" />
+                    <mat-error *ngIf="password.hasError('required')">Jelszó megadása kötelező!</mat-error>
+                    <mat-error *ngIf="password.hasError('maxlength')"
+                        >Jelszó nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                </mat-form-field>
+                <mat-form-field class="profile-form-field" appearance="outline">
+                    <mat-label>Jelszó újra</mat-label>
+                    <input matInput type="password" [formControl]="passwordAgain" />
+                    <mat-error *ngIf="passwordAgain.hasError('required')">Jelszó megadása kötelező!</mat-error>
+                    <mat-error *ngIf="passwordAgain.hasError('maxlength')"
+                        >Jelszó nem lehet hosszabb 255 karakternél!</mat-error
+                    >
+                    <mat-error *ngIf="passwordAgain.hasError('passwordsAreEqual')">A két jelszó nem egyezik!</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="profile-form-button">
+        <button
+            class="content-font profile-button"
+            mat-raised-button
+            color="primary"
+            (click)="saveAuthenticationData()"
+        >
+            Módosítás
+        </button>
+    </div>
+</div>

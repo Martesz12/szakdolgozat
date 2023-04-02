@@ -1,10 +1,14 @@
 package hu.szakdoga.backend.authentication.data.dto;
 
 import hu.szakdoga.backend.authentication.data.model.Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +20,8 @@ public class UserDTO {
     private final String appUsername;
     private final String email;
     private final Role role;
+    private final Long timetablePreference;
+    private final Long universityPreference;
+    private final List<Long> facultiesPreference;
+    private final List<Long> majorsPreference;
 }

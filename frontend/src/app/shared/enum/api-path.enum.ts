@@ -18,4 +18,6 @@ export enum ApiPath {
     FindFacultiesByIds = 'findFacultiesByIds',
     UploadMessageFile = 'upload',
     GetMessageFile = 'get',
+    ModifyUserPreference = 'modifyUserPreference',
+    ModifyUserAuthenticationData = 'modifyUserAuthenticationData',
 }
