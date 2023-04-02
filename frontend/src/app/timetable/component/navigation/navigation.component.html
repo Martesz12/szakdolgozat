@@ -40,6 +40,10 @@
                     <mat-icon class="mr-5">logout</mat-icon>
                     <span>Kijelentkezés</span>
                 </div>
+                <div (click)="openProfileDialog()" mat-list-item class="drawer-element">
+                    <mat-icon class="mr-5">person</mat-icon>
+                    <span>Profil</span>
+                </div>
             </mat-nav-list>
             <mat-divider></mat-divider>
             <app-timetable-side-menu></app-timetable-side-menu>

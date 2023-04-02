@@ -1,5 +1,4 @@
-TODO profil oldal, meg lehet változtatni a dolgokat, és beállítani kezdő oldalt és alapértelmezett órarendet
+TODO beállítani az órarendet és szűrést alapértelmezettek alapján
+TODO email módosítás után beszar
 TODO 500 JWT expired error handle
 TODO bejelentkezés után nem minden tölt be egyből
-
-TODO fájlra rákattintva dialogon nagyobb méretben
