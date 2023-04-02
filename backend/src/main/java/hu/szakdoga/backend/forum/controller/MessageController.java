@@ -26,8 +26,7 @@ public class MessageController {
 
     @MessageMapping("/addMessageToActiveForum")
     public void addMessageToActiveForum(MessageDTO messageDTO){
-        MessageDTO newMessage = messageService.addMessage(messageDTO);
-        this.template.convertAndSend("/activeForumMessages",  newMessage);
+        this.template.convertAndSend("/activeForumMessages",  messageDTO);
     }
 
     @GetMapping("/find/{id}")

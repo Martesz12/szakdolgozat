@@ -73,7 +73,7 @@ export class MessageService {
         const socket = new SockJS('http://localhost:8080/socket');
         this.stompClient = Stomp.over(socket);
         const _this = this;
-        this.stompClient.connect({}, function (frame: any) {
+        this.stompClient.connect({ Authorization: `Bearer ${this.userService.getToken()}` }, function (frame: any) {
             _this.stompClient.subscribe('/activeForumMessages', function (newMessageResponse: any) {
                 let newMessage = JSON.parse(newMessageResponse.body) as MessageDto;
                 let newMessageIndex = _this.allMessage.findIndex(message => message.id === newMessage.id);
@@ -94,7 +94,7 @@ export class MessageService {
         console.log(newMessage);
         this.stompClient.send(
             '/app/addMessageToActiveForum',
-            {},
+            { Authorization: `Bearer ${this.userService.getToken()}` },
             JSON.stringify({
                 id: newMessage.id,
                 pinned: newMessage.pinned,
