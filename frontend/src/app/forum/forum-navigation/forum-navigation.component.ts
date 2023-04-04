@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { UserService } from 'src/app/shared/service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileComponent } from '../../component/profile/profile.component';
@@ -12,18 +12,23 @@ export type DrawerModes = (typeof drawerModes)[number];
     templateUrl: './forum-navigation.component.html',
     styleUrls: ['./forum-navigation.component.scss'],
 })
-export class ForumNavigationComponent implements OnInit {
+export class ForumNavigationComponent implements OnInit, AfterViewInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
-    constructor(private renderer: Renderer2, private userService: UserService, private dialog: MatDialog) {
+    constructor(
+        private renderer: Renderer2,
+        private userService: UserService,
+        private dialog: MatDialog,
+        private cdr: ChangeDetectorRef
+    ) {
         this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
 
     ngOnInit(): void {}
 
-    onToggleSidenav(sidenav: MatSidenav) {
-        sidenav.toggle();
+    ngAfterViewInit(): void {
+        this.cdr.detectChanges();
     }
 
     getScreenWidth(): number {

@@ -30,7 +30,6 @@ export class TimetableSideMenuComponent implements OnDestroy {
         this.treeControl.dataNodes = this.dataSource.data;
         this.treeControl.expandAll();
         this.getSelectedTimetableId();
-        console.log(this.router.url);
         this.router.navigateByUrl(this.router.url);
     }
 

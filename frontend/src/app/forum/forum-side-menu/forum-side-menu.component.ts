@@ -23,8 +23,8 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
     filterText: string = '';
 
     universityFilter = new FormControl(0);
-    majorsFilter = new FormControl([]);
-    facultiesFilter = new FormControl([]);
+    majorsFilter = new FormControl([] as number[]);
+    facultiesFilter = new FormControl([] as number[]);
     allUniversity: UniversityDto[] = [];
     allFaculty: FacultyDto[] = [];
     filteredFaculties: FacultyDto[] = [];
@@ -50,6 +50,24 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
         this.getAllMajor();
         this.setViewdForum();
         this.userService.isUserAdmin().subscribe(isAdmin => (this.isUserAdmin = isAdmin));
+        this.getDefaultForumFilter();
+    }
+
+    getDefaultForumFilter(): void {
+        this.userService.getUserByToken().subscribe(user => {
+            if (user.universityPreference) {
+                this.universityFilter.setValue(user.universityPreference);
+                this.universityChanged(user.universityPreference);
+                if (user.facultiesPreference) {
+                    this.facultiesFilter.setValue(user.facultiesPreference);
+                    this.facultyChanged(user.facultiesPreference);
+                    if (user.majorsPreference) {
+                        this.majorsFilter.setValue(user.majorsPreference);
+                    }
+                }
+            }
+            this.filterForumsByEducation();
+        });
     }
 
     ngOnDestroy() {
@@ -153,18 +171,18 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
             this.filteredAllForums = this.allForum.filter(forum => forum.universityId === this.universityFilter.value);
         } else this.filteredForums = this.allForum;
         if (!!this.facultiesFilter.value?.length) {
-            this.filteredForums = this.allForum.filter(forum =>
+            this.filteredForums = this.filteredAllForums.filter(forum =>
                 this.haveArraysSameElement(forum.facultyIds, this.facultiesFilter.value!)
             );
-            this.filteredAllForums = this.allForum.filter(forum =>
+            this.filteredAllForums = this.filteredAllForums.filter(forum =>
                 this.haveArraysSameElement(forum.facultyIds, this.facultiesFilter.value!)
             );
         }
         if (!!this.majorsFilter.value?.length) {
-            this.filteredForums = this.allForum.filter(forum =>
+            this.filteredForums = this.filteredAllForums.filter(forum =>
                 this.haveArraysSameElement(forum.majorIds, this.majorsFilter.value!)
             );
-            this.filteredAllForums = this.allForum.filter(forum =>
+            this.filteredAllForums = this.filteredAllForums.filter(forum =>
                 this.haveArraysSameElement(forum.majorIds, this.majorsFilter.value!)
             );
         }

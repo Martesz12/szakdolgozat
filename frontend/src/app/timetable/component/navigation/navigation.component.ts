@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { TimetableService } from 'src/app/shared/service/timetable/timetable.service';
 import { UserService } from 'src/app/shared/service/user.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,26 +13,37 @@ export type DrawerModes = (typeof drawerModes)[number];
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, AfterViewInit {
     @ViewChild('drawer') drawer!: MatDrawer;
     drawerMode: DrawerModes = 'side';
     constructor(
         private renderer: Renderer2,
         private userService: UserService,
         private timetableService: TimetableService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private cdr: ChangeDetectorRef
     ) {
         this.renderer.listen('window', 'resize', this.windowResizeEvent);
         this.drawerMode = this.isInMobileView() ? 'over' : 'side';
     }
 
     ngOnInit(): void {
-        let timetableId = localStorage.getItem('selectedTimetableId');
-        if (timetableId) this.timetableService.setSelectedTimetableId(+timetableId);
+        this.getDefaultTimetable();
     }
 
-    onToggleSidenav(sidenav: MatSidenav) {
-        sidenav.toggle();
+    ngAfterViewInit(): void {
+        this.cdr.detectChanges();
+    }
+
+    getDefaultTimetable(): void {
+        this.userService.getUserByToken().subscribe(user => {
+            if (user.timetablePreference) {
+                this.timetableService.setSelectedTimetableId(user.timetablePreference);
+            } else {
+                let timetableId = localStorage.getItem('selectedTimetableId');
+                if (timetableId) this.timetableService.setSelectedTimetableId(+timetableId);
+            }
+        });
     }
 
     getScreenWidth(): number {
