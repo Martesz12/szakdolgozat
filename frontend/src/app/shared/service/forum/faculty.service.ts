@@ -15,7 +15,6 @@ export class FacultyService {
 
     getAllFaculty() {
         this.facultyWebService.getAllFaculty().subscribe(facultys => {
-            console.log(facultys);
             this.allFacultySubject.next(facultys);
         });
     }

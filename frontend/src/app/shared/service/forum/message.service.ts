@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, Observable, switchMap } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import { MessageDto } from '../../model/forum/message.dto';
 import { MessageWebService } from '../api/forum/message-web.service';
 import { ForumService } from './forum.service';
@@ -91,7 +91,6 @@ export class MessageService {
     }
 
     sendMessageToActiveForum(newMessage: MessageDto) {
-        console.log(newMessage);
         this.stompClient.send(
             '/app/addMessageToActiveForum',
             { Authorization: `Bearer ${this.userService.getToken()}` },

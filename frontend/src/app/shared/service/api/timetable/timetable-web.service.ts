@@ -107,7 +107,6 @@ export class TimetableWebService {
     }
 
     createHeader(): HttpHeaders {
-        console.log(this.userService.getToken());
         return new HttpHeaders({
             Authorization: `Bearer ${this.userService.getToken()}`,
         });

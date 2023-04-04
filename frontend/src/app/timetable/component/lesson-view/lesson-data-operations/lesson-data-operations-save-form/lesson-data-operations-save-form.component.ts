@@ -121,10 +121,6 @@ export class LessonDataOperationsSaveFormComponent {
         let endTime = this.newEndTime.value?.split(':');
 
         if (startTime?.length && endTime?.length) {
-            console.log(+startTime[0]);
-            console.log(+endTime[0]);
-
-            console.log(+startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1]));
             return +startTime[0] < +endTime[0] || (+startTime[0] === +endTime[0] && +startTime[1] < +endTime[1]);
         }
         return true;

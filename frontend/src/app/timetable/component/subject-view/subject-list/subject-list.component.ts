@@ -42,7 +42,6 @@ export class SubjectListComponent {
 
     private getAllSubject() {
         this.subjectService.getAllSubjectSubject().subscribe(subjects => {
-            console.log(subjects);
             this.allSubject = subjects;
             this.filteredAllSubject = subjects;
         });

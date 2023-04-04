@@ -82,7 +82,6 @@ export class AgendaMonthlyViewCalendarComponent implements AfterViewInit {
                         .filter(mainTask => !mainTask.fulfilled)
                         .forEach(filteredMainTask => {
                             let mainTaskDate = new Date(filteredMainTask.deadline);
-                            console.log(mainTaskDate);
                             this.mainTaskDates.push(
                                 new Date(
                                     mainTaskDate.getFullYear(),

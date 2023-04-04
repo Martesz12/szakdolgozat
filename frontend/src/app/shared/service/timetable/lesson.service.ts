@@ -28,7 +28,6 @@ export class LessonService {
             )
             .subscribe(lessons => {
                 this.allLessonSubject.next(lessons);
-                console.log(lessons);
             });
     }
 

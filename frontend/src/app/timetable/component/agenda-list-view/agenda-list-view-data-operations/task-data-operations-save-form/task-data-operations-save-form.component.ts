@@ -80,7 +80,6 @@ export class TaskDataOperationsSaveFormComponent {
         if (this.newNote.value !== null) note = this.newNote.value;
         if (this.newDeadline.value !== null) deadline = this.newDeadline.value;
         if (this.newType.value !== null && this.newType.value !== '') type = this.newType.value;
-        console.log(this.newType.value);
 
         return new MainTaskDto(name, false, deadline, note, type, lessonId);
     }
