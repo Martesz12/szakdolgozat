@@ -85,3 +85,11 @@
     transform: rotate(90deg);
     color: var(--primary);
 }
+
+.approved-list-row-name,
+.disapproved-list-row-name {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

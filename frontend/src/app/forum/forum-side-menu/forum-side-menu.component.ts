@@ -85,6 +85,7 @@ export class ForumSideMenuComponent implements OnInit, OnDestroy {
             this.allForum = forums.filter(forum => forum.approved);
             this.filteredForums = forums.filter(forum => forum.approved);
             this.filteredAllForums = forums.filter(forum => forum.approved);
+            this.filterForumsByEducation();
         });
     }
 
