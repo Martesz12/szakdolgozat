@@ -129,6 +129,7 @@
 .sub-task-main {
     display: flex;
     align-items: center;
+    flex-grow: 1;
 }
 
 .sub-task-buttons {
@@ -229,7 +230,6 @@
 }
 
 .expansion-panel-header-main {
-    width: 90%;
     display: flex;
     flex-direction: column;
 }

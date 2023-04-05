@@ -12,44 +12,53 @@
 .navigation-main-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-500);
+    line-height: 1;
 }
 
-.navigation-secondary-font {
+.navigation-secondary-font,
+.profile-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-400);
+    line-height: 1;
 }
 
 .main-title-font {
     font-size: var(--fs-25);
     font-weight: var(--fw-500);
+    line-height: 1;
 }
 
 .secondary-title-font,
 .message-username-font {
     font-size: var(--fs-20);
     font-weight: var(--fw-500);
+    line-height: 1;
 }
 
 .content-font {
     font-size: var(--fs-16);
     font-weight: var(--fw-400);
+    line-height: 1;
 }
 
 .message-time-font,
 .small-button-font {
     font-size: var(--fs-12);
     font-weight: var(--fw-400);
+    line-height: 1;
 }
 
 .no-element-found-font,
 .authentication-font {
     font-size: var(--fs-40);
     font-weight: var(--fw-500);
+    line-height: 1;
 }
 
 .content-on-color-font {
     font-size: var(--fs-16);
     font-weight: var(--fw-500);
+    line-height: 1;
 }
 
 .content-overflow {

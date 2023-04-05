@@ -217,4 +217,11 @@ export class ForumManagementUpdateFormComponent implements OnInit {
     backToListView(): void {
         this.forumService.resetForumState();
     }
+
+    getScreenWidth(): number {
+        return window.innerWidth;
+    }
+    isInMobileView(): boolean {
+        return this.getScreenWidth() <= 1000;
+    }
 }

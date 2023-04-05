@@ -191,7 +191,7 @@ export class ForumMainComponent implements OnInit, OnDestroy {
     }
 
     onFileSelected($event: any) {
-        this.messageFile = $event.target.files[0];
+        [this.messageFile] = $event.target.files;
     }
 
     setFileSelection(): void {

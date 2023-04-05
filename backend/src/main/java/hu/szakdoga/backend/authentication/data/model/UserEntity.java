@@ -35,7 +35,7 @@ public class UserEntity implements Serializable, UserDetails {
     @Column(nullable = false)
     private String appUsername;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)

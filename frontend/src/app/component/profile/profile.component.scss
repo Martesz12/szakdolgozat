@@ -42,6 +42,12 @@
     padding: 10px;
 }
 
+.warning-message {
+    color: red;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 640px) {
     .profile-form-button {
         flex-wrap: wrap;

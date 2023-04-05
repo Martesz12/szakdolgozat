@@ -14,6 +14,7 @@ import { UserDto } from '../../shared/model/authentication/dto/user.dto';
 import { UserService } from '../../shared/service/user.service';
 import { SnackBarService } from '../../shared/service/snack-bar.service';
 import { AuthenticationModifyRequest } from '../../shared/model/authentication/authentication-modify-request';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-profile',
@@ -48,7 +49,8 @@ export class ProfileComponent implements OnInit {
         private majorService: MajorService,
         public timetableService: TimetableService,
         private userService: UserService,
-        private snacBarService: SnackBarService
+        private snacBarService: SnackBarService,
+        public dialogRef: MatDialogRef<ProfileComponent>
     ) {}
 
     ngOnInit(): void {
@@ -183,6 +185,8 @@ export class ProfileComponent implements OnInit {
                 this.snacBarService.infoSnackBar('A felhasználó autentikációs adat módosítása sikeres!');
                 this.currentUser = user;
                 this.setFormControlValues();
+                this.dialogRef.close();
+                this.userService.logout();
             },
             error: err => {
                 this.snacBarService.errorSnackBar('A felhasználó autentikációs adat módosítása sikertelen!');

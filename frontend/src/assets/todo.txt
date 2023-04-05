@@ -1,4 +1,8 @@
-TODO beállítani az órarendet és szűrést alapértelmezettek alapján
-TODO email módosítás után beszar
 TODO 500 JWT expired error handle
-TODO bejelentkezés után nem minden tölt be egyből
+    TODO JWT errorokat átalakítani
+TODO szoba bármely módosítása/hozzáadása után a szobák szűrése "törlődik"
+
+TODO-k amiket majd később meg lehetne csinálni:
+    TODO megjelenített napok preferencia
+    TODO órarend kezdőoldal preferencia
+    TODO spinner töltéskor
